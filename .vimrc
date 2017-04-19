@@ -100,3 +100,7 @@ set undoreload=10000
 " Keybinds for vim-easy-align
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
+
+" Markdown
+" Enable syntax highlighting in fenced code blocks
+let g:markdown_fenced_languages = ['slim', 'html', 'ruby', 'javascript', 'java', 'clojure', 'erb=eruby', 'coffee']
