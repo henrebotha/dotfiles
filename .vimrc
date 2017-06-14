@@ -4,6 +4,9 @@ filetype off                  " required
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
+" set the runtime path to include NeoBundle and initialize
+set rtp+=/Users/henrebotha/.vim/bundle/neobundle.vim/
+call neobundle#begin(expand('/Users/henrebotha/.vim/bundle'))
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
 
@@ -17,10 +20,21 @@ Plugin 'tpope/vim-surround'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'haya14busa/incsearch.vim'
 Plugin 'junegunn/vim-easy-align'
+Plugin 'ervandew/supertab'
 Bundle 'vim-ruby/vim-ruby'
 
-" All of your Plugins must be added before the following line
+" All of your Vundle plugins must be added before the following line
 call vundle#end()            " required
+
+" let NeoBundle manage NeoBundle, required
+NeoBundleFetch 'Shougo/neobundle.vim'
+NeoBundle 'joker1007/vim-ruby-heredoc-syntax'
+
+" All of your NeoBundle plugins must be added before the following line
+call neobundle#end()         " required
+
+NeoBundleCheck " prompt to install uninstalled bundles
+
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
