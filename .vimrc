@@ -117,4 +117,7 @@ nmap ga <Plug>(EasyAlign)
 
 " Markdown
 " Enable syntax highlighting in fenced code blocks
-let g:markdown_fenced_languages = ['slim', 'html', 'ruby', 'javascript', 'java', 'clojure', 'erb=eruby', 'coffee', 'xml', 'json']
+let g:markdown_fenced_languages = ['slim', 'html', 'ruby', 'javascript', 'java', 'clojure', 'erb=eruby', 'coffee', 'xml', 'json', 'sql', 'postgresql']
+
+" Enable mouse scrolling inside tmux
+set mouse=a
