@@ -17,10 +17,14 @@ Plugin 'kchmck/vim-coffee-script'
 Plugin 'vim-airline/vim-airline'
 Plugin 'chrisbra/NrrwRgn'
 Plugin 'tpope/vim-surround'
-Plugin 'vim-syntastic/syntastic'
+" Plugin 'vim-syntastic/syntastic'
+Plugin 'w0rp/ale'
 Plugin 'haya14busa/incsearch.vim'
 Plugin 'junegunn/vim-easy-align'
 Plugin 'ervandew/supertab'
+" Plugin 'wincent/command-t'
+Plugin 'elmcast/elm-vim'
+" Plugin 'othree/javascript-libraries-syntax.vim'
 Bundle 'vim-ruby/vim-ruby'
 
 " All of your Vundle plugins must be added before the following line
@@ -93,6 +97,12 @@ let g:airline_powerline_fonts = 1
 set number
 set relativenumber
 
+" Show as much as possible of a wrapped last line
+set display=lastline
+
+" Wrap at word boundaries, not in the middle of words
+set linebreak
+
 " Linter settings
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
@@ -100,7 +110,16 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_mode_map = { 'mode': 'passive' }
 let g:syntastic_ruby_checkers = ['rubocop']
+let g:syntastic_scss_checkers = ['scss_lint']
 let g:syntastic_slim_checkers = []
+" Disable Syntastic by default; do :call ActivateSyntastic() to enable. This is
+" a startup time optimisation. See
+" https://github.com/vim-syntastic/syntastic/issues/91#issuecomment-2888737
+" let g:pathogen_disabled = ['syntastic']
+" function! ActivateSyntastic() abort
+"   set rtp+=~/.vim/bundle/syntastic
+"   runtime plugin/syntastic.vim
+" endfunction
 
 " Trim trailing whitespace on write
 autocmd BufWritePre * %s/\s\+$//e
@@ -121,3 +140,6 @@ let g:markdown_fenced_languages = ['slim', 'html', 'ruby', 'javascript', 'java',
 
 " Enable mouse scrolling inside tmux
 set mouse=a
+
+" JS lib syntax
+" let g:used_javascript_libs = 'angularjs'
