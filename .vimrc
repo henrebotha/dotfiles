@@ -57,6 +57,16 @@ syntax enable
 " Shortcut to rapidly toggle `set list`
 nmap <leader>l :set list!<CR>
 
+" Shortcuts for ale to navigate between errors
+" ^k - go to previous error
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+" ^j - go to next error
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
+" Keep gutter open at all times
+let g:ale_sign_column_always = 1
+" Slow it down a little
+let g:ale_lint_delay = 500
+
 " Use the same symbols as TextMate for tabstops and EOLs
 set listchars=tab:>\ ,eol:¬,space:-
 
@@ -68,8 +78,8 @@ map / <Plug>(incsearch-forward)
 map ? <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
 
-" Use C-k to highlight the current cursor position
-nnoremap <C-K> :call HighlightNearCursor()<CR>
+" Use C-l to highlight the current cursor position
+nnoremap <C-l> :call HighlightNearCursor()<CR>
 function HighlightNearCursor()
   if !exists("s:highlightcursor")
     match Todo /\k*\%#\k*/
