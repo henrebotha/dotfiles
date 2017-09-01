@@ -12,9 +12,9 @@
 	compactionheuristic = true
 [alias]
 	# Hide files from git
-	hidden = ! git ls-files -v . | grep ^S
+	hidden = ! git ls-files -v . | grep ^S | awk '{ print $2 }'
 	hide = update-index --skip-worktree
 	unhide = update-index --no-skip-worktree
-	unhide-all = ! cd $(git rev-parse --show-toplevel || echo ".") && git hidden | awk '{print $2}' | xargs git unhide
+	unhide-all = ! cd $(git rev-parse --show-toplevel || echo ".") && git hidden | xargs git unhide
 
 	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
