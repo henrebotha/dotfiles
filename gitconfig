@@ -1,3 +1,5 @@
+# vim: set ts=2 sw=2 noet:
+
 [core]
 	compression = 0
 	autocrlf = input
@@ -9,7 +11,10 @@
 [diff]
 	compactionheuristic = true
 [alias]
+	# Hide files from git
 	hidden = ! git ls-files -v . | grep ^S
 	hide = update-index --skip-worktree
 	unhide = update-index --no-skip-worktree
 	unhide-all = ! cd $(git rev-parse --show-toplevel || echo ".") && git hidden | awk '{print $2}' | xargs git unhide
+
+	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
