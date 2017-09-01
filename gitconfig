@@ -11,6 +11,9 @@
 [diff]
 	compactionheuristic = true
 [alias]
+	# Display all aliases :)
+	aliases = ! git config --list | awk '/alias/{ print $1 }' | perl -pe 's/alias\\.//g' | perl -pe 's/=.+//g'
+
 	# Hide files from git
 	hidden = ! git ls-files -v . | grep ^S | awk '{ print $2 }'
 	hide = update-index --skip-worktree
