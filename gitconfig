@@ -1,0 +1,15 @@
+[core]
+	compression = 0
+	autocrlf = input
+	excludesfile = /Users/henrebotha/.gitignore_global
+	editor = vim
+[user]
+	name = Henré Botha
+	email = henrebotha@gmail.com
+[diff]
+	compactionheuristic = true
+[alias]
+	hidden = ! git ls-files -v . | grep ^S
+	hide = update-index --skip-worktree
+	unhide = update-index --no-skip-worktree
+	unhide-all = ! cd $(git rev-parse --show-toplevel || echo ".") && git hidden | awk '{print $2}' | xargs git unhide
