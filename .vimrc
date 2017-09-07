@@ -159,3 +159,10 @@ set mouse=a
 
 " JS lib syntax
 " let g:used_javascript_libs = 'angularjs'
+
+" Enable modelines for tweaking config per file
+set modeline
+set modelines=5
+
+" Show partially-typed commands in the bottom right
+set showcmd
