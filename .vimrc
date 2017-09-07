@@ -67,6 +67,11 @@ nmap <silent> <C-j> <Plug>(ale_next_wrap)
 let g:ale_sign_column_always = 1
 " Slow it down a little
 let g:ale_lint_delay = 500
+" Only enable one JS linter... TODO: find a per-file solution
+let g:ale_linters = {
+\   'javascript': ['jshint'],
+\   'html': [],
+\}
 
 " Use the same symbols as TextMate for tabstops and EOLs
 set listchars=tab:>\ ,eol:¬,space:-
