@@ -24,6 +24,7 @@ Plugin 'junegunn/vim-easy-align'
 Plugin 'ervandew/supertab'
 " Plugin 'wincent/command-t'
 Plugin 'elmcast/elm-vim'
+Plugin 'gregsexton/MatchTag'
 " Plugin 'othree/javascript-libraries-syntax.vim'
 Bundle 'vim-ruby/vim-ruby'
 
