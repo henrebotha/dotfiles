@@ -167,3 +167,7 @@ set modelines=5
 
 " Show partially-typed commands in the bottom right
 set showcmd
+
+" Show a ruler for column width
+set colorcolumn=80
+highligh ColorColumn ctermbg=0 guibg=lightgrey
