@@ -71,6 +71,7 @@ let g:ale_lint_delay = 500
 let g:ale_linters = {
 \   'javascript': ['jshint'],
 \   'html': [],
+\   'scss': []
 \}
 
 " Use the same symbols as TextMate for tabstops and EOLs
