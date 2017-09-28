@@ -26,6 +26,8 @@ Plugin 'ervandew/supertab'
 Plugin 'elmcast/elm-vim'
 Plugin 'gregsexton/MatchTag'
 " Plugin 'othree/javascript-libraries-syntax.vim'
+" Plugin 'jebaum/vim-tmuxify'
+Plugin 'elixir-editors/vim-elixir'
 Bundle 'vim-ruby/vim-ruby'
 
 " All of your Vundle plugins must be added before the following line
