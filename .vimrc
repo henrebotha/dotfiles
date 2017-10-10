@@ -28,6 +28,8 @@ Plugin 'gregsexton/MatchTag'
 " Plugin 'othree/javascript-libraries-syntax.vim'
 " Plugin 'jebaum/vim-tmuxify'
 Plugin 'elixir-editors/vim-elixir'
+Plugin 'leafgarland/typescript-vim'
+Plugin 'tpope/vim-ragtag'
 Bundle 'vim-ruby/vim-ruby'
 
 " All of your Vundle plugins must be added before the following line
@@ -72,8 +74,9 @@ let g:ale_lint_delay = 500
 " Only enable one JS linter... TODO: find a per-file solution
 let g:ale_linters = {
 \   'javascript': ['jshint'],
+\   'typescript': ['eslint'],
 \   'html': [],
-\   'scss': []
+\   'scss': ['scsslint']
 \}
 
 " Use the same symbols as TextMate for tabstops and EOLs
@@ -173,3 +176,9 @@ set showcmd
 " Show a ruler for column width
 set colorcolumn=80
 highligh ColorColumn ctermbg=0 guibg=lightgrey
+
+" Store swap files in a central location
+set directory^=$HOME/.vim/tmp//
+
+" Detect & load changes to the file
+set autoread
