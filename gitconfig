@@ -21,3 +21,19 @@
 	unhide-all = ! cd $(git rev-parse --show-toplevel || echo ".") && git hidden | xargs git unhide
 
 	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+
+	# Short aliases for simple commands, taken from the oh-my-zsh git plugin
+	a = add
+	apa = add --patch
+	b = branch
+	ba = branch -a
+	c = commit
+	co = checkout
+	l = log
+	lo = log --oneline --decorate
+	r = remote
+	ra = remote add
+	rmv = remote rename
+	rrm = remote remove
+	rv = remote -v
+	st = status
