@@ -30,6 +30,7 @@ Plugin 'gregsexton/MatchTag'
 Plugin 'elixir-editors/vim-elixir'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'tpope/vim-ragtag'
+Plugin 'airblade/vim-gitgutter'
 Bundle 'vim-ruby/vim-ruby'
 
 " All of your Vundle plugins must be added before the following line
