@@ -1,64 +1,32 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" set the runtime path to include NeoBundle and initialize
-set rtp+=/Users/henrebotha/.vim/bundle/neobundle.vim/
-call neobundle#begin(expand('/Users/henrebotha/.vim/bundle'))
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
+call plug#begin()
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'slim-template/vim-slim.git'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'vim-airline/vim-airline'
-Plugin 'chrisbra/NrrwRgn'
-Plugin 'tpope/vim-surround'
-" Plugin 'vim-syntastic/syntastic'
-Plugin 'w0rp/ale'
-Plugin 'haya14busa/incsearch.vim'
-Plugin 'junegunn/vim-easy-align'
-Plugin 'ervandew/supertab'
-" Plugin 'wincent/command-t'
-Plugin 'elmcast/elm-vim'
-Plugin 'gregsexton/MatchTag'
-" Plugin 'othree/javascript-libraries-syntax.vim'
-" Plugin 'jebaum/vim-tmuxify'
-Plugin 'elixir-editors/vim-elixir'
-Plugin 'leafgarland/typescript-vim'
-Plugin 'tpope/vim-ragtag'
-Plugin 'airblade/vim-gitgutter'
-Bundle 'vim-ruby/vim-ruby'
+Plug 'sheerun/vim-polyglot'              " Loads language packs on demand
+Plug 'vim-airline/vim-airline'           " Status line
+Plug 'chrisbra/NrrwRgn'                  " Emacs-style narrowing
+Plug 'tpope/vim-surround'                " Adds commands for surrounding chars
+Plug 'w0rp/ale'                          " Async linter
+Plug 'haya14busa/incsearch.vim'          " Highlight incremental search results
+Plug 'junegunn/vim-easy-align'           " Align things, easily
+Plug 'ervandew/supertab'                 " Tab completion
+Plug 'gregsexton/MatchTag'               " Highlight matching XML tag
+Plug 'airblade/vim-gitgutter'            " Show git status in gutter, async
+Plug 'junegunn/fzf.vim'                  " Fast fuzzy finder
+Plug 'junegunn/goyo.vim'                 " Distraction-free mode
+Plug 'tpope/vim-unimpaired'              " Pairwise commands
+Plug 'joker1007/vim-ruby-heredoc-syntax' " Highlighting heredocs in Ruby
+Plug 'tpope/vim-commentary'              " Toggle comments
+Plug 'tpope/vim-ragtag'
+" Plug 'wincent/command-t'
+" Plug 'othree/javascript-libraries-syntax.vim'
+" Plug 'jebaum/vim-tmuxify'
 
-" All of your Vundle plugins must be added before the following line
-call vundle#end()            " required
+call plug#end()
 
-" let NeoBundle manage NeoBundle, required
-NeoBundleFetch 'Shougo/neobundle.vim'
-NeoBundle 'joker1007/vim-ruby-heredoc-syntax'
-
-" All of your NeoBundle plugins must be added before the following line
-call neobundle#end()         " required
-
-NeoBundleCheck " prompt to install uninstalled bundles
-
-filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
-
-syntax enable
+" Enable fzf
+set rtp+=/usr/local/opt/fzf
 
 " Shortcut to rapidly toggle `set list`
 nmap <leader>l :set list!<CR>
@@ -102,6 +70,13 @@ function HighlightNearCursor()
     unlet s:highlightcursor
   endif
 endfunction
+
+" Bindings for fzf
+nmap <leader>f :Files<CR>
+nmap <leader>t :Tags<CR>
+
+" Bindings for goyo ("prose mode")
+nmap <leader>p :Goyo<CR>
 
 " Use 2 spaces per tab
 set tabstop=2
