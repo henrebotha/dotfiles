@@ -18,6 +18,8 @@ Plug 'junegunn/goyo.vim'                 " Distraction-free mode
 Plug 'tpope/vim-unimpaired'              " Pairwise commands
 Plug 'joker1007/vim-ruby-heredoc-syntax' " Highlighting heredocs in Ruby
 Plug 'tpope/vim-commentary'              " Toggle comments
+Plug 'tpope/vim-endwise'                 " Auto-insert Ruby end, etc
+Plug 'tpope/vim-sleuth'                  " Auto-detect indentation
 Plug 'tpope/vim-ragtag'
 " Plug 'wincent/command-t'
 " Plug 'othree/javascript-libraries-syntax.vim'
