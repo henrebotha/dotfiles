@@ -84,7 +84,7 @@ nmap <leader>f :Files<CR>
 nmap <leader>t :Tags<CR>
 
 " Bindings for goyo ("prose mode")
-nmap <leader>p :Goyo<CR>
+nmap <leader>p :Goyo <bar> highlight StatusLineNC ctermfg=white<CR>
 
 " Use 2 spaces per tab
 set tabstop=2
