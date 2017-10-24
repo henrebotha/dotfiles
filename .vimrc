@@ -33,6 +33,9 @@ let g:airline_theme='spacedust'
 " Enable fzf
 set rtp+=/usr/local/opt/fzf
 
+" Space leader is best leader
+let mapleader = "\<space>"
+
 " Shortcut to rapidly toggle `set list`
 nmap <leader>l :set list!<CR>
 
