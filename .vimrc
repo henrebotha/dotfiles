@@ -3,29 +3,32 @@ filetype off                  " required
 
 call plug#begin()
 
-Plug 'sheerun/vim-polyglot'              " Loads language packs on demand
-Plug 'vim-airline/vim-airline'           " Status line
-Plug 'chrisbra/NrrwRgn'                  " Emacs-style narrowing
-Plug 'tpope/vim-surround'                " Adds commands for surrounding chars
-Plug 'w0rp/ale'                          " Async linter
-Plug 'haya14busa/incsearch.vim'          " Highlight incremental search results
-Plug 'junegunn/vim-easy-align'           " Align things, easily
-Plug 'ervandew/supertab'                 " Tab completion
-Plug 'gregsexton/MatchTag'               " Highlight matching XML tag
-Plug 'airblade/vim-gitgutter'            " Show git status in gutter, async
-Plug 'junegunn/fzf.vim'                  " Fast fuzzy finder
-Plug 'junegunn/goyo.vim'                 " Distraction-free mode
-Plug 'tpope/vim-unimpaired'              " Pairwise commands
-Plug 'joker1007/vim-ruby-heredoc-syntax' " Highlighting heredocs in Ruby
-Plug 'tpope/vim-commentary'              " Toggle comments
-Plug 'tpope/vim-endwise'                 " Auto-insert Ruby end, etc
-Plug 'tpope/vim-sleuth'                  " Auto-detect indentation
+Plug 'sheerun/vim-polyglot'               " Loads language packs on demand
+Plug 'vim-airline/vim-airline'            " Status line
+Plug 'chrisbra/NrrwRgn'                   " Emacs-style narrowing
+Plug 'tpope/vim-surround'                 " Adds commands for surrounding chars
+Plug 'w0rp/ale'                           " Async linter
+Plug 'haya14busa/incsearch.vim'           " Highlight incremental search results
+Plug 'junegunn/vim-easy-align'            " Align things, easily
+Plug 'ervandew/supertab'                  " Tab completion
+Plug 'gregsexton/MatchTag'                " Highlight matching XML tag
+Plug 'airblade/vim-gitgutter'             " Show git status in gutter, async
+Plug 'junegunn/fzf.vim'                   " Fast fuzzy finder
+Plug 'junegunn/goyo.vim'                  " Distraction-free mode
+Plug 'tpope/vim-unimpaired'               " Pairwise commands
+Plug 'joker1007/vim-ruby-heredoc-syntax'  " Highlighting heredocs in Ruby
+Plug 'tpope/vim-commentary'               " Toggle comments
+Plug 'tpope/vim-endwise'                  " Auto-insert Ruby end, etc
+Plug 'tpope/vim-sleuth'                   " Auto-detect indentation
+Plug 'marcelbeumer/spacedust-airline.vim' " Spacedust!
 Plug 'tpope/vim-ragtag'
 " Plug 'wincent/command-t'
 " Plug 'othree/javascript-libraries-syntax.vim'
 " Plug 'jebaum/vim-tmuxify'
 
 call plug#end()
+
+let g:airline_theme='spacedust'
 
 " Enable fzf
 set rtp+=/usr/local/opt/fzf
