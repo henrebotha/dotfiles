@@ -28,9 +28,6 @@ COMPLETION_WAITING_DOTS="true"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
-# This must happen before zsh-nvm is loaded.
-export NVM_LAZY_LOAD=true
-
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
@@ -43,9 +40,6 @@ plugins=(git osx zsh-nvm)
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
@@ -64,8 +58,6 @@ source $ZSH/oh-my-zsh.sh
 # Enable rbenv.
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
-
-export PATH="/Applications/Postgres.app/Contents/Versions/9.6/bin:$PATH"
 
 # # zsh-autoenv
 # source ~/.dotfiles/lib/zsh-autoenv/autoenv.zsh
