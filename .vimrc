@@ -21,12 +21,17 @@ Plug 'tpope/vim-commentary'               " Toggle comments
 Plug 'tpope/vim-endwise'                  " Auto-insert Ruby end, etc
 Plug 'tpope/vim-sleuth'                   " Auto-detect indentation
 Plug 'marcelbeumer/spacedust-airline.vim' " Spacedust!
+Plug 'mbbill/undotree'                    " Undo tree viewer
+Plug 'chiel92/vim-autoformat'             " Exactly what it says on the tin
 Plug 'tpope/vim-ragtag'
 " Plug 'wincent/command-t'
 " Plug 'othree/javascript-libraries-syntax.vim'
 " Plug 'jebaum/vim-tmuxify'
 
 call plug#end()
+
+" Make Vim respond faster to some stuff, e.g. vim-gitgutter load delay
+set updatetime=250
 
 let g:airline_theme='spacedust'
 
@@ -38,6 +43,31 @@ let mapleader = "\<space>"
 
 " Shortcut to rapidly toggle `set list`
 nmap <leader>l :set list!<CR>
+
+" Some experimental stuff for vim-gitgutter
+nmap <leader>gdargs :echo "gitgutter diff args: " . g:gitgutter_diff_args<CR>
+
+function! GitGutterToggleCached()
+  if g:gitgutter_diff_args =~ " --cached"
+    let g:gitgutter_diff_args = substitute(g:gitgutter_diff_args, " --cached", "", "")
+  else
+    let g:gitgutter_diff_args = g:gitgutter_diff_args . " --cached"
+  endif
+  :GitGutterAll
+endfunc
+
+nmap <leader>gdca :call GitGutterToggleCached()<CR>
+
+function! GitGutterToggleWhitespace()
+  if g:gitgutter_diff_args =~ " -w"
+    let g:gitgutter_diff_args = substitute(g:gitgutter_diff_args, " -w", "", "")
+  else
+    let g:gitgutter_diff_args = g:gitgutter_diff_args . " -w"
+  endif
+  :GitGutterAll
+endfunc
+
+nmap <leader>gdw :call GitGutterToggleWhitespace()<CR>
 
 " Shortcuts for ale to navigate between errors
 " ^k - go to previous error
@@ -82,6 +112,14 @@ endfunction
 " Bindings for fzf
 nmap <leader>f :Files<CR>
 nmap <leader>t :Tags<CR>
+" https://medium.com/@crashybang/supercharge-vim-with-fzf-and-ripgrep-d4661fc853d2
+" --column: Show column number
+" --line-number: Show line number
+" --no-heading: Do not show file headings in results
+" --hidden: Search hidden files and folders
+" --color: Search color options
+command! -bang -nargs=* Search call fzf#vim#grep('rg --column --line-number --no-heading --hidden --color "always" -e '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
+nmap <leader>s :Search<CR>
 
 " Bindings for goyo ("prose mode")
 nmap <leader>p :Goyo <bar> highlight StatusLineNC ctermfg=white<CR>
@@ -101,31 +139,15 @@ let g:airline_powerline_fonts = 1
 
 " Line numbers
 set number
-set relativenumber
+" set relativenumber
+" relativenumber slows down rendering, so we use lazyredraw to buffer redraws
+set lazyredraw
 
 " Show as much as possible of a wrapped last line
 set display=lastline
 
 " Wrap at word boundaries, not in the middle of words
 set linebreak
-
-" Linter settings
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_mode_map = { 'mode': 'passive' }
-let g:syntastic_ruby_checkers = ['rubocop']
-let g:syntastic_scss_checkers = ['scss_lint']
-let g:syntastic_slim_checkers = []
-" Disable Syntastic by default; do :call ActivateSyntastic() to enable. This is
-" a startup time optimisation. See
-" https://github.com/vim-syntastic/syntastic/issues/91#issuecomment-2888737
-" let g:pathogen_disabled = ['syntastic']
-" function! ActivateSyntastic() abort
-"   set rtp+=~/.vim/bundle/syntastic
-"   runtime plugin/syntastic.vim
-" endfunction
 
 " Trim trailing whitespace on write
 autocmd BufWritePre * %s/\s\+$//e
@@ -163,6 +185,18 @@ highligh ColorColumn ctermbg=0 guibg=lightgrey
 
 " Store swap files in a central location
 set directory^=$HOME/.vim/tmp//
+
+let g:nrrw_rgn_resize_window = 'relative'
+let g:nrrw_rgn_width = 100
+
+" <Leader>zz to keep cursor centred
+nnoremap <Leader>zz :let &scrolloff=999-&scrolloff<CR>
+
+" <Leader>u to show the undo viewer
+nnoremap <Leader>u :UndotreeToggle<CR>
+
+" <Leader>af to autoformat
+nnoremap <Leader>af :Autoformat<CR>
 
 " Detect & load changes to the file
 set autoread
