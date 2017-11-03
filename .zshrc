@@ -86,11 +86,14 @@ alias v='mvim -v'
 alias t='tree'
 alias tx='tmuxinator s'
 alias txe='tmuxinator new'
+alias ta='tmux a -t'
 # Shortcuts for elm.
 alias elmc='elm-repl'
 alias elmr='elm-reactor'
 alias elmm='elm-make'
 alias elmp='elm-package'
+
+alias s='source ~/.zshrc'
 
 # List folder contents after cd.
 cdl() { cd $1; la }

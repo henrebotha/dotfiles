@@ -28,6 +28,7 @@
 	b = branch
 	ba = branch -a
 	c = commit
+	cmsg = commit -m
 	co = checkout
 	l = log
 	lo = log --oneline --decorate
