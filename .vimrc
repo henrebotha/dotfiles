@@ -139,7 +139,7 @@ let g:airline_powerline_fonts = 1
 
 " Line numbers
 set number
-" set relativenumber
+set relativenumber
 " relativenumber slows down rendering, so we use lazyredraw to buffer redraws
 set lazyredraw
 
