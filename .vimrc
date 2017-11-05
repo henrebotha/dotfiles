@@ -3,6 +3,7 @@ filetype off                  " required
 
 call plug#begin()
 
+Plug 'elmcast/elm-vim'                    " Elm support & features. Must appear before polyglot
 Plug 'sheerun/vim-polyglot'               " Loads language packs on demand
 Plug 'vim-airline/vim-airline'            " Status line
 Plug 'chrisbra/NrrwRgn'                   " Emacs-style narrowing
@@ -22,13 +23,18 @@ Plug 'tpope/vim-endwise'                  " Auto-insert Ruby end, etc
 Plug 'tpope/vim-sleuth'                   " Auto-detect indentation
 Plug 'marcelbeumer/spacedust-airline.vim' " Spacedust!
 Plug 'mbbill/undotree'                    " Undo tree viewer
-Plug 'chiel92/vim-autoformat'             " Exactly what it says on the tin
+Plug 'chiel92/vim-autoformat'             " Automatically format various files
 Plug 'tpope/vim-ragtag'
 " Plug 'wincent/command-t'
 " Plug 'othree/javascript-libraries-syntax.vim'
 " Plug 'jebaum/vim-tmuxify'
 
 call plug#end()
+
+" Disable polyglot's built-in Elm
+let g:polyglot_disabled = ['elm']
+
+let g:elm_format_autosave = 1
 
 " Make Vim respond faster to some stuff, e.g. vim-gitgutter load delay
 set updatetime=250
@@ -85,6 +91,7 @@ let g:ale_linters = {
 \   'html': [],
 \   'scss': ['scsslint']
 \}
+let g:ale_set_highlights = 0
 
 " Use the same symbols as TextMate for tabstops and EOLs
 set listchars=tab:>\ ,eol:¬,space:-
