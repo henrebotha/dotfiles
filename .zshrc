@@ -146,4 +146,7 @@ replace() {
   done
 }
 
+# fzf keybinds/completion
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 source ~/.dev
