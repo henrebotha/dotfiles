@@ -20,6 +20,9 @@
 	unhide = update-index --no-skip-worktree
 	unhide-all = ! cd $(git rev-parse --show-toplevel || echo ".") && git hidden | xargs git unhide
 
+	# # Alternative to git status - also shows hidden files! Currently broken...
+	# s = ! sh -c 'git status $1' - && [ '$git hidden | wc -l' != '0' ] && echo '\n  Hidden files present!'
+
 	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
 
 	# Short aliases for simple commands, taken from the oh-my-zsh git plugin
