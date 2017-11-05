@@ -45,19 +45,19 @@ let g:airline_theme='spacedust'
 set rtp+=/usr/local/opt/fzf
 
 " Space leader is best leader
-let mapleader = "\<space>"
+let mapleader = '\<space>'
 
 " Shortcut to rapidly toggle `set list`
 nmap <leader>l :set list!<CR>
 
 " Some experimental stuff for vim-gitgutter
-nmap <leader>gdargs :echo "gitgutter diff args: " . g:gitgutter_diff_args<CR>
+nmap <leader>gdargs :echo 'gitgutter diff args: ' . g:gitgutter_diff_args<CR>
 
 function! GitGutterToggleCached()
-  if g:gitgutter_diff_args =~ " --cached"
-    let g:gitgutter_diff_args = substitute(g:gitgutter_diff_args, " --cached", "", "")
+  if g:gitgutter_diff_args =~ ' --cached'
+    let g:gitgutter_diff_args = substitute(g:gitgutter_diff_args, ' --cached', '', '')
   else
-    let g:gitgutter_diff_args = g:gitgutter_diff_args . " --cached"
+    let g:gitgutter_diff_args = g:gitgutter_diff_args . ' --cached'
   endif
   :GitGutterAll
 endfunc
@@ -65,10 +65,10 @@ endfunc
 nmap <leader>gdca :call GitGutterToggleCached()<CR>
 
 function! GitGutterToggleWhitespace()
-  if g:gitgutter_diff_args =~ " -w"
-    let g:gitgutter_diff_args = substitute(g:gitgutter_diff_args, " -w", "", "")
+  if g:gitgutter_diff_args =~ ' -w'
+    let g:gitgutter_diff_args = substitute(g:gitgutter_diff_args, ' -w', '', '')
   else
-    let g:gitgutter_diff_args = g:gitgutter_diff_args . " -w"
+    let g:gitgutter_diff_args = g:gitgutter_diff_args . ' -w'
   endif
   :GitGutterAll
 endfunc
@@ -107,7 +107,7 @@ map g/ <Plug>(incsearch-stay)
 " Use C-l to highlight the current cursor position
 nnoremap <C-l> :call HighlightNearCursor()<CR>
 function HighlightNearCursor()
-  if !exists("s:highlightcursor")
+  if !exists('s:highlightcursor')
     match Todo /\k*\%#\k*/
     let s:highlightcursor=1
   else
