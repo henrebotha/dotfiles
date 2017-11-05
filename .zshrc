@@ -59,6 +59,9 @@ source $ZSH/oh-my-zsh.sh
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 
+# Fix yarn binary issue https://github.com/yarnpkg/yarn/issues/648
+export PATH="$(yarn global bin):$PATH"
+
 # # zsh-autoenv
 # source ~/.dotfiles/lib/zsh-autoenv/autoenv.zsh
 
