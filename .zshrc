@@ -87,11 +87,41 @@ alias elmp='elm-package'
 
 alias s='source ~/.zshrc'
 
+# Enable Vi mode.
+bindkey -v
+
+bindkey '^P' up-history
+bindkey '^N' down-history
+
+# backspace and ^h working even after
+# returning from command mode
+bindkey '^?' backward-delete-char
+bindkey '^h' backward-delete-char
+
+# ctrl-r starts searching history backward
+bindkey '^r' history-incremental-search-backward
+# ctrl-s starts searching history backward
+bindkey '^s' history-incremental-search-forward
+
+# Default 0.4 second delay after ESC is too slow. Increase this value if this
+# breaks other commands that depend on the delay.
+export KEYTIMEOUT=1
+
+# Functionality for displaying normal mode indicator in Vi mode.
+function zle-line-init zle-keymap-select {
+    VIM_PROMPT="%{$fg[green]%} [% NORMAL]% %{$reset_color%}"
+    RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/}$EPS1"
+    zle reset-prompt
+}
+zle -N zle-line-init
+zle -N zle-keymap-select
+# End Vi mode functionality
+
 # List folder contents after cd.
 cdl() { cd $1; la }
+
 # A lovely script that watches files for changes and automatically commits them
 # to git. Nice to use for note-taking.
-
 autocommit() {
   # commit any changes since last run
   date +%Y-%m-%dT%H:%M:%S%z; git add $@; git commit -m "AUTOCOMMIT"; echo
