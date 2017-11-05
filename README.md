@@ -7,6 +7,7 @@ My various configs.
 1. Clone the repo by doing `git clone https://github.com/henrebotha/dotfiles`.
 2. Head to your home directory by doing `cd ~`.
 3. Make a symlink for each file by doing `ln -s ~/path/to/dotfiles/filename .filename` per file.
+  * `karabiner.json` is different - it goes in `~/.config/karabiner/karabiner.json`.
 
 ## What goes where?
 
