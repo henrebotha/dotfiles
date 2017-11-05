@@ -87,25 +87,20 @@ alias elmp='elm-package'
 
 alias s='source ~/.zshrc'
 
+# https://dougblack.io/words/zsh-vi-mode.html
 # Enable Vi mode.
 bindkey -v
 
 bindkey '^P' up-history
 bindkey '^N' down-history
-
-# backspace and ^h working even after
-# returning from command mode
 bindkey '^?' backward-delete-char
 bindkey '^h' backward-delete-char
-
-# ctrl-r starts searching history backward
 bindkey '^r' history-incremental-search-backward
-# ctrl-s starts searching history backward
 bindkey '^s' history-incremental-search-forward
 
-# Default 0.4 second delay after ESC is too slow. Increase this value if this
-# breaks other commands that depend on the delay.
-export KEYTIMEOUT=1
+# Default 400ms delay after ESC is too slow. Increase this value if this breaks
+# other commands that depend on the delay.
+export KEYTIMEOUT=1 # 100 ms
 
 # Functionality for displaying normal mode indicator in Vi mode.
 function zle-line-init zle-keymap-select {
