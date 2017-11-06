@@ -2,7 +2,7 @@ set nocompatible              " be iMproved, required
 filetype off                  " required
 
 " Space leader is best leader
-let mapleader = '\<space>'
+let mapleader = "\<space>"
 
 call plug#begin()
 
@@ -86,11 +86,11 @@ let g:ale_sign_column_always = 1
 let g:ale_lint_delay = 500
 " Only enable one JS linter... TODO: find a per-file solution
 let g:ale_linters = {
-\   'javascript': ['jshint'],
-\   'typescript': ['eslint'],
-\   'html': [],
-\   'scss': ['scsslint']
-\}
+      \   'javascript': ['jshint'],
+      \   'typescript': ['eslint'],
+      \   'html': [],
+      \   'scss': ['scsslint']
+      \}
 let g:ale_set_highlights = 0
 
 " Use the same symbols as TextMate for tabstops and EOLs
