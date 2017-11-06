@@ -33,6 +33,7 @@
 	c = commit
 	cmsg = commit -m
 	co = checkout
+	dca = diff --cached
 	l = log
 	lo = log --oneline --decorate
 	r = remote
