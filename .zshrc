@@ -60,7 +60,8 @@ export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 
 # Fix yarn binary issue https://github.com/yarnpkg/yarn/issues/648
-export PATH="$(yarn global bin):$PATH"
+# Do `yarn global bin` to get the path
+export PATH="/usr/local/Cellar/node/8.2.1/bin:$PATH"
 
 # # zsh-autoenv
 # source ~/.dotfiles/lib/zsh-autoenv/autoenv.zsh
