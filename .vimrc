@@ -106,7 +106,7 @@ map g/ <Plug>(incsearch-stay)
 
 " Use C-l to highlight the current cursor position
 nnoremap <C-l> :call HighlightNearCursor()<CR>
-function HighlightNearCursor()
+function! HighlightNearCursor()
   if !exists('s:highlightcursor')
     match Todo /\k*\%#\k*/
     let s:highlightcursor=1
