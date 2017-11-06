@@ -1,6 +1,9 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
+" Space leader is best leader
+let mapleader = '\<space>'
+
 call plug#begin()
 
 Plug 'elmcast/elm-vim'                    " Elm support & features. Must appear before polyglot
@@ -43,9 +46,6 @@ let g:airline_theme='spacedust'
 
 " Enable fzf
 set rtp+=/usr/local/opt/fzf
-
-" Space leader is best leader
-let mapleader = '\<space>'
 
 " Shortcut to rapidly toggle `set list`
 nmap <leader>l :set list!<CR>
