@@ -34,6 +34,7 @@ Plug 'tpope/vim-sleuth'                   " Auto-detect indentation
 Plug 'marcelbeumer/spacedust-airline.vim' " Spacedust!
 Plug 'mbbill/undotree'                    " Undo tree viewer
 Plug 'chiel92/vim-autoformat'             " Automatically format various files
+Plug 'AndrewRadev/splitjoin.vim'          " Transform between single- and multiline code
 Plug 'tpope/vim-ragtag'
 " Plug 'wincent/command-t'
 " Plug 'othree/javascript-libraries-syntax.vim'
