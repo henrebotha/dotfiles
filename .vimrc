@@ -130,6 +130,9 @@ nmap <leader>s :Search<CR>
 
 " Bindings for goyo ("prose mode")
 nmap <leader>p :Goyo <bar> highlight StatusLineNC ctermfg=white<CR>
+" Detect window resize with goyo active & maximize window size when it happens
+" Workaround for https://github.com/junegunn/goyo.vim/issues/159
+autocmd VimResized * if exists('#goyo') | exe "normal \<c-w>=" | endif
 
 " Use 2 spaces per tab
 set tabstop=2
