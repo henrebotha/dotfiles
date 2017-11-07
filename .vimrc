@@ -4,6 +4,13 @@ filetype off                  " required
 " Space leader is best leader
 let mapleader = "\<space>"
 
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall
+  autocmd VimEnter * close
+endif
+
 call plug#begin()
 
 Plug 'elmcast/elm-vim'                    " Elm support & features. Must appear before polyglot
