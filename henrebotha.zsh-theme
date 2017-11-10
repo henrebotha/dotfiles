@@ -11,12 +11,22 @@ zle -N zle-line-init
 zle -N zle-keymap-select
 # End Vi mode functionality
 
+# Detect git repo
+parse_git_branch() {
+  (git symbolic-ref -q HEAD || git name-rev --name-only --no-undefined --always HEAD) 2> /dev/null
+}
+# Print git info if we're in a repo
+git_string() {
+  local git_where="$(parse_git_branch)"
+  [ -n "$git_where" ] && echo "%{$fg[green]%}$(git_prompt_info)"
+}
+# End git functionality
+
 VIRTUAL_ENV_DISABLE_PROMPT=true
 
 local host_name="%{$fg[magenta]%}$(whoami)"
 local path_string="%{$fg[yellow]%}%~"
-local git_string="%{$fg[green]%}$(git_prompt_info)"
 local date_string="$(date '+%Y-%m-%d %H:%M:%S')"
 
-PROMPT='${date_string} ${host_name} ${path_string} ${git_string}
+PROMPT='${date_string} ${host_name} ${path_string} $(git_string)
 ${return_status} %{$reset_color%}'
