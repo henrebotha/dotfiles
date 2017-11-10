@@ -4,7 +4,8 @@ export ZSH=/Users/henrebotha/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="wild-cherry"
+# ZSH_THEME="wild-cherry"
+ZSH_THEME="henrebotha"
 
 # Uncomment the following line to use hyphen-insensitive completion. Case
 # sensitive completion must be off. _ and - will be interchangeable.
@@ -106,15 +107,15 @@ bindkey '^s' history-incremental-search-forward
 # other commands that depend on the delay.
 export KEYTIMEOUT=1 # 100 ms
 
-# Functionality for displaying normal mode indicator in Vi mode.
-function zle-line-init zle-keymap-select {
-    VIM_PROMPT="%{$fg[green]%} [% NORMAL]% %{$reset_color%}"
-    RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/}$EPS1"
-    zle reset-prompt
-}
-zle -N zle-line-init
-zle -N zle-keymap-select
-# End Vi mode functionality
+# # Functionality for displaying normal mode indicator in Vi mode.
+# function zle-line-init zle-keymap-select {
+#     VIM_PROMPT="%{$bg[blue]$fg[yellow]%}[% NORMAL]% %{$reset_color%}"
+#     RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/}$EPS1"
+#     zle reset-prompt
+# }
+# zle -N zle-line-init
+# zle -N zle-keymap-select
+# # End Vi mode functionality
 
 # List folder contents after cd.
 cdl() { cd $1; la }
