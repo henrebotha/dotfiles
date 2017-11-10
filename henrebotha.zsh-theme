@@ -15,6 +15,8 @@ VIRTUAL_ENV_DISABLE_PROMPT=true
 
 local host_name="%{$fg[magenta]%}$(whoami)"
 local path_string="%{$fg[yellow]%}%~"
+local git_string="%{$fg[green]%}branch foo"
+local date_string="$(date '+%Y-%m-%d %H:%M:%S')"
 
-PROMPT='${host_name} ${path_string}
+PROMPT='${date_string} ${host_name} ${path_string} ${git_string}
 ${return_status} %{$reset_color%}'
