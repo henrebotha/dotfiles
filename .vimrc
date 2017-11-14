@@ -35,6 +35,7 @@ Plug 'marcelbeumer/spacedust-airline.vim' " Spacedust!
 Plug 'mbbill/undotree'                    " Undo tree viewer
 Plug 'chiel92/vim-autoformat'             " Automatically format various files
 Plug 'AndrewRadev/splitjoin.vim'          " Transform between single- and multiline code
+Plug 'andymass/matchup.vim'               " Movement between matching if/ends etc
 Plug 'tpope/vim-ragtag'
 " Plug 'wincent/command-t'
 " Plug 'othree/javascript-libraries-syntax.vim'
