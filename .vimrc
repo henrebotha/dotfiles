@@ -219,3 +219,6 @@ nnoremap <Leader>af :Autoformat<CR>
 
 " Detect & load changes to the file
 set autoread
+
+" Enable bash-like command line completion
+set wildmode=list:longest,full
