@@ -18,7 +18,7 @@ parse_git_branch() {
 # Print git info if we're in a repo
 git_string() {
   local git_where="$(parse_git_branch)"
-  [ -n "$git_where" ] && echo "%{$fg[green]%}$(git_prompt_info)"
+  [ -n "$git_where" ] && echo "%{$fg[green]%}$(git_prompt_info) %{$fg[red]%}$(work_in_progress)"
 }
 # End git functionality
 
