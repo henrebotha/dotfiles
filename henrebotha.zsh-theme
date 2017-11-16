@@ -34,3 +34,6 @@ precmd() {
 }
 
 PROMPT='${return_status} %{$reset_color%}'
+
+# Override oh-my-zsh vi-mode plugin prompt
+RPS1=''
