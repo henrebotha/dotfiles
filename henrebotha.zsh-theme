@@ -25,12 +25,12 @@ git_string() {
 VIRTUAL_ENV_DISABLE_PROMPT=true
 
 # http://web.cs.elte.hu/zsh-manual/zsh_15.html#SEC53 search for PS1
-local host_name="%{$fg[magenta]%}$(whoami)"
+local username="%{$fg[magenta]%}%n"
 local path_string="%{$fg[yellow]%}%3c"
 local date_string="%D{%Y-%m-%d %H:%M:%S}"
 
 precmd() {
-  print -rP '${date_string} ${host_name} ${path_string} $(git_string)'
+  print -rP '${date_string} ${username} ${path_string} $(git_string)'
 }
 
 PROMPT='${return_status} %{$reset_color%}'
