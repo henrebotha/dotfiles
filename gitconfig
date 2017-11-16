@@ -4,7 +4,7 @@
 	compression = 0
 	autocrlf = input
 	excludesfile = /Users/henrebotha/.gitignore_global
-	editor = vim
+	editor = mvim -v
 [user]
 	name = Henré Botha
 	email = henrebotha@gmail.com
