@@ -116,7 +116,7 @@ replace() {
 # zsh-async
 # Installation
 if [[ ! -a ~/.zsh-async ]]; then
-  git clone -b 'v1.5.2' https://github.com/mafredri/zsh-async ~/.zsh-async
+  git clone -b 'v1.5.2' git@github.com:mafredri/zsh-async ~/.zsh-async
 fi
 source ~/.zsh-async/async.zsh
 
