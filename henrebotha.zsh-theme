@@ -18,22 +18,32 @@ parse_git_branch() {
 # Print git info if we're in a repo
 git_string() {
   local git_where="$(parse_git_branch)"
-  [ -n "$git_where" ] && echo "%{$fg[green]%}$(git_prompt_info) %{$fg[red]%}$(work_in_progress)"
+  [ -n "$git_where" ] && echo "%{$fg[green]%}$(git_prompt_info) %{$fg[red]%}$(work_in_progress) "
 }
 # End git functionality
+
+vagrant_string() {
+  echo "%{$fg_bold[white]%}$H_PROMPT_VAGRANT_UP"
+}
 
 VIRTUAL_ENV_DISABLE_PROMPT=true
 
 # http://web.cs.elte.hu/zsh-manual/zsh_15.html#SEC53 search for PS1
 local username="%{$fg[magenta]%}%n"
 local path_string="%{$fg[yellow]%}%3c"
-local date_string="%D{%Y-%m-%d %H:%M:%S}"
+local date_string=$(date +'%Y-%m-%d %H:%M:%S')
 
 precmd() {
-  print -rP '${date_string} ${username} ${path_string} $(git_string)'
+  # We do it here so that it _doesn't_ update on zle reset-prompt
+  date_string=$(date +'%Y-%m-%d %H:%M:%S')
 }
 
-PROMPT='${return_status} %{$reset_color%}'
+TMOUT=1
+TRAPALRM() { zle reset-prompt }
+
+# We keep the prompt as a single var, so that reset-prompt redraws the whole thing
+PROMPT='${date_string} ${username} ${path_string} $(git_string)$(vagrant_string)%{$reset_color%}
+${return_status} %{$reset_color%}'
 
 # Override oh-my-zsh vi-mode plugin prompt
 RPS1=''

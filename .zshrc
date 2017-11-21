@@ -113,4 +113,35 @@ replace() {
 # fzf keybinds/completion
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# zsh-async
+# Installation
+if [[ ! -a ~/.zsh-async ]]; then
+  git clone -b 'v1.5.2' https://github.com/mafredri/zsh-async ~/.zsh-async
+fi
+source ~/.zsh-async/async.zsh
+
+vagrant_status() {
+  VAGRANT_CWD=$1 vagrant status
+}
+
+# Configuration
+async_init
+
+async_start_worker my_worker -n
+
+completed_callback() {
+  local output=$@
+  if [[ $output =~ 'running' ]]; then
+    H_PROMPT_VAGRANT_UP='v↑'
+  else
+    H_PROMPT_VAGRANT_UP=''
+  fi
+  async_job my_worker vagrant_status $(pwd)
+}
+
+async_register_callback my_worker completed_callback
+
+async_job my_worker vagrant_status $(pwd)
+# end zsh-async
+
 source ~/.dev
