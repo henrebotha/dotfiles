@@ -127,21 +127,21 @@ vagrant_status() {
 # Configuration
 async_init
 
-async_start_worker my_worker -n
+async_start_worker vagrant_prompt_worker -n
 
-completed_callback() {
+vagrant_prompt_callback() {
   local output=$@
   if [[ $output =~ 'running' ]]; then
     H_PROMPT_VAGRANT_UP='v↑'
   else
     H_PROMPT_VAGRANT_UP=''
   fi
-  async_job my_worker vagrant_status $(pwd)
+  async_job vagrant_prompt_worker vagrant_status $(pwd)
 }
 
-async_register_callback my_worker completed_callback
+async_register_callback vagrant_prompt_worker vagrant_prompt_callback
 
-async_job my_worker vagrant_status $(pwd)
+async_job vagrant_prompt_worker vagrant_status $(pwd)
 # end zsh-async
 
 source ~/.dev
