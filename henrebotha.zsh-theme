@@ -18,12 +18,19 @@ parse_git_branch() {
 # Print git info if we're in a repo
 git_string() {
   local git_where="$(parse_git_branch)"
-  [ -n "$git_where" ] && echo "%{$fg[green]%}$(git_prompt_info) %{$fg[red]%}$(work_in_progress) "
+  if [[ ! -n "$git_where" ]]; then
+    return
+  fi
+  local g_str="%{$fg[green]%}$(git_prompt_info) "
+  if [[ work_in_progress ]]; then
+    g_str+="%{$fg[red]%}$(work_in_progress) "
+  fi
+  echo $g_str
 }
 # End git functionality
 
 vagrant_string() {
-  echo "%{$fg_bold[white]%}$H_PROMPT_VAGRANT_UP"
+  echo "%{$fg_bold[white]%}$H_PROMPT_VAGRANT_UP "
 }
 
 VIRTUAL_ENV_DISABLE_PROMPT=true
