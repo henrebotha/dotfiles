@@ -16,6 +16,9 @@ parse_git_branch() {
   (git symbolic-ref -q HEAD || git name-rev --name-only --no-undefined --always HEAD) 2> /dev/null
 }
 # Print git info if we're in a repo
+ZSH_THEME_GIT_PROMPT_PREFIX=''
+ZSH_THEME_GIT_PROMPT_SUFFIX=''
+ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[blue]%}*"
 git_string() {
   local git_where="$(parse_git_branch)"
   if [[ ! -n "$git_where" ]]; then
