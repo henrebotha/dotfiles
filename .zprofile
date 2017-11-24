@@ -1,5 +1,4 @@
 # exports should go in this file, not .zshrc
-export ZSH=/Users/henrebotha/.oh-my-zsh
 
 # This must happen before zsh-nvm is loaded.
 export NVM_LAZY_LOAD=true
