@@ -42,11 +42,15 @@ alias ghidden='git ls-files -v . | grep ^S'
 alias emacs="/usr/local/Cellar/emacs-plus/25.1/Emacs.app/Contents/MacOS/Emacs -nw"
 alias vim="mvim -v"
 alias v='mvim -v'
+
 alias t='tree'
+
 alias tx='tmuxinator s'
 alias txe='tmuxinator new'
 alias ta='tmux a -t'
-# Shortcuts for elm.
+alias tai='tmux new-session -t' # mnemonic: "tmux attach independent"
+alias tl='tmux ls'
+
 alias elmc='elm-repl'
 alias elmr='elm-reactor'
 alias elmm='elm-make'
