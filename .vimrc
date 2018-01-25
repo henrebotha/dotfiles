@@ -22,20 +22,24 @@ Plug 'w0rp/ale'                           " Async linter
 Plug 'haya14busa/incsearch.vim'           " Highlight incremental search results
 Plug 'junegunn/vim-easy-align'            " Align things, easily
 Plug 'ervandew/supertab'                  " Tab completion
-Plug 'gregsexton/MatchTag'                " Highlight matching XML tag
+" Plug 'gregsexton/MatchTag'                " Highlight matching XML tag
 Plug 'airblade/vim-gitgutter'             " Show git status in gutter, async
-Plug 'junegunn/fzf.vim'                   " Fast fuzzy finder
+Plug 'junegunn/fzf.vim', { 'do': './install --bin' }
+                                          " Fast fuzzy finder
 Plug 'junegunn/goyo.vim'                  " Distraction-free mode
 Plug 'tpope/vim-unimpaired'               " Pairwise commands
 Plug 'joker1007/vim-ruby-heredoc-syntax'  " Highlighting heredocs in Ruby
 Plug 'tpope/vim-commentary'               " Toggle comments
 Plug 'tpope/vim-endwise'                  " Auto-insert Ruby end, etc
 Plug 'tpope/vim-sleuth'                   " Auto-detect indentation
+Plug 'mhallendal/spacedust-theme'         " Spacedust!
 Plug 'marcelbeumer/spacedust-airline.vim' " Spacedust!
 Plug 'mbbill/undotree'                    " Undo tree viewer
 Plug 'chiel92/vim-autoformat'             " Automatically format various files
 Plug 'AndrewRadev/splitjoin.vim'          " Transform between single- and multiline code
 Plug 'andymass/matchup.vim'               " Movement between matching if/ends etc
+Plug 'zyedidia/literate.vim'              " Syntax support for Literate
+Plug 'scrooloose/nerdtree'                " Tree browser
 Plug 'tpope/vim-ragtag'
 " Plug 'wincent/command-t'
 " Plug 'othree/javascript-libraries-syntax.vim'
@@ -226,3 +230,12 @@ set autoread
 
 " Enable bash-like command line completion
 set wildmode=list:longest,full
+
+nnoremap <Leader>tree :NERDTree<CR>
+
+" ------------------------
+" Abbreviations & snippets
+" ------------------------
+
+" Type <// to auto-close XML tags
+iabbrev <// </<C-x><C-o>
