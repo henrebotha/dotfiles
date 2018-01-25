@@ -89,7 +89,7 @@ nmap <leader>gdw :call GitGutterToggleWhitespace()<CR>
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 " ^j - go to next error
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
-" Keep gutter open at all times
+" Keep gutter open at all times. Causes flickering when toggling Goyo
 let g:ale_sign_column_always = 1
 " Slow it down a little
 let g:ale_lint_delay = 500
@@ -141,7 +141,10 @@ nmap <leader>s :Search<CR>
 nmap <leader>p :Goyo <bar> highlight StatusLineNC ctermfg=white<CR>
 " Detect window resize with goyo active & maximize window size when it happens
 " Workaround for https://github.com/junegunn/goyo.vim/issues/159
-autocmd VimResized * if exists('#goyo') | exe "normal \<c-w>=" | endif
+augroup goyohacks
+  autocmd!
+  autocmd VimResized * if exists('#goyo') | exe "normal \<c-w>=" | endif
+augroup END
 
 " Use 2 spaces per tab
 set tabstop=2
