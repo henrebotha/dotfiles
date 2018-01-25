@@ -204,7 +204,7 @@ set showcmd
 
 " Show a ruler for column width
 set colorcolumn=80
-highligh ColorColumn ctermbg=0 guibg=lightgrey
+highlight ColorColumn ctermbg=0 guibg=lightgrey
 
 " Store swap files in a central location
 set directory^=$HOME/.vim/tmp//
