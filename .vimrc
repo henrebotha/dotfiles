@@ -175,6 +175,7 @@ set linebreak
 autocmd BufWritePre * %s/\s\+$//e
 
 " Persist undo state across sessions
+silent !mkdir $HOME/.vim/undo 2>/dev/null
 set undofile
 set undodir=$HOME/.vim/undo
 set undolevels=1000
