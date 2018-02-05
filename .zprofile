@@ -1,4 +1,6 @@
 # exports should go in this file, not .zshrc
+export PATH="/usr/local/sbin:$PATH"
+export PATH="/opt/local/bin:$PATH"
 
 # This must happen before zsh-nvm is loaded.
 export NVM_LAZY_LOAD=true

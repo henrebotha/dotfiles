@@ -5,14 +5,14 @@ COMPLETION_WAITING_DOTS="true"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
-plugins=(git osx zsh-nvm vi-mode)
+plugins=(git osx zsh-nvm vi-mode virtualbox mvn)
 
 # User configuration
 
 # export PATH="/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
 # export MANPATH="/usr/local/man:$MANPATH"
 
-source $ZSH/oh-my-zsh.sh
+. $ZSH/oh-my-zsh.sh
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -27,7 +27,7 @@ eval "$(rbenv init -)"
 export PATH="/usr/local/Cellar/node/8.2.1/bin:$PATH"
 
 # # zsh-autoenv
-# source ~/.dotfiles/lib/zsh-autoenv/autoenv.zsh
+# . ~/.dotfiles/lib/zsh-autoenv/autoenv.zsh
 
 # Shortcut for finding aliases.
 alias cmd='alias | grep '
@@ -43,20 +43,42 @@ alias emacs="/usr/local/Cellar/emacs-plus/25.1/Emacs.app/Contents/MacOS/Emacs -n
 alias vim="mvim -v"
 alias v='mvim -v'
 
-alias t='tree'
+alias t='tree -L'
 
 alias tx='tmuxinator s'
 alias txe='tmuxinator new'
 alias ta='tmux a -t'
 alias tai='tmux new-session -t' # mnemonic: "tmux attach independent"
+alias tk='tmux kill-session -t'
 alias tl='tmux ls'
+alias tn='tmux new-session -s'
 
 alias elmc='elm-repl'
 alias elmr='elm-reactor'
 alias elmm='elm-make'
 alias elmp='elm-package'
 
-alias s='source ~/.zshrc'
+alias mvnq='mvn -q'
+
+alias s='. ~/.zshrc'
+
+alias swine='/Applications/Wine\ Staging.app/Contents/Resources/wine/bin/wine'
+alias swine64='/Applications/Wine\ Staging.app/Contents/Resources/wine/bin/wine64'
+alias swineboot='/Applications/Wine\ Staging.app/Contents/Resources/wine/bin/wineboot'
+# alias swinebuild='winebuild'
+alias swinecfg='/Applications/Wine\ Staging.app/Contents/Resources/wine/bin/winecfg'
+alias swineconsole='/Applications/Wine\ Staging.app/Contents/Resources/wine/bin/wineconsole'
+# alias swinecpp='winecpp'
+alias swinedbg='/Applications/Wine\ Staging.app/Contents/Resources/wine/bin/winedbg'
+# alias swinedump='winedump'
+alias swinefile='/Applications/Wine\ Staging.app/Contents/Resources/wine/bin/winefile'
+# alias swineg++='wineg++'
+# alias swinegcc='winegcc'
+# alias swinemaker='winemaker'
+alias swinemine='/Applications/Wine\ Staging.app/Contents/Resources/wine/bin/winemine'
+alias swinepath='/Applications/Wine\ Staging.app/Contents/Resources/wine/bin/winepath'
+alias swineserver='/Applications/Wine\ Staging.app/Contents/Resources/wine/bin/wineserver'
+# alias swinetricks='winetricks'
 
 # https://dougblack.io/words/zsh-vi-mode.html
 # Enable Vi mode.
@@ -126,37 +148,37 @@ command_not_found_handler() {
 }
 
 # fzf keybinds/completion
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ~/.fzf.zsh ] && . ~/.fzf.zsh
 
-# zsh-async
-# Installation
-if [[ ! -a ~/.zsh-async ]]; then
-  git clone -b 'v1.5.2' git@github.com:mafredri/zsh-async ~/.zsh-async
-fi
-source ~/.zsh-async/async.zsh
+# # zsh-async
+# # Installation
+# if [[ ! -a ~/.zsh-async ]]; then
+#   git clone -b 'v1.5.2' https://github.com/mafredri/zsh-async ~/.zsh-async
+# fi
+# . ~/.zsh-async/async.zsh
 
-vagrant_status() {
-  VAGRANT_CWD=$1 vagrant status
-}
+# vagrant_status() {
+#   VAGRANT_CWD=$1 vagrant status
+# }
 
-# Configuration
-async_init
+# # Configuration
+# async_init
 
-async_start_worker vagrant_prompt_worker -n
+# async_start_worker vagrant_prompt_worker -n
 
-vagrant_prompt_callback() {
-  local output=$@
-  if [[ $output =~ 'running' ]]; then
-    H_PROMPT_VAGRANT_UP='v↑'
-  else
-    H_PROMPT_VAGRANT_UP=''
-  fi
-  async_job vagrant_prompt_worker vagrant_status $(pwd)
-}
+# vagrant_prompt_callback() {
+#   local output=$@
+#   if [[ $output =~ 'running' ]]; then
+#     H_PROMPT_VAGRANT_UP='v↑'
+#   else
+#     H_PROMPT_VAGRANT_UP=''
+#   fi
+#   async_job vagrant_prompt_worker vagrant_status $(pwd)
+# }
 
-async_register_callback vagrant_prompt_worker vagrant_prompt_callback
+# async_register_callback vagrant_prompt_worker vagrant_prompt_callback
 
-async_job vagrant_prompt_worker vagrant_status $(pwd)
-# end zsh-async
+# async_job vagrant_prompt_worker vagrant_status $(pwd)
+# # end zsh-async
 
-source ~/.dev
+. ~/.dev

@@ -5,6 +5,7 @@
 	autocrlf = input
 	excludesfile = /Users/henrebotha/.gitignore_global
 	editor = mvim -v
+	pager = less -x1,3
 [user]
 	name = Henré Botha
 	email = henrebotha@gmail.com
