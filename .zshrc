@@ -114,6 +114,17 @@ replace() {
   done
 }
 
+# Whenever a command is not found, prompt the user to install it via homebrew.
+# command_not_found_handler is a built-in Zsh hook, called automatically.
+command_not_found_handler() {
+  echo "Command $1 not found. Type y to install using homebrew."
+  read -sk answer
+  if [[ $answer = "y" || $answer = "Y" ]]; then
+    echo "brew install $1"
+    brew install "$1"
+  fi
+}
+
 # fzf keybinds/completion
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
