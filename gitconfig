@@ -26,6 +26,9 @@
 
 	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
 
+	# Safer alternative to --force
+	pf = push --force-with-lease
+
 	# Short aliases for simple commands, taken from the oh-my-zsh git plugin
 	a = add
 	apa = add --patch
@@ -35,6 +38,7 @@
 	cmsg = commit -m
 	co = checkout
 	dca = diff --cached
+	fa = fetch --all --prune
 	l = log
 	lo = log --oneline --decorate
 	r = remote
