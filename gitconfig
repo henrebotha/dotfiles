@@ -47,3 +47,5 @@
 	rrm = remote remove
 	rv = remote -v
 	st = status
+[push]
+	default = current
