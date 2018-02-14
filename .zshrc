@@ -5,7 +5,7 @@ COMPLETION_WAITING_DOTS="true"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
-plugins=(git osx zsh-nvm vi-mode virtualbox mvn)
+plugins=(git osx zsh-nvm vi-mode virtualbox mvn docker)
 
 # User configuration
 
