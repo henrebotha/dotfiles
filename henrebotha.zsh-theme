@@ -33,7 +33,7 @@ git_string() {
 # End git functionality
 
 vagrant_string() {
-  echo "%{$fg_bold[white]%}$H_PROMPT_VAGRANT_UP "
+  # echo "%{$fg_bold[white]%}$H_PROMPT_VAGRANT_UP "
 }
 
 VIRTUAL_ENV_DISABLE_PROMPT=true
@@ -48,8 +48,8 @@ precmd() {
   date_string=$(date +'%Y-%m-%d %H:%M:%S')
 }
 
-TMOUT=1
-TRAPALRM() { zle reset-prompt }
+# TMOUT=1
+# TRAPALRM() { zle reset-prompt }
 
 # We keep the prompt as a single var, so that reset-prompt redraws the whole thing
 PROMPT='${date_string} ${username} ${path_string} $(git_string)$(vagrant_string)%{$reset_color%}
