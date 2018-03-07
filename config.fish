@@ -1,6 +1,45 @@
 set fish_greeting "Welcome back, Commander."
 set fish_term24bit 0
 
+function prompt_pwd --description 'Display at most the last 3 dirs of the pwd'
+  set trunc (pwd | sed 's/^\///' | rev | cut -d/ -f1-3 | rev)
+  if test (pwd | grep -o '/' | wc -l) -gt 3
+    echo (set_color green)"…"(set_color yellow)"/$trunc"
+  else
+    echo (set_color yellow)"/$trunc"
+  end
+end
+
+function fish_prompt --description 'Write out the prompt'
+  set -l date_string (date +'%Y-%m-%d %H:%M:%S')
+  set -l git_string (
+    if git -C . rev-parse ^ /dev/null; and git rev-parse --abbrev-ref HEAD > /dev/null ^ /dev/null
+      git rev-parse --abbrev-ref HEAD
+    else
+      echo ""
+    end
+  )
+  set -l username (whoami)
+  set -l prompt_char "»"
+  set -l last_status $status
+  # TODO: this function doesn't work
+  function set_prompt_color
+    set_color cyan
+    # if test $last_status -eq 0
+    #   set_color cyan
+    # else
+    #   set_color red
+    # end
+  end
+  echo "$date_string "(set_color magenta)"$username "(set_color normal)(prompt_pwd)(set_color green)" $git_string " (set_color normal) "
+"(set_prompt_color)"$prompt_char "(set_color normal)
+end
+
+# Workaround for multiline prompt issues: https://github.com/fish-shell/fish-shell/issues/3481
+function fish_vi_cursor; end
+
+set -g EDITOR "mvim -v"
+
 # Enable rbenv
 # https://github.com/rbenv/rbenv/issues/195#issuecomment-6168636
 set PATH $PATH $HOME/.rbenv/bin
@@ -61,13 +100,18 @@ function swinepath; /Applications/Wine\ Staging.app/Contents/Resources/wine/bin/
 function swineserver; /Applications/Wine\ Staging.app/Contents/Resources/wine/bin/wineserver $argv; end
 # function swinetricks; winetricks $argv; end
 
-function hybrid_bindings --description "Vi-style bindings that inherit emacs-style bindings in all modes"
-  for mode in default insert visual
-    fish_default_key_bindings -M $mode
-  end
-  fish_vi_key_bindings --no-erase
-end
-set -g fish_key_bindings hybrid_bindings
+# function hybrid_bindings --description "Vi-style bindings that inherit emacs-style bindings in all modes"
+#   for mode in default insert visual
+#     fish_default_key_bindings -M $mode
+#   end
+#   fish_vi_key_bindings --no-erase
+# end
+# set -g fish_key_bindings hybrid_bindings
+# https://fedragon.github.io/vimode-fishshell-osx/
+set -g fish_key_bindings fish_vi_key_bindings
+
+# Prevent reading fast Esc > B as Esc+B
+set fish_escape_delay_ms 10
 
 function cdl --description "List folder contents after cd"
   cd $argv
