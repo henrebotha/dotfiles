@@ -13,10 +13,17 @@ endif
 
 call plug#begin()
 
-Plug 'elmcast/elm-vim'                    " Elm support & features. Must appear before polyglot
-Plug 'sheerun/vim-polyglot'               " Loads language packs on demand
+Plug 'elmcast/elm-vim'                    " Language pack for Elm
+Plug 'henrebotha/kotlin-vim', { 'commit': '8905918' }
+                                          " Language pack for Kotlin with fix
+                                          " for comment syntax
+Plug 'henrebotha/vim-protobuf'            " Language pack for Protobuf
+Plug 'sheerun/vim-polyglot'               " Loads language packs on demand. Put
+                                          " overriding language packs before this one
 Plug 'vim-airline/vim-airline'            " Status line
-Plug 'chrisbra/NrrwRgn'                   " Emacs-style narrowing
+Plug 'chrisbra/NrrwRgn', { 'on': ['NR', 'NrrwRgn'] }
+                                          " Emacs-style narrowing
+let g:airline#extensions#nrrwrgn#enabled = 0
 Plug 'tpope/vim-surround'                 " Adds commands for surrounding chars
 Plug 'w0rp/ale'                           " Async linter
 Plug 'haya14busa/incsearch.vim'           " Highlight incremental search results
@@ -39,7 +46,8 @@ Plug 'chiel92/vim-autoformat'             " Automatically format various files
 Plug 'AndrewRadev/splitjoin.vim'          " Transform between single- and multiline code
 Plug 'andymass/matchup.vim'               " Movement between matching if/ends etc
 Plug 'zyedidia/literate.vim'              " Syntax support for Literate
-Plug 'scrooloose/nerdtree'                " Tree browser
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+                                          " Tree browser
 Plug 'tpope/vim-ragtag'
 " Plug 'wincent/command-t'
 " Plug 'othree/javascript-libraries-syntax.vim'
@@ -56,6 +64,11 @@ let g:elm_format_autosave = 1
 set updatetime=250
 
 let g:airline_theme='spacedust'
+" Fix vimdiff colours to be not so eye-bleeding. Ugly, but better
+hi DiffAdd term=underline cterm=underline ctermfg=4 ctermbg=NONE
+hi DiffChange term=underline cterm=underline ctermfg=5 ctermbg=NONE
+hi DiffDelete term=underline cterm=underline ctermfg=6 ctermbg=NONE
+hi DiffText term=underline cterm=underline ctermfg=9 ctermbg=NONE
 
 " Enable fzf
 set rtp+=/usr/local/opt/fzf
@@ -179,9 +192,13 @@ set linebreak
 autocmd BufWritePre * %s/\s\+$//e
 
 " Persist undo state across sessions
-silent !mkdir $HOME/.vim/undo 2>/dev/null
+" https://www.reddit.com/r/vim/comments/2ib9au/why_does_exiting_vim_make_the_next_prompt_appear/cl0zb7m/
+let s:vim_cache = expand("$HOME/.vim/undo")
+if filewritable(s:vim_cache) == 0 && exists("*mkdir")
+  call mkdir(s:vim_cache, "p", 0700)
+endif
 set undofile
-set undodir=$HOME/.vim/undo
+let &undodir=s:vim_cache
 set undolevels=1000
 set undoreload=10000
 
@@ -233,9 +250,19 @@ set wildmode=list:longest,full
 
 nnoremap <Leader>tree :NERDTree<CR>
 
+" ------------
+" Text objects
+" ------------
+
+" Slashes
+onoremap <silent> a/ :<C-U>normal! F/vf/<CR>
+xnoremap <silent> a/ :<C-U>normal! F/vf/<CR>
+onoremap <silent> i/ :<C-U>normal! T/vt/<CR>
+xnoremap <silent> i/ :<C-U>normal! T/vt/<CR>
+
 " ------------------------
 " Abbreviations & snippets
 " ------------------------
 
 " Type <// to auto-close XML tags
-iabbrev <// </<C-x><C-o>
+inoremap <// </<C-x><C-o>
