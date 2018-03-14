@@ -40,7 +40,7 @@ VIRTUAL_ENV_DISABLE_PROMPT=true
 
 # http://web.cs.elte.hu/zsh-manual/zsh_15.html#SEC53 search for PS1
 local username="%{$fg[magenta]%}%n"
-local path_string="%{$fg[yellow]%}%3c"
+local path_string="%3(c|%{$fg[green]%}…%{$fg[yellow]%}/|)%{$fg[yellow]%}%3C"
 local date_string=$(date +'%Y-%m-%d %H:%M:%S')
 
 precmd() {
