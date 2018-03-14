@@ -187,4 +187,7 @@ command_not_found_handler() {
 # async_job vagrant_prompt_worker vagrant_status $(pwd)
 # # end zsh-async
 
+# autojump
+[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+
 . ~/.dev
