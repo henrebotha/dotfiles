@@ -20,6 +20,11 @@ Plug 'henrebotha/kotlin-vim', { 'commit': '8905918' }
 Plug 'henrebotha/vim-protobuf'            " Language pack for Protobuf
 Plug 'sheerun/vim-polyglot'               " Loads language packs on demand. Put
                                           " overriding language packs before this one
+Plug 'autozimu/LanguageClient-neovim', {
+  \ 'branch': 'next',
+  \ 'do': 'bash install.sh',
+  \ }
+Plug 'reasonml-editor/vim-reason-plus'    " Language pack for Reason
 Plug 'vim-airline/vim-airline'            " Status line
 Plug 'chrisbra/NrrwRgn', { 'on': ['NR', 'NrrwRgn'] }
                                           " Emacs-style narrowing
@@ -55,8 +60,14 @@ Plug 'tpope/vim-ragtag'
 
 call plug#end()
 
+" Configure language client for reason
+let g:LanguageClient_serverCommands = {
+    \ 'reason': ['ocaml-language-server', '--stdio'],
+    \ 'ocaml': ['ocaml-language-server', '--stdio'],
+    \ }
+
 " Disable polyglot's built-in Elm
-let g:polyglot_disabled = ['elm']
+let g:polyglot_disabled = ['elm', 'ocaml']
 
 let g:elm_format_autosave = 1
 
