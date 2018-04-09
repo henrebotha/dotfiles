@@ -53,6 +53,7 @@ Plug 'andymass/matchup.vim'               " Movement between matching if/ends et
 Plug 'zyedidia/literate.vim'              " Syntax support for Literate
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
                                           " Tree browser
+Plug 'tpope/vim-repeat'                   " Allow plugins to specify custom repeat actions
 Plug 'tpope/vim-ragtag'
 " Plug 'wincent/command-t'
 " Plug 'othree/javascript-libraries-syntax.vim'
