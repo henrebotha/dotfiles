@@ -5,7 +5,14 @@
 	autocrlf = input
 	excludesfile = /Users/henrebotha/.gitignore_global
 	editor = mvim -v
-	pager = less -x1,3
+	; view: vim -R (read only mode, in other words)
+	; -n:   don't use a swap file
+	; -c:   run command on start, after autocmd/modeline
+	pager = view - -n -c 'set filetype=git nowrap noro'
+[color]
+	; Vim can syntax highlight just fine on its own, and doesn't understand colour
+	; codes, so we disable the colouring when using a pager
+	pager = false
 [user]
 	name = Henré Botha
 	email = henrebotha@gmail.com
