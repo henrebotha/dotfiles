@@ -11,6 +11,10 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * close
 endif
 
+" TODO: Rework this. Detect whether we're launching as read-only. If so, set
+" all plugins to load on demand, in case we open a file in write mode during
+" the session.
+
 call plug#begin()
 
 Plug 'elmcast/elm-vim'                    " Language pack for Elm
@@ -30,34 +34,37 @@ Plug 'chrisbra/NrrwRgn', { 'on': ['NR', 'NrrwRgn'] }
                                           " Emacs-style narrowing
 let g:airline#extensions#nrrwrgn#enabled = 0
 Plug 'tpope/vim-surround'                 " Adds commands for surrounding chars
-Plug 'w0rp/ale'                           " Async linter
+Plug 'wellle/targets.vim'                 " More text objects
 Plug 'haya14busa/incsearch.vim'           " Highlight incremental search results
-Plug 'junegunn/vim-easy-align'            " Align things, easily
-Plug 'ervandew/supertab'                  " Tab completion
-" Plug 'gregsexton/MatchTag'                " Highlight matching XML tag
 Plug 'airblade/vim-gitgutter'             " Show git status in gutter, async
-Plug 'junegunn/fzf.vim', { 'do': './install --bin' }
-                                          " Fast fuzzy finder
 Plug 'junegunn/goyo.vim'                  " Distraction-free mode
 Plug 'tpope/vim-unimpaired'               " Pairwise commands
 Plug 'joker1007/vim-ruby-heredoc-syntax'  " Highlighting heredocs in Ruby
-Plug 'tpope/vim-commentary'               " Toggle comments
-Plug 'tpope/vim-endwise'                  " Auto-insert Ruby end, etc
-Plug 'tpope/vim-sleuth'                   " Auto-detect indentation
 Plug 'mhallendal/spacedust-theme'         " Spacedust!
 Plug 'marcelbeumer/spacedust-airline.vim' " Spacedust!
-Plug 'mbbill/undotree'                    " Undo tree viewer
-Plug 'chiel92/vim-autoformat'             " Automatically format various files
-Plug 'AndrewRadev/splitjoin.vim'          " Transform between single- and multiline code
 Plug 'andymass/matchup.vim'               " Movement between matching if/ends etc
 Plug 'zyedidia/literate.vim'              " Syntax support for Literate
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-                                          " Tree browser
-Plug 'tpope/vim-repeat'                   " Allow plugins to specify custom repeat actions
-Plug 'tpope/vim-ragtag'
-" Plug 'wincent/command-t'
-" Plug 'othree/javascript-libraries-syntax.vim'
-" Plug 'jebaum/vim-tmuxify'
+Plug 'junegunn/fzf.vim', { 'do': './install --bin' }
+                                          " Fast fuzzy finder
+if v:progname !=? 'view'
+  Plug 'w0rp/ale'                           " Async linter
+  Plug 'junegunn/vim-easy-align'            " Align things, easily
+  Plug 'ervandew/supertab'                  " Tab completion
+  " Plug 'gregsexton/MatchTag'                " Highlight matching XML tag
+  Plug 'tpope/vim-commentary'               " Toggle comments
+  Plug 'tpope/vim-endwise'                  " Auto-insert Ruby end, etc
+  Plug 'tpope/vim-sleuth'                   " Auto-detect indentation
+  Plug 'mbbill/undotree'                    " Undo tree viewer
+  Plug 'chiel92/vim-autoformat'             " Automatically format various files
+  Plug 'AndrewRadev/splitjoin.vim'          " Transform between single- and multiline code
+  Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+                                            " Tree browser
+  Plug 'tpope/vim-repeat'                   " Allow plugins to specify custom repeat actions
+  Plug 'tpope/vim-ragtag'
+  " Plug 'wincent/command-t'
+  " Plug 'othree/javascript-libraries-syntax.vim'
+  " Plug 'jebaum/vim-tmuxify'
+endif
 
 call plug#end()
 
