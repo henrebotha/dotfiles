@@ -18,6 +18,8 @@
 	email = henrebotha@gmail.com
 [diff]
 	compactionheuristic = true
+	mnemonicprefix = true ; replace a/b with (i)ndex/(c)ommit/(w)orking tree
+	renames = copies ; detect file copies as a type of rename
 [alias]
 	# Display all aliases :)
 	aliases = ! git config --list | awk '/alias/{ print $1 }' | perl -pe 's/alias\\.//g' | perl -pe 's/=.+//g'
