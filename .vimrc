@@ -148,6 +148,7 @@ set listchars=tab:>\ ,eol:¬,space:-
 map / <Plug>(incsearch-forward)
 map ? <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
+let g:incsearch#magic = '\v'
 
 " Use C-l to highlight the current cursor position
 nnoremap <C-l> :call HighlightNearCursor()<CR>
@@ -164,6 +165,7 @@ endfunction
 " Bindings for fzf
 nmap <leader>f :Files<CR>
 nmap <leader>t :Tags<CR>
+nmap <leader>/ :BLines<CR>
 " https://medium.com/@crashybang/supercharge-vim-with-fzf-and-ripgrep-d4661fc853d2
 " --column: Show column number
 " --line-number: Show line number
