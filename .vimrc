@@ -82,6 +82,11 @@ let g:elm_format_autosave = 1
 " Make Vim respond faster to some stuff, e.g. vim-gitgutter load delay
 set updatetime=250
 
+" 'Fix' colors
+" set t_8f=[38;2;%lu;%lu;%lum
+" set t_8b=[48;2;%lu;%lu;%lum
+" set termguicolors
+" colorscheme Spacedust
 let g:airline_theme='spacedust'
 " Fix vimdiff colours to be not so eye-bleeding. Ugly, but better
 hi DiffAdd term=underline cterm=underline ctermfg=4 ctermbg=NONE
