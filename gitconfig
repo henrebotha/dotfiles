@@ -26,6 +26,9 @@
 	# Display all aliases :)
 	aliases = ! git config --list | awk '/alias/{ print $1 }' | perl -pe 's/alias\\.//g' | perl -pe 's/=.+//g'
 
+	# https://twitter.com/DotProto/status/991112367323824128
+	orphan = ! git log --pretty=oneline --abbrev-commit --graph --decorate `git reflog | cut -d \" \" -f 1`
+
 	# Hide files from git
 	hidden = ! git ls-files -v . | grep ^S | awk '{ print $2 }'
 	hide = update-index --skip-worktree
