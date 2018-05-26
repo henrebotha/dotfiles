@@ -55,6 +55,7 @@
 	fa = fetch --all --prune
 	l = log
 	lo = log --oneline --decorate
+	lg = log --oneline --decorate --graph
 	r = remote
 	ra = remote add
 	rmv = remote rename
