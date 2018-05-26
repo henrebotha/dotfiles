@@ -136,6 +136,10 @@ replace() {
   done
 }
 
+# Fix the macOS pasteboard when it breaks
+# alias fixpboard='ps aux | grep '\''[p]board'\'' | perl -p -e '\''s/ +/ /g'\'' | cut -d '\'' '\'' -f 2 | xargs kill -9'
+alias fixpboard='pkill -9 pboard'
+
 # Whenever a command is not found, prompt the user to install it via homebrew.
 # command_not_found_handler is a built-in Zsh hook, called automatically.
 command_not_found_handler() {
