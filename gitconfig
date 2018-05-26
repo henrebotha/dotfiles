@@ -4,13 +4,13 @@
 	compression = 0
 	autocrlf = input
 	excludesfile = /Users/henrebotha/.gitignore_global
-	editor = mvim -v
+	editor = nvim
 	; -v:           CLI mode (not GVim)
 	; -R:           read only mode
 	; -n:           don't use a swap file
 	; -c:           run command on start, after autocmd/modeline
 	; --not-a-term: don't show the stupid "reading from stdin" message
-	pager = mvim -v -R - -n -c 'set filetype=git nowrap noro' --not-a-term
+	pager = nvim -R - -n -c 'set filetype=git nowrap noro'
 [color]
 	; Vim can syntax highlight just fine on its own, and doesn't understand colour
 	; codes, so we disable the colouring when using a pager

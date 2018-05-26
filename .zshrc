@@ -40,8 +40,8 @@ alias gunhide='git update-index --no-skip-worktree'
 alias ghidden='git ls-files -v . | grep ^S'
 
 alias emacs="/usr/local/Cellar/emacs-plus/25.1/Emacs.app/Contents/MacOS/Emacs -nw"
-alias vim="mvim -v"
-alias v='mvim -v'
+alias vim='nvim'
+alias v='nvim'
 
 alias t='tree -L'
 
