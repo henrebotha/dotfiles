@@ -28,8 +28,10 @@ Plug 'autozimu/LanguageClient-neovim', {
   \ 'branch': 'next',
   \ 'do': 'bash install.sh',
   \ }
+Plug 'henrebotha/vim-git'
 Plug 'reasonml-editor/vim-reason-plus'    " Language pack for Reason
 Plug 'vim-airline/vim-airline'            " Status line
+Plug 'vim-airline/vim-airline-themes'     " Status line themes
 Plug 'chrisbra/NrrwRgn', { 'on': ['NR', 'NrrwRgn'] }
                                           " Emacs-style narrowing
 let g:airline#extensions#nrrwrgn#enabled = 0
@@ -75,19 +77,25 @@ let g:LanguageClient_serverCommands = {
     \ }
 
 " Disable polyglot's built-in Elm
-let g:polyglot_disabled = ['elm', 'ocaml']
+" Disable Git so we can get the newer version
+let g:polyglot_disabled = ['elm', 'git', 'ocaml']
 
 let g:elm_format_autosave = 1
 
 " Make Vim respond faster to some stuff, e.g. vim-gitgutter load delay
 set updatetime=250
 
+" Colours go from 0 to 7: black, red, green, yellow, blue, magenta, cyan, white
+" Then from 8 to 15, bright versions of the above
+" 16 is pure black
+hi LineNr ctermfg=14
+hi CursorLineNr ctermfg=14
 " 'Fix' colors
 " set t_8f=[38;2;%lu;%lu;%lum
 " set t_8b=[48;2;%lu;%lu;%lum
 " set termguicolors
 " colorscheme Spacedust
-let g:airline_theme='spacedust'
+let g:airline_theme='term'
 " Fix vimdiff colours to be not so eye-bleeding. Ugly, but better
 hi DiffAdd term=underline cterm=underline ctermfg=4 ctermbg=NONE
 hi DiffChange term=underline cterm=underline ctermfg=5 ctermbg=NONE
@@ -292,3 +300,17 @@ xnoremap <silent> i/ :<C-U>normal! T/vt/<CR>
 
 " Type <// to auto-close XML tags
 inoremap <// </<C-x><C-o>
+
+" ------------------------
+" Brave experimental stuff
+" ------------------------
+
+nnoremap q: q:i
+nnoremap q/ q/i
+nnoremap q? q?i
+
+set cmdwinheight=1
+
+map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+      \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+      \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
