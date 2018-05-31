@@ -199,3 +199,97 @@ command_not_found_handler() {
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 
 . ~/.dev
+
+bindkey '^f' reset-prompt
+
+# OPAM configuration
+. /Users/henrebotha/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+
+# Regular Colors
+
+export COL_BLACK="\e[0;30m"
+export COL_RED="\e[0;31m"
+export COL_GREEN="\e[0;32m"
+export COL_YELLOW="\e[0;33m"
+export COL_BLUE="\e[0;34m"
+export COL_PURPLE="\e[0;35m"
+export COL_CYAN="\e[0;36m"
+export COL_WHITE="\e[0;37m"
+
+# Bold
+
+export COL_BOLD_BLACK="\e[1;30m"
+export COL_BOLD_RED="\e[1;31m"
+export COL_BOLD_GREEN="\e[1;32m"
+export COL_BOLD_YELLOW="\e[1;33m"
+export COL_BOLD_BLUE="\e[1;34m"
+export COL_BOLD_PURPLE="\e[1;35m"
+export COL_BOLD_CYAN="\e[1;36m"
+export COL_BOLD_WHITE="\e[1;37m"
+
+# Underline
+
+export COL_UND_BLACK="\e[4;30m"
+export COL_UND_RED="\e[4;31m"
+export COL_UND_GREEN="\e[4;32m"
+export COL_UND_YELLOW="\e[4;33m"
+export COL_UND_BLUE="\e[4;34m"
+export COL_UND_PURPLE="\e[4;35m"
+export COL_UND_CYAN="\e[4;36m"
+export COL_UND_WHITE="\e[4;37m"
+
+# Background
+
+export COL_BG_BLACK="\e[40m"
+export COL_BG_RED="\e[41m"
+export COL_BG_GREEN="\e[42m"
+export COL_BG_YELLOW="\e[43m"
+export COL_BG_BLUE="\e[44m"
+export COL_BG_PURPLE="\e[45m"
+export COL_BG_CYAN="\e[46m"
+export COL_BG_WHITE="\e[47m"
+
+# High Intensty
+
+export COL_HI_BLACK="\e[0;90m"
+export COL_HI_RED="\e[0;91m"
+export COL_HI_GREEN="\e[0;92m"
+export COL_HI_YELLOW="\e[0;93m"
+export COL_HI_BLUE="\e[0;94m"
+export COL_HI_PURPLE="\e[0;95m"
+export COL_HI_CYAN="\e[0;96m"
+export COL_HI_WHITE="\e[0;97m"
+
+# Bold High Intensty
+
+export COL_HI_BOLD_BLACK="\e[1;90m"
+export COL_HI_BOLD_RED="\e[1;91m"
+export COL_HI_BOLD_GREEN="\e[1;92m"
+export COL_HI_BOLD_YELLOW="\e[1;93m"
+export COL_HI_BOLD_BLUE="\e[1;94m"
+export COL_HI_BOLD_PURPLE="\e[1;95m"
+export COL_HI_BOLD_CYAN="\e[1;96m"
+export COL_HI_BOLD_WHITE="\e[1;97m"
+
+# High Intensty backgrounds
+
+export COL_HI_BG_BLACK="\e[0;100m"
+export COL_HI_BG_RED="\e[0;101m"
+export COL_HI_BG_GREEN="\e[0;102m"
+export COL_HI_BG_YELLOW="\e[0;103m"
+export COL_HI_BG_BLUE="\e[0;104m"
+export COL_HI_BG_PURPLE="\e[0;105m"
+export COL_HI_BG_CYAN="\e[0;106m"
+export COL_HI_BG_WHITE="\e[0;107m"
+
+# Reset
+
+export COL_RESET="\e[0m"
+
+# ---
+
+if [[ `uname` == 'Darwin' ]]
+then
+  alias ip-eth="ipconfig getifaddr en0"
+  alias ip-wifi="ipconfig getifaddr en1"
+fi
