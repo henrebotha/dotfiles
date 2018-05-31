@@ -80,6 +80,10 @@ alias swinepath='/Applications/Wine\ Staging.app/Contents/Resources/wine/bin/win
 alias swineserver='/Applications/Wine\ Staging.app/Contents/Resources/wine/bin/wineserver'
 # alias swinetricks='winetricks'
 
+rgl() {
+  rg --color=always $@ | less -R
+}
+
 # https://dougblack.io/words/zsh-vi-mode.html
 # Enable Vi mode.
 bindkey -v
