@@ -4,8 +4,8 @@
 	compression = 0
 	autocrlf = input
 	excludesfile = /Users/henrebotha/.gitignore_global
+	ignorecase=false
 	editor = nvim
-	; -v:           CLI mode (not GVim)
 	; -R:           read only mode
 	; -n:           don't use a swap file
 	; -c:           run command on start, after autocmd/modeline
@@ -52,6 +52,10 @@
 	cmsg = commit -m
 	co = checkout
 	dca = diff --cached
+	dcaw = diff --cached --word-diff
+	dcac = diff --cached --word-diff-regex=.
+	dw = diff --word-diff
+	dc = diff --word-diff-regex=.
 	fa = fetch --all --prune
 	l = log
 	lo = log --oneline --decorate
@@ -62,5 +66,7 @@
 	rrm = remote remove
 	rv = remote -v
 	st = status
+	sdw = show --word-diff
+	sdc = show --word-diff-regex=.
 [push]
 	default = current
