@@ -5,7 +5,25 @@ COMPLETION_WAITING_DOTS="true"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
-plugins=(git osx zsh-nvm vi-mode virtualbox mvn docker)
+# zsh-autosuggestions
+if [[ ! -a ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions ]]; then
+  git clone -b 'v0.4.3' git@github.com:zsh-users/zsh-autosuggestions.git ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+fi
+
+# zsh-syntax-highlighting
+if [[ ! -a ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting ]]; then
+  git clone -b '0.6.0' git@github.com:zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+fi
+
+plugins=(git
+         osx
+         zsh-nvm
+         vi-mode
+         virtualbox
+         mvn
+         docker
+         zsh-autosuggestions
+         zsh-syntax-highlighting)
 
 # User configuration
 
