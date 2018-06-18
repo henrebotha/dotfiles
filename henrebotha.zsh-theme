@@ -1,6 +1,6 @@
 # Functionality for displaying normal mode indicator in Vi mode.
 function zle-line-init zle-keymap-select {
-  local visual_mode="%{$fg[green]%}N"
+  local visual_mode="%{$fg[green]%}›"
   local prompt_char="${${KEYMAP/vicmd/$visual_mode}/(main|viins)/»}"
   # Make prompt_char red if the last executed command failed. This needs to be
   # here because outside the function body, precedence breaks it. ¯\_(ツ)_/¯
