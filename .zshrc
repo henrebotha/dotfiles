@@ -112,6 +112,23 @@ bindkey '^?' backward-delete-char
 bindkey '^h' backward-delete-char
 bindkey '^r' history-incremental-search-backward
 bindkey '^s' history-incremental-search-forward
+bindkey '^[[Z' reverse-menu-complete # SHIFT-TAB to go back
+bindkey -M vicmd '^B' push-line-or-edit # "context switch" half-written command
+bindkey -M viins '^B' push-line-or-edit
+bindkey -M vicmd 'gcc' vi-pound-insert
+
+# Enable quoted & bracketed text objects!!! Thanks @mr_v
+autoload -U select-quoted select-bracketed
+zle -N select-quoted
+zle -N select-bracketed
+for m in visual viopp; do
+  for c in {a,i}{\',\",\`}; do
+    bindkey -M $m $c select-quoted
+  done
+  for c in {a,i}${(s..)^:-'()[]{}<>bB'}; do
+    bindkey -M $m $c select-bracketed
+  done
+done
 
 # Default 400ms delay after ESC is too slow. Increase this value if this breaks
 # other commands that depend on the delay.
