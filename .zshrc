@@ -130,6 +130,9 @@ for m in visual viopp; do
   done
 done
 
+# Allow tab completion to match hidden files always
+setopt globdots
+
 # Default 400ms delay after ESC is too slow. Increase this value if this breaks
 # other commands that depend on the delay.
 export KEYTIMEOUT=1 # 100 ms
