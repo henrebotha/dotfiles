@@ -113,8 +113,8 @@ bindkey '^h' backward-delete-char
 bindkey '^r' history-incremental-search-backward
 bindkey '^s' history-incremental-search-forward
 bindkey '^[[Z' reverse-menu-complete # SHIFT-TAB to go back
-bindkey -M vicmd '^B' push-line-or-edit # "context switch" half-written command
-bindkey -M viins '^B' push-line-or-edit
+bindkey -M vicmd '^\' push-line-or-edit # "context switch" half-written command
+bindkey -M viins '^\' push-line-or-edit
 bindkey -M vicmd 'gcc' vi-pound-insert
 
 # Enable quoted & bracketed text objects!!! Thanks @mr_v
