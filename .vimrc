@@ -1,12 +1,20 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
+" Before we continue, detect which version of Vim we're running
+if has('nvim')
+  let config_path = '~/.config/nvim'
+else
+  let config_path = '~/.vim'
+endif
+
 " Space leader is best leader
 let mapleader = "\<space>"
 
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+let autoload_path = config_path . '/autoload'
+let plug_path = autoload_path . '/plug.vim'
+if empty(glob(autoload_path))
+  execute 'silent !curl -fLo ' . plug_path . ' --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
   autocmd VimEnter * PlugInstall
   autocmd VimEnter * close
 endif
@@ -227,7 +235,7 @@ autocmd BufWritePre * %s/\s\+$//e
 
 " Persist undo state across sessions
 " https://www.reddit.com/r/vim/comments/2ib9au/why_does_exiting_vim_make_the_next_prompt_appear/cl0zb7m/
-let s:vim_cache = expand("$HOME/.vim/undo")
+let s:vim_cache = expand("$HOME/.vim/undo") " TODO: change for nvim? Or keep across Vim installs?
 if filewritable(s:vim_cache) == 0 && exists("*mkdir")
   call mkdir(s:vim_cache, "p", 0700)
 endif
@@ -262,7 +270,7 @@ set colorcolumn=80
 highlight ColorColumn ctermbg=0 guibg=lightgrey
 
 " Store swap files in a central location
-set directory^=$HOME/.vim/tmp//
+set directory^=$HOME/.vim/tmp// " TODO: change for nvim? Or keep across Vim installs?
 
 let g:nrrw_rgn_resize_window = 'relative'
 let g:nrrw_rgn_width = 100
