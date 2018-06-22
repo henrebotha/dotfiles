@@ -22,6 +22,7 @@ endif
 " TODO: Rework this. Detect whether we're launching as read-only. If so, set
 " all plugins to load on demand, in case we open a file in write mode during
 " the session.
+" https://stackoverflow.com/a/36323097/1966418
 
 call plug#begin()
 
