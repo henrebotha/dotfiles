@@ -37,7 +37,7 @@ Plug 'autozimu/LanguageClient-neovim', {
   \ 'branch': 'next',
   \ 'do': 'bash install.sh',
   \ }
-Plug 'henrebotha/vim-git'
+Plug 'tpope/vim-git'
 Plug 'reasonml-editor/vim-reason-plus'    " Language pack for Reason
 Plug 'vim-airline/vim-airline'            " Status line
 Plug 'vim-airline/vim-airline-themes'     " Status line themes
