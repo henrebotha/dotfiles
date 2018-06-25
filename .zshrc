@@ -1,3 +1,7 @@
+# ------------------------------------------------------------------------------
+# Zsh & oh-my-zsh
+# ------------------------------------------------------------------------------
+
 ZSH_THEME="henrebotha"
 
 COMPLETION_WAITING_DOTS="true"
@@ -23,11 +27,21 @@ fi
 
 alias help=run-help
 
-# Enable rbenv.
+alias s='. ~/.zshrc'
+
+# ------------------------------------------------------------------------------
+# Ruby
+# ------------------------------------------------------------------------------
+
+# Enable rbenv
 if type rbenv > /dev/null; then
   export PATH="$HOME/.rbenv/bin:$PATH"
   eval "$(rbenv init -)"
 fi
+
+# ------------------------------------------------------------------------------
+# Yarn
+# ------------------------------------------------------------------------------
 
 # Fix yarn binary issue https://github.com/yarnpkg/yarn/issues/648
 # Do `yarn global bin` to get the path
@@ -36,17 +50,25 @@ export PATH="/usr/local/Cellar/node/8.2.1/bin:$PATH"
 # # zsh-autoenv
 # . ~/.dotfiles/lib/zsh-autoenv/autoenv.zsh
 
-# Find aliases
-alias cmd='alias | grep '
+# ------------------------------------------------------------------------------
+# Git
+# ------------------------------------------------------------------------------
 
 # Discard changes to all unstaged, tracked files. TODO: move to gitconfig
 alias gdisc='git checkout -- $(git ls-files -m)'
 
-alias emacs="/usr/local/Cellar/emacs-plus/25.1/Emacs.app/Contents/MacOS/Emacs -nw"
-alias vim='nvim'
-alias v='nvim'
+# A lovely script that watches files for changes and automatically commits them
+# to git. Nice to use for note-taking.
+autocommit() {
+  # commit any changes since last run
+  date +%Y-%m-%dT%H:%M:%S%z; git add $@; git commit -m "AUTOCOMMIT"; echo
+  # now commit changes whenever files are saved
+  fswatch -0 $@ | xargs -0 -n 1 sh -c "date +%Y-%m-%dT%H:%M:%S%z; git add .; git commit -m \"AUTOCOMMIT\"; echo"
+}
 
-alias t='tree -L'
+# ------------------------------------------------------------------------------
+# Tmux
+# ------------------------------------------------------------------------------
 
 alias tx='tmuxinator s'
 alias txe='tmuxinator new'
@@ -56,14 +78,43 @@ alias tk='tmux kill-session -t'
 alias tl='tmux ls'
 alias tn='tmux new-session -s'
 
+# ------------------------------------------------------------------------------
+# Vim
+# ------------------------------------------------------------------------------
+
+alias vim='nvim'
+alias v='nvim'
+
+# ------------------------------------------------------------------------------
+# Emacs
+# ------------------------------------------------------------------------------
+
+alias emacs="/usr/local/Cellar/emacs-plus/25.1/Emacs.app/Contents/MacOS/Emacs -nw"
+
+# ------------------------------------------------------------------------------
+# Tree
+# ------------------------------------------------------------------------------
+
+alias t='tree -L'
+
+# ------------------------------------------------------------------------------
+# Elm
+# ------------------------------------------------------------------------------
+
 alias elmc='elm-repl'
 alias elmr='elm-reactor'
 alias elmm='elm-make'
 alias elmp='elm-package'
 
+# ------------------------------------------------------------------------------
+# Maven
+# ------------------------------------------------------------------------------
+
 alias mvnq='mvn -q'
 
-alias s='. ~/.zshrc'
+# ------------------------------------------------------------------------------
+# Wine
+# ------------------------------------------------------------------------------
 
 alias swine='/Applications/Wine\ Staging.app/Contents/Resources/wine/bin/wine'
 alias swine64='/Applications/Wine\ Staging.app/Contents/Resources/wine/bin/wine64'
@@ -83,9 +134,30 @@ alias swinepath='/Applications/Wine\ Staging.app/Contents/Resources/wine/bin/win
 alias swineserver='/Applications/Wine\ Staging.app/Contents/Resources/wine/bin/wineserver'
 # alias swinetricks='winetricks'
 
+# ------------------------------------------------------------------------------
+# Ripgrep
+# ------------------------------------------------------------------------------
+
 rgl() {
   rg --color=always $@ | less -R
 }
+
+# ------------------------------------------------------------------------------
+# macOS
+# ------------------------------------------------------------------------------
+
+if [[ `uname` == 'Darwin' ]]; then
+  # Fix the macOS pasteboard when it breaks
+  # alias fixpboard='ps aux | grep '\''[p]board'\'' | perl -p -e '\''s/ +/ /g'\'' | cut -d '\'' '\'' -f 2 | xargs kill -9'
+  alias fixpboard='pkill -9 pboard'
+
+  alias ip-eth="ipconfig getifaddr en0"
+  alias ip-wifi="ipconfig getifaddr en1"
+fi
+
+# ------------------------------------------------------------------------------
+# Key bindings & related config
+# ------------------------------------------------------------------------------
 
 # https://dougblack.io/words/zsh-vi-mode.html
 # Enable Vi mode.
@@ -115,24 +187,20 @@ for m in visual viopp; do
   done
 done
 
-# Allow tab completion to match hidden files always
-setopt globdots
-
 # Default 400ms delay after ESC is too slow. Increase this value if this breaks
 # other commands that depend on the delay.
 export KEYTIMEOUT=1 # 100 ms
 
-# List folder contents after cd.
-cdl() { cd $1; la }
+# ------------------------------------------------------------------------------
+# Completion
+# ------------------------------------------------------------------------------
 
-# A lovely script that watches files for changes and automatically commits them
-# to git. Nice to use for note-taking.
-autocommit() {
-  # commit any changes since last run
-  date +%Y-%m-%dT%H:%M:%S%z; git add $@; git commit -m "AUTOCOMMIT"; echo
-  # now commit changes whenever files are saved
-  fswatch -0 $@ | xargs -0 -n 1 sh -c "date +%Y-%m-%dT%H:%M:%S%z; git add .; git commit -m \"AUTOCOMMIT\"; echo"
-}
+# Allow tab completion to match hidden files always
+setopt globdots
+
+# ------------------------------------------------------------------------------
+# Misc
+# ------------------------------------------------------------------------------
 
 # https://github.com/thoughtbot/dotfiles/blob/master/bin/replace
 # Find and replace by a given list of files.
@@ -152,10 +220,6 @@ replace() {
     sed "s/$find_this/$replace_with/g" "$item" > "$temp" && mv "$temp" "$item"
   done
 }
-
-# Fix the macOS pasteboard when it breaks
-# alias fixpboard='ps aux | grep '\''[p]board'\'' | perl -p -e '\''s/ +/ /g'\'' | cut -d '\'' '\'' -f 2 | xargs kill -9'
-alias fixpboard='pkill -9 pboard'
 
 # Whenever a command is not found, prompt the user to install it via homebrew.
 # command_not_found_handler is a built-in Zsh hook, called automatically.
@@ -298,11 +362,3 @@ export COL_HI_BG_WHITE="\e[0;107m"
 # Reset
 
 export COL_RESET="\e[0m"
-
-# ---
-
-if [[ `uname` == 'Darwin' ]]
-then
-  alias ip-eth="ipconfig getifaddr en0"
-  alias ip-wifi="ipconfig getifaddr en1"
-fi
