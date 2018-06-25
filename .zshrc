@@ -24,8 +24,10 @@ fi
 alias help=run-help
 
 # Enable rbenv.
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
+if type rbenv > /dev/null; then
+  export PATH="$HOME/.rbenv/bin:$PATH"
+  eval "$(rbenv init -)"
+fi
 
 # Fix yarn binary issue https://github.com/yarnpkg/yarn/issues/648
 # Do `yarn global bin` to get the path
