@@ -4,7 +4,11 @@
 
 ZSH_THEME="henrebotha"
 
-COMPLETION_WAITING_DOTS="true"
+# Disabled on macOS due to line-chomping behaviour
+# https://github.com/robbyrussell/oh-my-zsh/issues/5765
+if [[ `uname` != 'Darwin' ]]; then
+  COMPLETION_WAITING_DOTS="true"
+fi
 
 plugins=(git
          osx
