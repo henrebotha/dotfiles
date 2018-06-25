@@ -2,9 +2,6 @@ ZSH_THEME="henrebotha"
 
 COMPLETION_WAITING_DOTS="true"
 
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
 plugins=(git
          osx
          zsh-nvm
@@ -12,8 +9,6 @@ plugins=(git
          virtualbox
          mvn
          docker)
-
-# User configuration
 
 # export PATH="/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -28,10 +23,6 @@ fi
 
 alias help=run-help
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-
 # Enable rbenv.
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
@@ -43,15 +34,11 @@ export PATH="/usr/local/Cellar/node/8.2.1/bin:$PATH"
 # # zsh-autoenv
 # . ~/.dotfiles/lib/zsh-autoenv/autoenv.zsh
 
-# Shortcut for finding aliases.
+# Find aliases
 alias cmd='alias | grep '
-# Shortcut for discarding changes to all unstaged, tracked files.
+
+# Discard changes to all unstaged, tracked files. TODO: move to gitconfig
 alias gdisc='git checkout -- $(git ls-files -m)'
-# Shortcuts for hiding changes from git (e.g. so that we can override configs
-# in dev without risk of committing them by accident).
-alias ghide='git update-index --skip-worktree'
-alias gunhide='git update-index --no-skip-worktree'
-alias ghidden='git ls-files -v . | grep ^S'
 
 alias emacs="/usr/local/Cellar/emacs-plus/25.1/Emacs.app/Contents/MacOS/Emacs -nw"
 alias vim='nvim'
@@ -132,16 +119,6 @@ setopt globdots
 # Default 400ms delay after ESC is too slow. Increase this value if this breaks
 # other commands that depend on the delay.
 export KEYTIMEOUT=1 # 100 ms
-
-# # Functionality for displaying normal mode indicator in Vi mode.
-# function zle-line-init zle-keymap-select {
-#     VIM_PROMPT="%{$bg[blue]$fg[yellow]%}[% NORMAL]% %{$reset_color%}"
-#     RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/}$EPS1"
-#     zle reset-prompt
-# }
-# zle -N zle-line-init
-# zle -N zle-keymap-select
-# # End Vi mode functionality
 
 # List folder contents after cd.
 cdl() { cd $1; la }
