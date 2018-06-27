@@ -16,6 +16,7 @@ plugins=(git
          vi-mode
          virtualbox
          mvn
+         zsh-autosuggestions
          docker)
 
 # export PATH="/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
@@ -32,6 +33,12 @@ fi
 alias help=run-help
 
 alias s='. ~/.zshrc'
+
+# ------------------------------------------------------------------------------
+# Zsh-autosuggestions
+# ------------------------------------------------------------------------------
+
+export ZSH_AUTOSUGGEST_USE_ASYNC=1
 
 # ------------------------------------------------------------------------------
 # Ruby
