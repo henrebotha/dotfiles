@@ -35,10 +35,40 @@ alias help=run-help
 alias s='. ~/.zshrc'
 
 # ------------------------------------------------------------------------------
+# Zsh-histdb
+# ------------------------------------------------------------------------------
+
+if type sqlite3 > /dev/null; then
+  source ~/.oh-my-zsh/custom/plugins/zsh-histdb/sqlite-history.zsh
+  autoload -Uz add-zsh-hook
+  add-zsh-hook precmd histdb-update-outcome
+fi
+
+# ------------------------------------------------------------------------------
 # Zsh-autosuggestions
 # ------------------------------------------------------------------------------
 
 export ZSH_AUTOSUGGEST_USE_ASYNC=1
+
+if type histdb > /dev/null; then
+  ZSH_AUTOSUGGEST_STRATEGY=histdb # (histdb history completion)
+
+  _zsh_autosuggest_strategy_histdb() {
+    typeset -g suggestion
+    suggestion=$(_histdb_query "
+        SELECT commands.argv
+        FROM history
+          LEFT JOIN commands ON history.command_id = commands.rowid
+          LEFT JOIN places ON history.place_id = places.rowid
+        WHERE
+          commands.argv LIKE '$(sql_escape $1)%' AND
+          places.dir = '$(sql_escape $PWD)'
+        GROUP BY commands.argv
+        ORDER BY history.start_time desc
+        LIMIT 1
+    ")
+  }
+fi
 
 # ------------------------------------------------------------------------------
 # Ruby
