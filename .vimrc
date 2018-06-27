@@ -57,6 +57,8 @@ Plug 'andymass/matchup.vim'               " Movement between matching if/ends et
 Plug 'zyedidia/literate.vim'              " Syntax support for Literate
 Plug 'junegunn/fzf.vim', { 'do': './install --bin' }
                                           " Fast fuzzy finder
+Plug 'michaeljsmith/vim-indent-object'    " Text object for indentation blocks
+
 if v:progname !=? 'view'
   Plug 'w0rp/ale'                           " Async linter
   Plug 'junegunn/vim-easy-align'            " Align things, easily
