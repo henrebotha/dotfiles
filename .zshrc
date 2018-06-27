@@ -252,6 +252,13 @@ command_not_found_handler() {
 # fzf keybinds/completion
 [ -f ~/.fzf.zsh ] && . ~/.fzf.zsh
 
+alias fzfp='fzf --preview '\''[[ $(file --mime {}) =~ binary ]] &&
+                 echo {} is a binary file ||
+                 (highlight -O ansi -l {} ||
+                  coderay {} ||
+                  rougify {} ||
+                  cat {}) 2> /dev/null | head -200'\'
+
 # # zsh-async
 # # Installation
 # if [[ ! -a ~/.zsh-async ]]; then
