@@ -62,6 +62,7 @@
 	lg = -c core.pager='less -R' -c color.pager=true log --oneline --decorate --graph
 	r = remote
 	ra = remote add
+	rbm = ! "git rebase -i `git merge-base HEAD master`"
 	rmv = remote rename
 	rrm = remote remove
 	rv = remote -v
