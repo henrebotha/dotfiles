@@ -9,6 +9,7 @@ My various configs.
 3. Make a symlink for each file by doing `ln -s ~/path/to/dotfiles/filename .filename` per file.
   * `karabiner.json` is different - it goes in `~/.config/karabiner/karabiner.json`.
   * `.vim/ftplugin` (a directory) should live at `~/.vim/ftplugin`.
+  * `kakrc` should go in `$(which kak)/../share/kak/kakrc`.
 
 ## What goes where?
 
