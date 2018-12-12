@@ -4,6 +4,8 @@ filetype off                  " required
 " Before we continue, detect which version of Vim we're running
 if has('nvim')
   let config_path = '~/.config/nvim'
+  let g:python2_host_prog = '/usr/local/bin/python2'
+  let g:python3_host_prog = '/usr/local/bin/python3'
 else
   let config_path = '~/.vim'
 endif
@@ -38,12 +40,15 @@ Plug 'autozimu/LanguageClient-neovim', {
   \ 'do': 'bash install.sh',
   \ }
 Plug 'tpope/vim-git'
+Plug 'sjl/splice.vim'                     " Merge tool
 Plug 'reasonml-editor/vim-reason-plus'    " Language pack for Reason
-Plug 'vim-airline/vim-airline'            " Status line
-Plug 'vim-airline/vim-airline-themes'     " Status line themes
+" Plug 'itchyny/lightline.vim'
+Plug 'ap/vim-buftabline'
+" Plug 'vim-airline/vim-airline'            " Status line
+" Plug 'vim-airline/vim-airline-themes'     " Status line themes
 Plug 'chrisbra/NrrwRgn', { 'on': ['NR', 'NrrwRgn'] }
                                           " Emacs-style narrowing
-let g:airline#extensions#nrrwrgn#enabled = 0
+" let g:airline#extensions#nrrwrgn#enabled = 0
 Plug 'tpope/vim-surround'                 " Adds commands for surrounding chars
 Plug 'wellle/targets.vim'                 " More text objects
 Plug 'haya14busa/incsearch.vim'           " Highlight incremental search results
@@ -52,13 +57,14 @@ Plug 'junegunn/goyo.vim'                  " Distraction-free mode
 Plug 'tpope/vim-unimpaired'               " Pairwise commands
 Plug 'joker1007/vim-ruby-heredoc-syntax'  " Highlighting heredocs in Ruby
 Plug 'mhallendal/spacedust-theme'         " Spacedust!
-Plug 'marcelbeumer/spacedust-airline.vim' " Spacedust!
+" Plug 'marcelbeumer/spacedust-airline.vim' " Spacedust!
 Plug 'andymass/matchup.vim'               " Movement between matching if/ends etc
 Plug 'zyedidia/literate.vim'              " Syntax support for Literate
 Plug 'junegunn/fzf.vim', { 'do': './install --bin' }
                                           " Fast fuzzy finder
 Plug 'michaeljsmith/vim-indent-object'    " Text object for indentation blocks
 Plug 'tpope/vim-apathy'                   " Some path values for various langs
+Plug 'dzeban/vim-log-syntax'              " Log syntax
 
 if v:progname !=? 'view'
   Plug 'w0rp/ale'                           " Async linter
@@ -81,6 +87,10 @@ if v:progname !=? 'view'
 endif
 
 call plug#end()
+
+set hidden
+nnoremap <C-N> :bnext<CR>
+nnoremap <C-P> :bprev<CR>
 
 " Configure language client for reason
 let g:LanguageClient_serverCommands = {
@@ -107,7 +117,7 @@ hi CursorLineNr ctermfg=14
 " set t_8b=[48;2;%lu;%lu;%lum
 " set termguicolors
 " colorscheme Spacedust
-let g:airline_theme='term'
+" let g:airline_theme='term'
 " Fix vimdiff colours to be not so eye-bleeding. Ugly, but better
 hi DiffAdd term=underline cterm=underline ctermfg=4 ctermbg=NONE
 hi DiffChange term=underline cterm=underline ctermfg=5 ctermbg=NONE
@@ -220,10 +230,14 @@ set shiftwidth=2
 set expandtab
 
 " Make airline actually show up
-set laststatus=2
+" set laststatus=2
+
+" Add filetype to statusline
+" :h statusline for details on the defaults
+set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)%y\ %P
 
 " Enable powerline fonts
-let g:airline_powerline_fonts = 1
+" let g:airline_powerline_fonts = 1
 
 " Line numbers
 " set number
