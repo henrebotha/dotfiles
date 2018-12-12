@@ -74,6 +74,8 @@
 	l = log
 	lo = log --oneline --decorate
 	lg = -c core.pager='less -R' -c color.pager=true log --oneline --decorate --graph
+	lga = -c core.pager='less -R' -c color.pager=true log --oneline --decorate --graph --all
+	lgb = -c core.pager='less -R' -c color.pager=true log --oneline --decorate --graph --branches
 	r = remote
 	ra = remote add
 	rbm = ! "git rebase -i `git merge-base HEAD master`"
@@ -89,3 +91,5 @@
 	wips = ! git branch -v --no-abbrev | grep '\\-\\-wip\\-\\-'
 [push]
 	default = current
+[credential]
+	helper = osxkeychain

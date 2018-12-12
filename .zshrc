@@ -33,6 +33,16 @@ fi
 alias help=run-help
 
 alias s='. ~/.zshrc'
+alias :q=exit # Welp
+
+# Allow **foo as shorthand for **/*foo
+setopt GLOBSTARSHORT
+
+# Don't expand history inline
+setopt HIST_VERIFY
+
+# Flag ~/dev/ as a common path to cd into
+cdpath=($cdpath ~/dev)
 
 # ------------------------------------------------------------------------------
 # Zsh-histdb
@@ -40,7 +50,7 @@ alias s='. ~/.zshrc'
 
 if type sqlite3 > /dev/null; then
   source ~/.oh-my-zsh/custom/plugins/zsh-histdb/sqlite-history.zsh
-  autoload -Uz add-zsh-hook
+  # autoload -Uz add-zsh-hook # disabled because of slow
   add-zsh-hook precmd histdb-update-outcome
 fi
 
@@ -68,6 +78,21 @@ if type histdb > /dev/null; then
         LIMIT 1
     ")
   }
+fi
+
+# ------------------------------------------------------------------------------
+# Docker
+# ------------------------------------------------------------------------------
+
+alias d=docker
+
+# ------------------------------------------------------------------------------
+# Java
+# ------------------------------------------------------------------------------
+
+if which jenv > /dev/null; then
+  eval "$(jenv init -)"
+  export PATH="$HOME/.jenv/shims:$PATH"
 fi
 
 # ------------------------------------------------------------------------------
@@ -426,3 +451,11 @@ export COL_HI_BG_WHITE="\e[0;107m"
 # Reset
 
 export COL_RESET="\e[0m"
+
+source ~/esp.autocomplete
+
+# ------------------------------------------------------------------------------
+# Direnv
+# ------------------------------------------------------------------------------
+
+eval "$(direnv hook zsh)"
