@@ -174,7 +174,7 @@ let g:ale_linters = {
 let g:ale_set_highlights = 0
 
 " Use the same symbols as TextMate for tabstops and EOLs
-set listchars=tab:>\ ,eol:¬,space:-
+set listchars=tab:>\ ,eol:¬,space:-,trail:-
 
 " Pad the top/bottom of the screen by a few lines for nicer scrolling
 set scrolloff=3
@@ -250,6 +250,11 @@ set display=lastline
 
 " Wrap at word boundaries, not in the middle of words
 set linebreak
+
+" Indent line breaks on indentend blocks, and indicate it
+set breakindent
+set breakindentopt=sbr
+set showbreak=↪
 
 " Trim trailing whitespace on write
 autocmd BufWritePre * %s/\s\+$//e
