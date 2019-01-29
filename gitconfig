@@ -5,12 +5,12 @@
 	autocrlf = input
 	excludesfile = /Users/henrebotha/.gitignore_global
 	ignorecase=false
-	editor = kak ; nvim
+	editor = vim
 	; -R:           read only mode
 	; -n:           don't use a swap file
 	; -c:           run command on start, after autocmd/modeline
 	; --not-a-term: don't show the stupid "reading from stdin" message
-	pager = kak -ro -e 'set buffer filetype git-diff' ; nvim -R - -n -c 'set filetype=git nowrap noro'
+	pager = vim -R - -n -c 'set filetype=git nowrap noro'
 [color]
 	; Vim/Kakoune can syntax highlight just fine on their own, and don't understand
 	; colour codes, so we disable the colouring when using a pager
@@ -22,16 +22,6 @@
 	compactionheuristic = true
 	mnemonicprefix = true ; replace a/b with (i)ndex/(c)ommit/(w)orking tree
 	renames = copies ; detect file copies as a type of rename
-	; tool = kakoune
-; [difftool]
-	; prompt = false
-; [difftool "kakoune"]
-	; cmd = "kak -ro -e 'set buffer filetype git-diff' $MERGED"
-[merge]
-	tool = splice
-[mergetool "splice"]
-	cmd = "nvim -f $BASE $LOCAL $REMOTE $MERGED -c 'SpliceInit'"
-	trustExitCode = true
 [grep]
 	lineNumber = true
 	extendedRegexp = true
