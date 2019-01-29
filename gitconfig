@@ -17,7 +17,7 @@
 	pager = false
 [user]
 	name = Henré Botha
-	email = henrebotha@gmail.com
+	useConfigOnly = true ; force me to set email in repo local config
 [diff]
 	compactionheuristic = true
 	mnemonicprefix = true ; replace a/b with (i)ndex/(c)ommit/(w)orking tree
