@@ -148,8 +148,9 @@ alias tn='tmux new-session -s'
 # Vim
 # ------------------------------------------------------------------------------
 
-alias vim='nvim'
-alias v='nvim'
+# Launch with -X to prevent communication with X11 on startup, improving startup
+# speed in Tmux
+alias v='vim -X'
 
 # ------------------------------------------------------------------------------
 # Kakoune
