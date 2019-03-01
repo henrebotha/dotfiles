@@ -84,5 +84,3 @@
 	email = config --local user.email
 [push]
 	default = current
-[credential]
-	helper = osxkeychain
