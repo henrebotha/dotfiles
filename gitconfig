@@ -82,5 +82,8 @@
 	wips = ! git branch -v --no-abbrev | grep '\\-\\-wip\\-\\-'
 
 	email = config --local user.email
+
+	intend = add -N
+	unintend = rm --cached
 [push]
 	default = current
