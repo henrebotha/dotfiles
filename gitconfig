@@ -3,7 +3,7 @@
 [core]
 	compression = 0
 	autocrlf = input
-	excludesfile = /Users/henrebotha/.gitignore_global
+	excludesfile = ~/.gitignore_global
 	ignorecase=false
 	editor = vim -X
 	; -X:           don't talk to X11 on startup
