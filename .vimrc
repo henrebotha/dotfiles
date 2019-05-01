@@ -53,6 +53,8 @@ Plug 'vim-perl/vim-perl', {
     \ }
 Plug 'sheerun/vim-polyglot'               " Loads language packs on demand. Put
                                           " overriding language packs before this one
+Plug 'joker1007/vim-ruby-heredoc-syntax', { 'for': ['ruby'] }
+                                          " Highlighting heredocs in Ruby
 if has('nvim')
   Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
@@ -73,11 +75,9 @@ Plug 'tpope/vim-surround'                 " Adds commands for surrounding chars
 Plug 'wellle/targets.vim'                 " More text objects
 Plug 'haya14busa/incsearch.vim'           " Highlight incremental search results
 Plug 'airblade/vim-gitgutter'             " Show git status in gutter, async
-Plug 'junegunn/goyo.vim'                  " Distraction-free mode
 Plug 'tpope/vim-unimpaired'               " Pairwise commands
-Plug 'joker1007/vim-ruby-heredoc-syntax'  " Highlighting heredocs in Ruby
-Plug 'mhallendal/spacedust-theme'         " Spacedust!
-" Plug 'marcelbeumer/spacedust-airline.vim' " Spacedust!
+Plug 'junegunn/goyo.vim', { 'on': ['Goyo'] }
+                                          " Distraction-free mode
 Plug 'andymass/matchup.vim'               " Movement between matching if/ends etc
 Plug 'junegunn/fzf.vim', { 'do': './install --bin' }
                                           " Fast fuzzy finder
