@@ -37,12 +37,13 @@ endif
 
 call plug#begin()
 
-Plug 'elmcast/elm-vim'                    " Language pack for Elm
-Plug 'henrebotha/kotlin-vim', { 'commit': '8905918' }
-                                          " Language pack for Kotlin with fix
-                                          " for comment syntax
-Plug 'henrebotha/vim-protobuf'            " Language pack for Protobuf
 Plug 'jeffkreeftmeijer/vim-dim'           " 4-bit colour scheme to force using terminal colours
+Plug 'elmcast/elm-vim', { 'for': ['elm'] }
+                                          " Language pack for Elm
+Plug 'udalov/kotlin-vim', { 'for': ['kotlin'] }
+                                          " Language pack for Kotlin
+Plug 'henrebotha/vim-protobuf', { 'for': ['protobuf'] }
+                                          " Language pack for Protobuf
 Plug 'sheerun/vim-polyglot'               " Loads language packs on demand. Put
                                           " overriding language packs before this one
 if has('nvim')
@@ -93,8 +94,6 @@ if v:progname !=? 'view'
                                             " Tree browser
   Plug 'tpope/vim-repeat'                   " Allow plugins to specify custom repeat actions
   Plug 'tpope/vim-ragtag'
-  " Plug 'wincent/command-t'
-  " Plug 'othree/javascript-libraries-syntax.vim'
   " Plug 'jebaum/vim-tmuxify'
 endif
 
