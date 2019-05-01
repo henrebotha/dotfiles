@@ -242,9 +242,6 @@ command! -bang -nargs=* RgPerl call fzf#vim#grep("rg --column --line-number --no
 " https://dockyard.com/blog/2018/06/01/simple-vim-session-management-part-1
 " Remove `options` from sessionoptions — options get mangled sometimes
 let sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,terminal"
-" let g:sessions_dir = '~/.vim/sessions'
-" exec 'nmap <leader>ss :mksession! ' . g:sessions_dir . '/' | " session save
-" exec 'nmap <leader>sr :source ' . g:sessions_dir . '/' | " session restore
 nmap <leader>ss :Obsession Session
 nmap <leader>sr :source Session
 
