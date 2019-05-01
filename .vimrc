@@ -95,6 +95,7 @@ if v:progname !=? 'view'
   Plug 'tpope/vim-repeat'                   " Allow plugins to specify custom repeat actions
   Plug 'tpope/vim-ragtag'
   " Plug 'jebaum/vim-tmuxify'
+  Plug 'groenewege/vim-less'                " Trim whitespace on lines I touch
   Plug 'tpope/vim-obsession'                " Sane & continuous session saving
 endif
 
@@ -293,9 +294,6 @@ set linebreak
 set breakindent
 set breakindentopt=sbr
 set showbreak=↪
-
-" Trim trailing whitespace on write
-autocmd BufWritePre * %s/\s\+$//e
 
 " Persist undo state across sessions
 " https://www.reddit.com/r/vim/comments/2ib9au/why_does_exiting_vim_make_the_next_prompt_appear/cl0zb7m/
