@@ -234,6 +234,7 @@ set grepprg=rg\ --vimgrep
 " Bindings for fzf
 nmap <leader>f :Files<CR>
 nmap <leader>t :Tags<CR>
+nmap <leader>i :Lines
 nmap <leader>/ :BLines<CR>
 nmap <leader>b :Buffers<CR>
 nmap <leader>r :Rg
