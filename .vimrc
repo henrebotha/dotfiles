@@ -59,12 +59,13 @@ if has('nvim')
     \ 'do': 'bash install.sh',
     \ }
 endif
-Plug 'tpope/vim-git'
 Plug 'sjl/splice.vim'                     " Merge tool
 Plug 'reasonml-editor/vim-reason-plus'    " Language pack for Reason
 " Plug 'itchyny/lightline.vim'
 " Plug 'vim-airline/vim-airline'            " Status line
 " Plug 'vim-airline/vim-airline-themes'     " Status line themes
+
+Plug 'tpope/vim-git' " , { 'for': ['git'] }
 Plug 'chrisbra/NrrwRgn', { 'on': ['NR', 'NrrwRgn'] }
                                           " Emacs-style narrowing
 " let g:airline#extensions#nrrwrgn#enabled = 0
