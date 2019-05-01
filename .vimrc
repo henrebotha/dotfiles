@@ -95,6 +95,7 @@ if v:progname !=? 'view'
   Plug 'tpope/vim-repeat'                   " Allow plugins to specify custom repeat actions
   Plug 'tpope/vim-ragtag'
   " Plug 'jebaum/vim-tmuxify'
+  Plug 'tpope/vim-obsession'                " Sane & continuous session saving
 endif
 
 call plug#end()
@@ -234,6 +235,16 @@ nmap <leader>b :Buffers<CR>
 nmap <leader>r :Rg
 nmap <leader>c :Commands<CR>
 command! -bang -nargs=* RgPerl call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case -t perl ".shellescape(<q-args>), 1, <bang>0)',
+
+" Bindings for session management
+" https://dockyard.com/blog/2018/06/01/simple-vim-session-management-part-1
+" Remove `options` from sessionoptions — options get mangled sometimes
+let sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,terminal"
+" let g:sessions_dir = '~/.vim/sessions'
+" exec 'nmap <leader>ss :mksession! ' . g:sessions_dir . '/' | " session save
+" exec 'nmap <leader>sr :source ' . g:sessions_dir . '/' | " session restore
+nmap <leader>ss :Obsession Session
+nmap <leader>sr :source Session
 
 " Bindings for goyo ("prose mode")
 nmap <leader>p :Goyo <bar> highlight StatusLineNC ctermfg=white<CR>
