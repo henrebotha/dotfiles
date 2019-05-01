@@ -150,9 +150,6 @@ hi DiffChange term=underline cterm=underline ctermfg=5 ctermbg=NONE
 hi DiffDelete term=underline cterm=underline ctermfg=6 ctermbg=NONE
 hi DiffText term=underline cterm=underline ctermfg=9 ctermbg=NONE
 
-" Enable fzf
-set rtp+=/usr/local/opt/fzf
-
 " Shortcut to rapidly toggle `set list`
 nmap <leader>l :set list!<CR>
 
@@ -230,14 +227,10 @@ endfunction
 nmap <leader>f :Files<CR>
 nmap <leader>t :Tags<CR>
 nmap <leader>/ :BLines<CR>
-" https://medium.com/@crashybang/supercharge-vim-with-fzf-and-ripgrep-d4661fc853d2
-" --column: Show column number
-" --line-number: Show line number
-" --no-heading: Do not show file headings in results
-" --hidden: Search hidden files and folders
-" --color: Search color options
-command! -bang -nargs=* Search call fzf#vim#grep('rg --column --line-number --no-heading --hidden --color "always" -e '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
-nmap <leader>s :Search<CR>
+nmap <leader>b :Buffers<CR>
+nmap <leader>r :Rg
+nmap <leader>c :Commands<CR>
+command! -bang -nargs=* RgPerl call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case -t perl ".shellescape(<q-args>), 1, <bang>0)',
 
 " Bindings for goyo ("prose mode")
 nmap <leader>p :Goyo <bar> highlight StatusLineNC ctermfg=white<CR>
