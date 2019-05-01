@@ -316,6 +316,7 @@ let g:markdown_fenced_languages = ['slim', 'html', 'ruby', 'javascript', 'java',
 
 " Enable mouse scrolling inside tmux
 set mouse=a
+set mousemodel=popup
 
 " JS lib syntax
 " let g:used_javascript_libs = 'angularjs'
