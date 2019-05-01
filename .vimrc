@@ -19,6 +19,9 @@ call serverlist()
 " Space leader is best leader
 let mapleader = "\<space>"
 
+set visualbell
+set ruler
+
 let autoload_path = config_path . '/autoload'
 let plug_path = autoload_path . '/plug.vim'
 if empty(glob(autoload_path))
@@ -94,9 +97,23 @@ endif
 
 call plug#end()
 
+set backspace=indent,eol,start
+set infercase
+set pastetoggle=<Leader>pt
+set showmatch
+
 set hidden
 nnoremap <C-N> :bnext<CR>
 nnoremap <C-P> :bprev<CR>
+
+" Hook into Linux clipboard
+if has('clipboard')
+  set clipboard=unnamedplus
+endif
+
+" Sensible directions for splitting windows
+set splitbelow
+set splitright
 
 " Configure language client for reason
 let g:LanguageClient_serverCommands = {
@@ -234,6 +251,11 @@ set shiftwidth=2
 
 " Use soft tabs
 set expandtab
+set smarttab
+set shiftround
+
+set autoindent
+set smartindent
 
 " Make airline actually show up
 " set laststatus=2
@@ -297,9 +319,9 @@ set modelines=5
 " Show partially-typed commands in the bottom right
 set showcmd
 
-" Show a ruler for column width
-set colorcolumn=80
-highlight ColorColumn ctermbg=0 guibg=lightgrey
+" " Show a ruler for column width
+" set colorcolumn=80
+" highlight ColorColumn ctermbg=0 guibg=lightgrey
 
 " Store swap files in a central location
 set directory^=$HOME/.vim/tmp// " TODO: change for nvim? Or keep across Vim installs?
@@ -318,9 +340,15 @@ nnoremap <Leader>af :Autoformat<CR>
 
 " Detect & load changes to the file
 set autoread
+set autowrite
+
+set fileformats=unix,mac,dos
+set nomodeline
 
 " Enable bash-like command line completion
+set wildmenu
 set wildmode=list:longest,full
+set wildignorecase
 
 nnoremap <Leader>tree :NERDTree<CR>
 
