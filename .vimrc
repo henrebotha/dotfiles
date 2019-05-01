@@ -10,6 +10,12 @@ else
   let config_path = '~/.vim'
 endif
 
+set ttyfast
+
+" We start with -X option to improve startup time, but this affects clipboard.
+" Below restores clipboard functionality.
+call serverlist()
+
 " Space leader is best leader
 let mapleader = "\<space>"
 
