@@ -80,6 +80,8 @@ Plug 'michaeljsmith/vim-indent-object'    " Text object for indentation blocks
 Plug 'tpope/vim-apathy'                   " Some path values for various langs
 Plug 'dzeban/vim-log-syntax'              " Log syntax
 
+Plug 'metakirby5/codi.vim'                " In-buffer REPL
+
 if v:progname !=? 'view'
   Plug 'w0rp/ale'                           " Async linter
   Plug 'junegunn/vim-easy-align'            " Align things, easily
@@ -97,6 +99,7 @@ if v:progname !=? 'view'
   " Plug 'jebaum/vim-tmuxify'
   Plug 'groenewege/vim-less'                " Trim whitespace on lines I touch
   Plug 'tpope/vim-obsession'                " Sane & continuous session saving
+  Plug 'tpope/vim-fugitive'                 " Git
 endif
 
 call plug#end()
