@@ -187,9 +187,9 @@ endfunc
 nmap <leader>gdw :call GitGutterToggleWhitespace()<CR>
 
 " Shortcuts for ale to navigate between errors
-" ^k - go to previous error
+" go to previous error
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-" ^j - go to next error
+" go to next error
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 " Keep gutter open at all times. Causes flickering when toggling Goyo
 let g:ale_sign_column_always = 1
@@ -206,9 +206,6 @@ let g:ale_set_highlights = 0
 
 " Use the same symbols as TextMate for tabstops and EOLs
 set listchars=tab:>\ ,eol:¬,space:-,trail:-
-
-" " Highlight search results when using `/`
-" set hls
 
 " incsearch.vim settings
 map / <Plug>(incsearch-forward)
@@ -272,20 +269,12 @@ set shiftround
 set autoindent
 set smartindent
 
-" Make airline actually show up
-" set laststatus=2
-
 " Add filetype to statusline
 " :h statusline for details on the defaults
 set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)%y\ %P
 
-" Enable powerline fonts
-" let g:airline_powerline_fonts = 1
-
-" Line numbers
-" set number
-" set relativenumber
 " relativenumber slows down rendering, so we use lazyredraw to buffer redraws
+" may not be needed since we no longer use relativenumber
 set lazyredraw
 
 " Show as much as possible of a wrapped last line
@@ -294,7 +283,7 @@ set display=lastline
 " Wrap at word boundaries, not in the middle of words
 set linebreak
 
-" Indent line breaks on indentend blocks, and indicate it
+" Indent line breaks on indented blocks, and indicate it
 set breakindent
 set breakindentopt=sbr
 set showbreak=↪
@@ -314,16 +303,12 @@ set undoreload=10000
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
-" Markdown
-" Enable syntax highlighting in fenced code blocks
+" Enable syntax highlighting in Markdown fenced code blocks
 let g:markdown_fenced_languages = ['html', 'ruby', 'javascript', 'java', 'clojure', 'erb=eruby', 'xml', 'json', 'sql']
 
 " Enable mouse scrolling inside tmux
 set mouse=a
 set mousemodel=popup
-
-" JS lib syntax
-" let g:used_javascript_libs = 'angularjs'
 
 " Enable modelines for tweaking config per file
 set modeline
@@ -332,23 +317,18 @@ set modelines=5
 " Show partially-typed commands in the bottom right
 set showcmd
 
-" " Show a ruler for column width
-" set colorcolumn=80
-" highlight ColorColumn ctermbg=0 guibg=lightgrey
-
 " Store swap files in a central location
 set directory^=$HOME/.vim/tmp// " TODO: change for nvim? Or keep across Vim installs?
 
 let g:nrrw_rgn_resize_window = 'relative'
 let g:nrrw_rgn_width = 100
 
-" <Leader>zz to keep cursor centred
+" Keep cursor centred
 nnoremap <Leader>zz :let &scrolloff=999-&scrolloff<CR>
 
-" <Leader>u to show the undo viewer
+" Show the undo viewer
 nnoremap <Leader>u :UndotreeToggle<CR>
 
-" <Leader>af to autoformat
 nnoremap <Leader>af :Autoformat<CR>
 
 " Detect & load changes to the file
