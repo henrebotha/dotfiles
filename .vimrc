@@ -38,6 +38,9 @@ endif
 call plug#begin()
 
 Plug 'jeffkreeftmeijer/vim-dim'           " 4-bit colour scheme to force using terminal colours
+Plug 'ap/vim-buftabline'
+
+Plug 'zyedidia/literate.vim'              " Syntax support for Literate
 Plug 'elmcast/elm-vim', { 'for': ['elm'] }
                                           " Language pack for Elm
 Plug 'udalov/kotlin-vim', { 'for': ['kotlin'] }
@@ -56,7 +59,6 @@ Plug 'tpope/vim-git'
 Plug 'sjl/splice.vim'                     " Merge tool
 Plug 'reasonml-editor/vim-reason-plus'    " Language pack for Reason
 " Plug 'itchyny/lightline.vim'
-Plug 'ap/vim-buftabline'
 " Plug 'vim-airline/vim-airline'            " Status line
 " Plug 'vim-airline/vim-airline-themes'     " Status line themes
 Plug 'chrisbra/NrrwRgn', { 'on': ['NR', 'NrrwRgn'] }
@@ -72,7 +74,6 @@ Plug 'joker1007/vim-ruby-heredoc-syntax'  " Highlighting heredocs in Ruby
 Plug 'mhallendal/spacedust-theme'         " Spacedust!
 " Plug 'marcelbeumer/spacedust-airline.vim' " Spacedust!
 Plug 'andymass/matchup.vim'               " Movement between matching if/ends etc
-Plug 'zyedidia/literate.vim'              " Syntax support for Literate
 Plug 'junegunn/fzf.vim', { 'do': './install --bin' }
                                           " Fast fuzzy finder
 Plug 'michaeljsmith/vim-indent-object'    " Text object for indentation blocks
