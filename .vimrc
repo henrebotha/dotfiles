@@ -73,6 +73,7 @@ Plug 'tpope/vim-unimpaired'               " Pairwise commands
 Plug 'junegunn/goyo.vim', { 'on': ['Goyo'] }
                                           " Distraction-free mode
 Plug 'andymass/matchup.vim'               " Movement between matching if/ends etc
+Plug '~/.fzf'
 Plug 'junegunn/fzf.vim', { 'do': './install --bin' }
                                           " Fast fuzzy finder
 Plug 'michaeljsmith/vim-indent-object'    " Text object for indentation blocks
@@ -226,6 +227,9 @@ function! HighlightNearCursor()
     unlet s:highlightcursor
   endif
 endfunction
+
+" Use ripgrep as our grep program
+set grepprg=rg\ --vimgrep
 
 " Bindings for fzf
 nmap <leader>f :Files<CR>
