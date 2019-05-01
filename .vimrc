@@ -61,16 +61,10 @@ if has('nvim')
     \ 'do': 'bash install.sh',
     \ }
 endif
-Plug 'sjl/splice.vim'                     " Merge tool
-Plug 'reasonml-editor/vim-reason-plus'    " Language pack for Reason
-" Plug 'itchyny/lightline.vim'
-" Plug 'vim-airline/vim-airline'            " Status line
-" Plug 'vim-airline/vim-airline-themes'     " Status line themes
 
 Plug 'tpope/vim-git' " , { 'for': ['git'] }
 Plug 'chrisbra/NrrwRgn', { 'on': ['NR', 'NrrwRgn'] }
                                           " Emacs-style narrowing
-" let g:airline#extensions#nrrwrgn#enabled = 0
 Plug 'tpope/vim-surround'                 " Adds commands for surrounding chars
 Plug 'wellle/targets.vim'                 " More text objects
 Plug 'haya14busa/incsearch.vim'           " Highlight incremental search results
@@ -89,7 +83,6 @@ if v:progname !=? 'view'
   Plug 'w0rp/ale'                           " Async linter
   Plug 'junegunn/vim-easy-align'            " Align things, easily
   Plug 'ervandew/supertab'                  " Tab completion
-  " Plug 'gregsexton/MatchTag'                " Highlight matching XML tag
   Plug 'tpope/vim-commentary'               " Toggle comments
   Plug 'tpope/vim-endwise'                  " Auto-insert Ruby end, etc
   Plug 'tpope/vim-sleuth'                   " Auto-detect indentation
