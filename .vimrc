@@ -42,6 +42,7 @@ Plug 'henrebotha/kotlin-vim', { 'commit': '8905918' }
                                           " Language pack for Kotlin with fix
                                           " for comment syntax
 Plug 'henrebotha/vim-protobuf'            " Language pack for Protobuf
+Plug 'jeffkreeftmeijer/vim-dim'           " 4-bit colour scheme to force using terminal colours
 Plug 'sheerun/vim-polyglot'               " Loads language packs on demand. Put
                                           " overriding language packs before this one
 Plug 'autozimu/LanguageClient-neovim', {
@@ -140,6 +141,8 @@ hi CursorLineNr ctermfg=14
 " set t_8b=[48;2;%lu;%lu;%lum
 " set termguicolors
 " colorscheme Spacedust
+colorscheme dim
+set bg=dark
 " let g:airline_theme='term'
 " Fix vimdiff colours to be not so eye-bleeding. Ugly, but better
 hi DiffAdd term=underline cterm=underline ctermfg=4 ctermbg=NONE
