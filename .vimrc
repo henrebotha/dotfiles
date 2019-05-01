@@ -45,10 +45,12 @@ Plug 'henrebotha/vim-protobuf'            " Language pack for Protobuf
 Plug 'jeffkreeftmeijer/vim-dim'           " 4-bit colour scheme to force using terminal colours
 Plug 'sheerun/vim-polyglot'               " Loads language packs on demand. Put
                                           " overriding language packs before this one
-Plug 'autozimu/LanguageClient-neovim', {
-  \ 'branch': 'next',
-  \ 'do': 'bash install.sh',
-  \ }
+if has('nvim')
+  Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+endif
 Plug 'tpope/vim-git'
 Plug 'sjl/splice.vim'                     " Merge tool
 Plug 'reasonml-editor/vim-reason-plus'    " Language pack for Reason
@@ -117,10 +119,12 @@ set splitbelow
 set splitright
 
 " Configure language client for reason
-let g:LanguageClient_serverCommands = {
-    \ 'reason': ['ocaml-language-server', '--stdio'],
-    \ 'ocaml': ['ocaml-language-server', '--stdio'],
-    \ }
+if has('nvim')
+  let g:LanguageClient_serverCommands = {
+      \ 'reason': ['ocaml-language-server', '--stdio'],
+      \ 'ocaml': ['ocaml-language-server', '--stdio'],
+      \ }
+endif
 
 " Disable polyglot's built-in Elm
 " Disable Git so we can get the newer version
