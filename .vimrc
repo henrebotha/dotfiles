@@ -397,10 +397,6 @@ inoremap <// </<C-x><C-o>
 " Brave experimental stuff
 " ------------------------
 
-nnoremap q: q:i
-nnoremap q/ q/i
-nnoremap q? q?i
-
 set cmdwinheight=1
 
 map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
