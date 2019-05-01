@@ -47,6 +47,10 @@ Plug 'udalov/kotlin-vim', { 'for': ['kotlin'] }
                                           " Language pack for Kotlin
 Plug 'henrebotha/vim-protobuf', { 'for': ['protobuf'] }
                                           " Language pack for Protobuf
+                                          " Language pack for Perl
+Plug 'vim-perl/vim-perl', {
+    \ 'do': 'mkdir -p after/syntax/perl && cp contrib/heredoc-sql.vim after/syntax/perl/heredoc-sql.vim'
+    \ }
 Plug 'sheerun/vim-polyglot'               " Loads language packs on demand. Put
                                           " overriding language packs before this one
 if has('nvim')
