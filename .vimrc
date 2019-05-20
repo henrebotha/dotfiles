@@ -38,19 +38,21 @@ endif
 call plug#begin()
 
 Plug 'jeffkreeftmeijer/vim-dim'           " 4-bit colour scheme to force using terminal colours
-Plug 'ap/vim-buftabline'
+Plug 'ap/vim-buftabline'                  " Show buffers in the tabline
 
-Plug 'zyedidia/literate.vim'              " Syntax support for Literate
 Plug 'elmcast/elm-vim', { 'for': ['elm'] }
                                           " Language pack for Elm
 Plug 'udalov/kotlin-vim', { 'for': ['kotlin'] }
                                           " Language pack for Kotlin
 Plug 'henrebotha/vim-protobuf', { 'for': ['protobuf'] }
                                           " Language pack for Protobuf
-                                          " Language pack for Perl
 Plug 'vim-perl/vim-perl', {
-    \ 'do': 'mkdir -p after/syntax/perl && cp contrib/heredoc-sql.vim after/syntax/perl/heredoc-sql.vim'
-    \ }
+  \ 'do': 'mkdir -p after/syntax/perl && cp contrib/heredoc-sql.vim after/syntax/perl/heredoc-sql.vim',
+  \ 'for': ['perl']
+  \ }
+                                          " Language pack for Perl
+                                          " Included here because heredoc
+                                          " syntax is not loaded automatically
 Plug 'sheerun/vim-polyglot'               " Loads language packs on demand. Put
                                           " overriding language packs before this one
 Plug 'joker1007/vim-ruby-heredoc-syntax', { 'for': ['ruby'] }
@@ -62,11 +64,14 @@ if has('nvim')
     \ }
 endif
 
-Plug 'tpope/vim-git' " , { 'for': ['git'] }
+Plug 'tpope/vim-git' , {
+  \ 'for': ['git', 'gitcommit', 'gitconfig', 'gitrebase', 'gitsendemail'] }
+                                          " Language pack for Git
 Plug 'chrisbra/NrrwRgn', { 'on': ['NR', 'NrrwRgn'] }
                                           " Emacs-style narrowing
 Plug 'tpope/vim-surround'                 " Adds commands for surrounding chars
 Plug 'wellle/targets.vim'                 " More text objects
+Plug 'michaeljsmith/vim-indent-object'    " Text object for indentation blocks
 Plug 'haya14busa/incsearch.vim'           " Highlight incremental search results
 Plug 'airblade/vim-gitgutter'             " Show git status in gutter, async
 Plug 'tpope/vim-unimpaired'               " Pairwise commands
@@ -76,11 +81,11 @@ Plug 'andymass/matchup.vim'               " Movement between matching if/ends et
 Plug '~/.fzf'
 Plug 'junegunn/fzf.vim', { 'do': './install --bin' }
                                           " Fast fuzzy finder
-Plug 'michaeljsmith/vim-indent-object'    " Text object for indentation blocks
 Plug 'tpope/vim-apathy'                   " Some path values for various langs
 Plug 'dzeban/vim-log-syntax'              " Log syntax
 
-Plug 'metakirby5/codi.vim'                " In-buffer REPL
+Plug 'metakirby5/codi.vim', { 'on': ['Codi'] }
+                                          " In-buffer REPL
 
 if v:progname !=? 'view'
   Plug 'w0rp/ale'                           " Async linter
