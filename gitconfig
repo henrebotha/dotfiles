@@ -11,11 +11,15 @@
 	; -n:           don't use a swap file
 	; -c:           run command on start, after autocmd/modeline
 	; --not-a-term: don't show the stupid "reading from stdin" message
-	pager = vim -X -R - -n -c 'set filetype=git nowrap noro'
+	; pager = vim -X -R - -n -c 'set filetype=git nowrap noro' ; removed as completely impractical on big repos
+[pager]
+	diff = vim -X -R - -n -c 'set filetype=git nowrap noro'
+	show = vim -X -R - -n -c 'set filetype=git nowrap noro'
 [color]
 	; Vim/Kakoune can syntax highlight just fine on their own, and don't understand
-	; colour codes, so we disable the colouring when using a pager
-	pager = false
+	; colour codes, so we disable the colouring when using Vim-paged commands
+	diff = false
+	show = false
 [user]
 	name = Henré Botha
 	useConfigOnly = true ; force me to set email in repo local config
