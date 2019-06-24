@@ -85,5 +85,8 @@
 
 	intend = add -N
 	unintend = rm --cached
+
+	# Mnemonic: "diverge"
+	di = ! "f() { git -c color.diff=true log --oneline --graph --decorate HEAD $1 `git merge-base HEAD $1`^!; }; f"
 [push]
 	default = current
