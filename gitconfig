@@ -56,20 +56,22 @@
 	c = commit
 	cmsg = commit -m
 	co = checkout
-	dca = diff --cached
-	dcaw = diff --cached --word-diff
-	dcac = diff --cached --word-diff-regex=.
-	dw = diff --word-diff
 	dc = diff --word-diff-regex=.
+	dca = diff --cached
+	dcac = diff --cached --word-diff-regex=.
+	dcaw = diff --cached --word-diff
+	dw = diff --word-diff
 	fa = fetch --all --prune
 	l = log
 	lo = log --oneline --decorate
-	lg = -c core.pager='less -R' -c color.pager=true log --oneline --decorate --graph
-	lga = -c core.pager='less -R' -c color.pager=true log --oneline --decorate --graph --all
-	lgb = -c core.pager='less -R' -c color.pager=true log --oneline --decorate --graph --branches
+	lg = -c color.diff=true log --oneline --decorate --graph
+	lga = -c color.diff=true log --oneline --decorate --graph --all
+	lgb = -c color.diff=true log --oneline --decorate --graph --branches
 	r = remote
 	ra = remote add
-	rbm = ! "git rebase -i `git merge-base HEAD master`"
+	rb = ! "f() { git rebase -i `git merge-base HEAD $1`; }; f"
+	; rbm = ! "git rebase -i `git merge-base HEAD master`"
+	; rbt = ! "git rebase -i `git merge-base HEAD trunk`"
 	rmv = remote rename
 	rrm = remote remove
 	rv = remote -v
