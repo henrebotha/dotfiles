@@ -243,6 +243,9 @@ nmap <leader>r :Rg
 nmap <leader>c :Commands<CR>
 command! -bang -nargs=* RgPerl call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case -t perl ".shellescape(<q-args>), 1, <bang>0)',
 
+" Yank file path with line number
+nnoremap <leader>y :let @+=expand("%") . ':' . line(".")<CR>
+
 " Bindings for session management
 " https://dockyard.com/blog/2018/06/01/simple-vim-session-management-part-1
 " Remove `options` from sessionoptions — options get mangled sometimes
