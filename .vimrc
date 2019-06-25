@@ -1,14 +1,14 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-" Before we continue, detect which version of Vim we're running
+" Before we continue, detect which version of Vim we're running {{{
 if has('nvim')
   let config_path = '~/.config/nvim'
   let g:python2_host_prog = '/usr/local/bin/python2'
   let g:python3_host_prog = '/usr/local/bin/python3'
 else
   let config_path = '~/.vim'
-endif
+endif " }}}
 
 set ttyfast
 
@@ -22,13 +22,16 @@ let mapleader = "\<space>"
 set visualbell
 set ruler
 
+" Manage autoload & plugins {{{
 let autoload_path = config_path . '/autoload'
 let plug_path = autoload_path . '/plug.vim'
 if empty(glob(autoload_path))
   execute 'silent !curl -fLo ' . plug_path . ' --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
   autocmd VimEnter * PlugInstall
   autocmd VimEnter * close
-endif
+endif " }}}
+
+" Install plugins {{{
 
 " TODO: Rework this. Detect whether we're launching as read-only. If so, set
 " all plugins to load on demand, in case we open a file in write mode during
@@ -108,7 +111,7 @@ if v:progname !=? 'view'
   Plug 'tpope/vim-fugitive'                 " Git
 endif
 
-call plug#end()
+call plug#end() " }}}
 
 set backspace=indent,eol,start
 set infercase
@@ -342,7 +345,6 @@ set autoread
 set autowrite
 
 set fileformats=unix,mac,dos
-set nomodeline
 
 " Enable bash-like command line completion
 set wildmenu
@@ -383,3 +385,4 @@ inoremap <// </<C-x><C-o>
 
 set cmdwinheight=1
 
+" vim: set foldmethod=marker foldlevel=0:
