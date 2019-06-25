@@ -86,6 +86,7 @@ Plug 'dzeban/vim-log-syntax'              " Log syntax
 
 Plug 'metakirby5/codi.vim', { 'on': ['Codi'] }
                                           " In-buffer REPL
+Plug 'chrisbra/recover.vim'               " Add 'compare' option to swap file recovery
 
 if v:progname !=? 'view'
   Plug 'w0rp/ale'                           " Async linter
