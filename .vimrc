@@ -168,10 +168,10 @@ hi DiffDelete term=underline cterm=underline ctermfg=6 ctermbg=NONE
 hi DiffText term=underline cterm=underline ctermfg=9 ctermbg=NONE
 
 " Shortcut to rapidly toggle `set list`
-nmap <leader>l :set list!<cr>
+nnoremap <leader>l :set list!<cr>
 
 " Some experimental stuff for vim-gitgutter
-nmap <leader>gdargs :echo 'gitgutter diff args: ' . g:gitgutter_diff_args<cr>
+nnoremap <leader>gdargs :echo 'gitgutter diff args: ' . g:gitgutter_diff_args<cr>
 
 function! GitGutterToggleCached()
   if g:gitgutter_diff_args =~ ' --cached'
@@ -182,7 +182,7 @@ function! GitGutterToggleCached()
   :GitGutterAll
 endfunc
 
-nmap <leader>gdca :call GitGutterToggleCached()<cr>
+nnoremap <leader>gdca :call GitGutterToggleCached()<cr>
 
 function! GitGutterToggleWhitespace()
   if g:gitgutter_diff_args =~ ' -w'
@@ -193,7 +193,7 @@ function! GitGutterToggleWhitespace()
   :GitGutterAll
 endfunc
 
-nmap <leader>gdw :call GitGutterToggleWhitespace()<cr>
+nnoremap <leader>gdw :call GitGutterToggleWhitespace()<cr>
 
 " Shortcuts for ale to navigate between errors
 " go to previous error
@@ -240,13 +240,13 @@ endfunction
 set grepprg=rg\ --vimgrep
 
 " Bindings for fzf
-nmap <leader>f :Files<cr>
-nmap <leader>t :Tags<cr>
-nmap <leader>i :Lines
-nmap <leader>/ :BLines<cr>
-nmap <leader>b :Buffers<cr>
-nmap <leader>r :Rg
-nmap <leader>c :Commands<cr>
+nnoremap <leader>f :Files<cr>
+nnoremap <leader>t :Tags<cr>
+nnoremap <leader>i :Lines
+nnoremap <leader>/ :BLines<cr>
+nnoremap <leader>b :Buffers<cr>
+nnoremap <leader>r :Rg
+nnoremap <leader>c :Commands<cr>
 command! -bang -nargs=* RgPerl call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case -t perl ".shellescape(<q-args>), 1, <bang>0)',
 
 " Yank file path with line number
@@ -256,11 +256,11 @@ nnoremap <leader>y :let @+=expand("%") . ':' . line(".")<cr>
 " https://dockyard.com/blog/2018/06/01/simple-vim-session-management-part-1
 " Remove `options` from sessionoptions — options get mangled sometimes
 let sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,terminal"
-nmap <leader>ss :Obsession Session
-nmap <leader>sr :source Session
+nnoremap <leader>ss :Obsession Session
+nnoremap <leader>sr :source Session
 
 " Bindings for goyo ("prose mode")
-nmap <leader>p :Goyo <bar> highlight StatusLineNC ctermfg=white<cr>
+nnoremap <leader>p :Goyo <bar> highlight StatusLineNC ctermfg=white<cr>
 " Detect window resize with goyo active & maximize window size when it happens
 " Workaround for https://github.com/junegunn/goyo.vim/issues/159
 augroup goyohacks
