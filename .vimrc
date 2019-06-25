@@ -115,12 +115,12 @@ call plug#end() " }}}
 
 set backspace=indent,eol,start
 set infercase
-set pastetoggle=<Leader>pt
+set pastetoggle=<leader>pt
 set showmatch
 
 set hidden
-nnoremap <C-N> :bnext<CR>
-nnoremap <C-P> :bprev<CR>
+nnoremap <c-n> :bnext<cr>
+nnoremap <c-p> :bprev<cr>
 
 " Hook into Linux clipboard
 if has('clipboard')
@@ -168,10 +168,10 @@ hi DiffDelete term=underline cterm=underline ctermfg=6 ctermbg=NONE
 hi DiffText term=underline cterm=underline ctermfg=9 ctermbg=NONE
 
 " Shortcut to rapidly toggle `set list`
-nmap <leader>l :set list!<CR>
+nmap <leader>l :set list!<cr>
 
 " Some experimental stuff for vim-gitgutter
-nmap <leader>gdargs :echo 'gitgutter diff args: ' . g:gitgutter_diff_args<CR>
+nmap <leader>gdargs :echo 'gitgutter diff args: ' . g:gitgutter_diff_args<cr>
 
 function! GitGutterToggleCached()
   if g:gitgutter_diff_args =~ ' --cached'
@@ -182,7 +182,7 @@ function! GitGutterToggleCached()
   :GitGutterAll
 endfunc
 
-nmap <leader>gdca :call GitGutterToggleCached()<CR>
+nmap <leader>gdca :call GitGutterToggleCached()<cr>
 
 function! GitGutterToggleWhitespace()
   if g:gitgutter_diff_args =~ ' -w'
@@ -193,13 +193,13 @@ function! GitGutterToggleWhitespace()
   :GitGutterAll
 endfunc
 
-nmap <leader>gdw :call GitGutterToggleWhitespace()<CR>
+nmap <leader>gdw :call GitGutterToggleWhitespace()<cr>
 
 " Shortcuts for ale to navigate between errors
 " go to previous error
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <c-k> <Plug>(ale_previous_wrap)
 " go to next error
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
+nmap <silent> <c-j> <Plug>(ale_next_wrap)
 " Keep gutter open at all times. Causes flickering when toggling Goyo
 let g:ale_sign_column_always = 1
 " Slow it down a little
@@ -225,7 +225,7 @@ map g/ <Plug>(incsearch-stay)
 let g:incsearch#magic = '\v'
 
 " Use C-l to highlight the current cursor position
-nnoremap <C-l> :call HighlightNearCursor()<CR>
+nnoremap <c-l> :call HighlightNearCursor()<cr>
 function! HighlightNearCursor()
   if !exists('s:highlightcursor')
     match Todo /\k*\%#\k*/
@@ -240,17 +240,17 @@ endfunction
 set grepprg=rg\ --vimgrep
 
 " Bindings for fzf
-nmap <leader>f :Files<CR>
-nmap <leader>t :Tags<CR>
+nmap <leader>f :Files<cr>
+nmap <leader>t :Tags<cr>
 nmap <leader>i :Lines
-nmap <leader>/ :BLines<CR>
-nmap <leader>b :Buffers<CR>
+nmap <leader>/ :BLines<cr>
+nmap <leader>b :Buffers<cr>
 nmap <leader>r :Rg
-nmap <leader>c :Commands<CR>
+nmap <leader>c :Commands<cr>
 command! -bang -nargs=* RgPerl call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case -t perl ".shellescape(<q-args>), 1, <bang>0)',
 
 " Yank file path with line number
-nnoremap <leader>y :let @+=expand("%") . ':' . line(".")<CR>
+nnoremap <leader>y :let @+=expand("%") . ':' . line(".")<cr>
 
 " Bindings for session management
 " https://dockyard.com/blog/2018/06/01/simple-vim-session-management-part-1
@@ -260,7 +260,7 @@ nmap <leader>ss :Obsession Session
 nmap <leader>sr :source Session
 
 " Bindings for goyo ("prose mode")
-nmap <leader>p :Goyo <bar> highlight StatusLineNC ctermfg=white<CR>
+nmap <leader>p :Goyo <bar> highlight StatusLineNC ctermfg=white<cr>
 " Detect window resize with goyo active & maximize window size when it happens
 " Workaround for https://github.com/junegunn/goyo.vim/issues/159
 augroup goyohacks
@@ -335,12 +335,12 @@ let g:nrrw_rgn_resize_window = 'relative'
 let g:nrrw_rgn_width = 100
 
 " Keep cursor centred
-nnoremap <Leader>zz :let &scrolloff=999-&scrolloff<CR>
+nnoremap <leader>zz :let &scrolloff=999-&scrolloff<cr>
 
 " Show the undo viewer
-nnoremap <Leader>u :UndotreeToggle<CR>
+nnoremap <leader>u :UndotreeToggle<cr>
 
-nnoremap <Leader>af :Autoformat<CR>
+nnoremap <leader>af :Autoformat<cr>
 
 " Detect & load changes to the file
 set autoread
@@ -353,7 +353,7 @@ set wildmenu
 set wildmode=list:longest,full
 set wildignorecase
 
-nnoremap <Leader>tree :NERDTree<CR>
+nnoremap <leader>tree :NERDTree<cr>
 
 let g:netrw_sort_by = 'time'
 let g:netrw_sort_direction = 'reverse'
@@ -369,17 +369,17 @@ let g:netrw_sort_direction = 'normal'
 " ------------
 
 " Slashes
-onoremap <silent> a/ :<C-U>normal! F/vf/<CR>
-xnoremap <silent> a/ :<C-U>normal! F/vf/<CR>
-onoremap <silent> i/ :<C-U>normal! T/vt/<CR>
-xnoremap <silent> i/ :<C-U>normal! T/vt/<CR>
+onoremap <silent> a/ :<c-u>normal! F/vf/<cr>
+xnoremap <silent> a/ :<c-u>normal! F/vf/<cr>
+onoremap <silent> i/ :<c-u>normal! T/vt/<cr>
+xnoremap <silent> i/ :<c-u>normal! T/vt/<cr>
 
 " ------------------------
 " Abbreviations & snippets
 " ------------------------
 
 " Type <// to auto-close XML tags
-inoremap <// </<C-x><C-o>
+inoremap <// </<c-x><c-o>
 
 " ------------------------
 " Brave experimental stuff
