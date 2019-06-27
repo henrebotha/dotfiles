@@ -24,6 +24,7 @@
 	name = Henré Botha
 	useConfigOnly = true ; force me to set email in repo local config
 [diff]
+	colorMoved = true ; give moved lines their own colour. Only works when paging with colour
 	compactionheuristic = true
 	mnemonicprefix = true ; replace a/b with (i)ndex/(c)ommit/(w)orking tree
 	renames = copies ; detect file copies as a type of rename
