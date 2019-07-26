@@ -74,7 +74,9 @@
 	lgb = -c color.diff=true log --oneline --decorate --graph --branches
 	r = remote
 	ra = remote add
-	rb = ! "f() { git rebase -i `git merge-base HEAD $1`; }; f"
+	rb = ! "f() { \
+		git rebase -i `git merge-base HEAD $1`; \
+	}; f"
 	; rbm = ! "git rebase -i `git merge-base HEAD master`"
 	; rbt = ! "git rebase -i `git merge-base HEAD trunk`"
 	rmv = remote rename
@@ -84,8 +86,14 @@
 	sdw = show --word-diff
 	sdc = show --word-diff-regex=.
 
-	wip = ! "f() { git add -A; git rm $(git ls-files --deleted) 2> /dev/null; git commit --no-verify -m '--wip-- [skip ci]'; }; f"
-	unwip = ! "f() { git log -n 1 | grep -q -c \"\\-\\-wip\\-\\-\" && git reset HEAD~1; }; f"
+	wip = ! "f() { \
+		git add -A; \
+		git rm $(git ls-files --deleted) 2> /dev/null; \
+		git commit --no-verify -m '--wip-- [skip ci]'; \
+	}; f"
+	unwip = ! "f() { \
+		git log -n 1 | grep -q -c \"\\-\\-wip\\-\\-\" && git reset HEAD~1; \
+	}; f"
 	wips = ! git branch -v --no-abbrev | grep '\\-\\-wip\\-\\-'
 
 	email = config --local user.email
@@ -94,13 +102,19 @@
 	unintend = rm --cached
 
 	# Mnemonic: "diverge"
-	di = ! "f() { git -c color.diff=true log --oneline --graph --decorate HEAD $1 `git merge-base HEAD $1`^!; }; f"
+	di = ! "f() { \
+		git -c color.diff=true log --oneline --graph --decorate HEAD $1 `git merge-base HEAD $1`^!; \
+	}; f"
 
 	# Worktree workflow
 	wkls = worktree list
 	# We have to unset the upstream if $2 is a remote branch, otherwise $1 will track $2, which will affect pushing
-	wkadd = ! "f() { git worktree add ../$(echo \"$1\" | sed \"s./.--.g\") $2 -b $1 && grep -qv \"^origin/\" <<< $2 || git branch --unset-upstream $1; }; f" ; usage: g wkadd hbotha/my-branch root-commit
-	wkrb = ! "f() { git fetch --prune && git rebase $1; }; f" ; usage: g wkrb origin/trunk
+	wkadd = ! "f() { \
+		git worktree add ../$(echo \"$1\" | sed \"s./.--.g\") $2 -b $1 && grep -qv \"^origin/\" <<< $2 || git branch --unset-upstream $1; \
+	}; f" ; usage: g wkadd hbotha/my-branch root-commit
+	wkrb = ! "f() { \
+		git fetch --prune && git rebase $1; \
+	}; f" ; usage: g wkrb origin/trunk
 	wkrm = ! "branch=$(git symbolic-ref --short HEAD) && git checkout --detach && git branch -D $branch && git worktree remove ."
 [push]
 	default = current
