@@ -120,6 +120,7 @@ export PATH="/usr/local/Cellar/node/8.2.1/bin:$PATH"
 # Git
 # ------------------------------------------------------------------------------
 
+alias g='noglob git'
 
 # A lovely script that watches files for changes and automatically commits them
 # to git. Nice to use for note-taking.
