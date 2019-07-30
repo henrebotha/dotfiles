@@ -120,8 +120,6 @@ export PATH="/usr/local/Cellar/node/8.2.1/bin:$PATH"
 # Git
 # ------------------------------------------------------------------------------
 
-# Discard changes to all unstaged, tracked files. TODO: move to gitconfig
-alias gdisc='git checkout -- $(git ls-files -m)'
 
 # A lovely script that watches files for changes and automatically commits them
 # to git. Nice to use for note-taking.
