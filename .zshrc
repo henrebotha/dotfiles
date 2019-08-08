@@ -3,6 +3,7 @@
 # ------------------------------------------------------------------------------
 
 ZSH_THEME="henrebotha"
+export ZSH='/home/hbotha/.oh-my-zsh'
 
 # Disabled on macOS due to line-chomping behaviour
 # https://github.com/robbyrussell/oh-my-zsh/issues/5765
@@ -50,7 +51,7 @@ cdpath=($cdpath ~/dev)
 
 if type sqlite3 > /dev/null; then
   source ~/.oh-my-zsh/custom/plugins/zsh-histdb/sqlite-history.zsh
-  # autoload -Uz add-zsh-hook # disabled because of slow
+  autoload -Uz add-zsh-hook # disable this if term gets slow
   add-zsh-hook precmd histdb-update-outcome
 fi
 

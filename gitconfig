@@ -11,10 +11,9 @@
 	; -n:           don't use a swap file
 	; -c:           run command on start, after autocmd/modeline
 	; --not-a-term: don't show the stupid "reading from stdin" message
-	; pager = ifne vim -X -R - -n -c 'set filetype=git nowrap noro' ; removed as completely impractical on big repos
+	pager = ifne vim -X -R - -n -c 'set filetype=git nowrap noro'
 [pager]
-	diff = ifne vim -X -R - -n -c 'set filetype=git nowrap noro'
-	show = ifne vim -X -R - -n -c 'set filetype=git nowrap noro'
+	log = less
 [color]
 	; Vim/Kakoune can syntax highlight just fine on their own, and don't understand
 	; colour codes, so we disable the colouring when using Vim-paged commands
@@ -55,7 +54,7 @@
 
 	# Short aliases for simple commands, taken from the oh-my-zsh git plugin
 	a = add
-	apa = add --patch
+	apa = -c color.diff=true add --patch
 	b = branch
 	ba = branch -a
 	c = commit
@@ -67,8 +66,8 @@
 	dcaw = diff --cached --word-diff
 	dw = diff --word-diff
 	fa = fetch --all --prune
-	l = log
-	lo = log --oneline --decorate
+	l = -c color.diff=true log
+	lo = -c color.diff=true log --oneline --decorate
 	lg = -c color.diff=true log --oneline --decorate --graph
 	lga = -c color.diff=true log --oneline --decorate --graph --all
 	lgb = -c color.diff=true log --oneline --decorate --graph --branches

@@ -1,10 +1,8 @@
-# Use brew git, not OSX git.
-if [[ `uname` == 'Darwin' ]]
-then
+if [[ `uname` == 'Darwin' ]]; then
   export EDITOR="nvim"
 else
-  export EDITOR="vim"
+  export EDITOR="vim -X"
 fi
 export PATH="/usr/local/bin:$PATH"
-export SHELL="zsh"
-export ZSH=/Users/henrebotha/.oh-my-zsh
+export PATH="/usr/local/sbin:$PATH"
+export PATH="/opt/local/bin:$PATH"
