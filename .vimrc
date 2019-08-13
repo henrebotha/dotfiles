@@ -376,6 +376,12 @@ let g:netrw_sort_direction = 'normal'
 " Text objects
 " ------------
 
+" Lines
+onoremap <silent> al :normal val<cr>
+xnoremap <silent> al $o0
+onoremap <silent> il :normal vil<cr>
+xnoremap <silent> il g_o^
+
 " Slashes
 onoremap <silent> a/ :<c-u>normal! F/vf/<cr>
 xnoremap <silent> a/ :<c-u>normal! F/vf/<cr>
