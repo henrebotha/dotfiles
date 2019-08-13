@@ -289,6 +289,9 @@ set smartindent
 " :h statusline for details on the defaults
 set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)%y\ %P
 
+" Reduce prevalence of 'press enter to continue' on file write
+set shortmess=filnxtToOS
+
 " relativenumber slows down rendering, so we use lazyredraw to buffer redraws
 " may not be needed since we no longer use relativenumber
 set lazyredraw
