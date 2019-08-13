@@ -253,8 +253,9 @@ nnoremap <leader>r :Rg
 nnoremap <leader>c :Commands<cr>
 command! -bang -nargs=* RgPerl call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case -t perl ".shellescape(<q-args>), 1, <bang>0)',
 
-" Yank file path with line number
-nnoremap <leader>y :let @+=expand("%") . ':' . line(".")<cr>
+" Yank file path, optionally with line number
+nnoremap <leader>yf :let @+=expand("%")<cr>
+nnoremap <leader>yl :let @+=expand("%") . ':' . line(".")<cr>
 
 " Bindings for session management
 " https://dockyard.com/blog/2018/06/01/simple-vim-session-management-part-1
