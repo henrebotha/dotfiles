@@ -76,7 +76,6 @@ Plug 'chrisbra/NrrwRgn', { 'on': ['NR', 'NrrwRgn'] }
 Plug 'tpope/vim-surround'                 " Adds commands for surrounding chars
 Plug 'wellle/targets.vim'                 " More text objects
 Plug 'michaeljsmith/vim-indent-object'    " Text object for indentation blocks
-Plug 'haya14busa/incsearch.vim'           " Highlight incremental search results
 Plug 'airblade/vim-gitgutter'             " Show git status in gutter, async
 Plug 'tpope/vim-unimpaired'               " Pairwise commands
 Plug 'junegunn/goyo.vim', { 'on': ['Goyo'] }
@@ -219,11 +218,15 @@ let g:ale_lint_on_insert_leave = 1
 " Use the same symbols as TextMate for tabstops and EOLs
 set listchars=tab:>\ ,eol:¬,space:-,trail:-
 
-" incsearch.vim settings
-map / <Plug>(incsearch-forward)
-map ? <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)
-let g:incsearch#magic = '\v'
+set incsearch
+set hlsearch
+augroup vimrc-incsearch-highlight
+  autocmd!
+  autocmd CmdlineEnter /,\? :set hlsearch
+  autocmd CmdlineLeave /,\? :set nohlsearch
+augroup END
+nnoremap / /\v
+cnoremap %s/ %s/\v
 
 " Use C-l to highlight the current cursor position
 nnoremap <c-l> :call HighlightNearCursor()<cr>
