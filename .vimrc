@@ -41,6 +41,7 @@ endif " }}}
 call plug#begin()
 
 Plug 'jeffkreeftmeijer/vim-dim'           " 4-bit colour scheme to force using terminal colours
+Plug 'noahfrederick/vim-noctu'            " 4-bit colour scheme to force using terminal colours
 Plug 'ap/vim-buftabline'                  " Show buffers in the tabline
 
 Plug 'elmcast/elm-vim', { 'for': ['elm'] }
@@ -158,7 +159,7 @@ hi CursorLineNr ctermfg=14
 " set t_8b=[48;2;%lu;%lu;%lum
 " set termguicolors
 " colorscheme Spacedust
-colorscheme dim
+colorscheme noctu
 set bg=dark
 " let g:airline_theme='term'
 " Fix vimdiff colours to be not so eye-bleeding. Ugly, but better
