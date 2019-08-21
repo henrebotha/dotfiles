@@ -109,13 +109,23 @@
 
 	# Worktree workflow
 	wkls = worktree list
-	# We have to unset the upstream if $2 is a remote branch, otherwise $1 will track $2, which will affect pushing
-	wkadd = ! "f() { \
-		git worktree add ../$(echo \"$1\" | sed \"s./.--.g\") $2 -b $1 && grep -qv \"^origin/\" <<< $2 || git branch --unset-upstream $1; \
-	}; f" ; usage: g wkadd hbotha/my-branch root-commit
-	wkrb = ! "f() { \
-		git fetch --prune && git rebase $1; \
-	}; f" ; usage: g wkrb origin/trunk
-	wkrm = ! "branch=$(git symbolic-ref --short HEAD) && git checkout --detach && git branch -D $branch && git worktree remove ."
+
+	# We have to unset the upstream if $2 is a remote branch, otherwise $1 will
+	# track $2, which will affect pushing
+	wkadd = ! "f() { \n\
+		git worktree add ../$(echo \"$1\" | sed \"s./.--.g\") $2 -b $1 && \n\
+		echo \"$2\" | grep -qv \"^origin/\" || git branch --unset-upstream $1; \n\
+		}; f"
+	wkrb = ! "f() { \n\
+		git fetch --prune && git rebase $1; \n\
+		}; f"
+	wkrm = ! "branch=$(git symbolic-ref --short HEAD) && \n\
+		default_branch=$(git symbolic-ref --short refs/remotes/origin/HEAD) && \n\
+		test $(git merge-base $default_branch HEAD) = $(git rev-parse HEAD) && \n\
+		git checkout --detach && \n\
+		git branch -d $branch && git worktree remove ."
+	wkrmf = ! "branch=$(git symbolic-ref --short HEAD) && \n\
+		git checkout --detach && \n\
+		git branch -D $branch && git worktree remove ."
 [push]
 	default = current
