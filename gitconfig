@@ -78,12 +78,14 @@
 	}; f"
 	; rbm = ! "git rebase -i `git merge-base HEAD master`"
 	; rbt = ! "git rebase -i `git merge-base HEAD trunk`"
+	re = restore
 	rmv = remote rename
 	rrm = remote remove
 	rv = remote -v
 	sdc = show --word-diff-regex=.
 	sdw = show --word-diff
 	st = status
+	sw = switch
 
 	wip = ! "f() { \
 		git add -A; \
