@@ -67,10 +67,10 @@
 	dw = diff --word-diff
 	fa = fetch --all --prune
 	l = -c color.diff=true log
-	lo = -c color.diff=true log --oneline --decorate
 	lg = -c color.diff=true log --oneline --decorate --graph
 	lga = -c color.diff=true log --oneline --decorate --graph --all
 	lgb = -c color.diff=true log --oneline --decorate --graph --branches
+	lo = -c color.diff=true log --oneline --decorate
 	r = remote
 	ra = remote add
 	rb = ! "f() { \
@@ -81,9 +81,9 @@
 	rmv = remote rename
 	rrm = remote remove
 	rv = remote -v
-	st = status
-	sdw = show --word-diff
 	sdc = show --word-diff-regex=.
+	sdw = show --word-diff
+	st = status
 
 	wip = ! "f() { \
 		git add -A; \
