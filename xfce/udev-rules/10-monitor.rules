@@ -1,0 +1,1 @@
+ACTION=="change", SUBSYSTEM=="drm", RUN+="/bin/sh -c 'cd /home/hbotha/scripts; /bin/sh monitor-layout.sh'"
