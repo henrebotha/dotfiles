@@ -52,12 +52,12 @@
 	# Safer alternative to --force
 	pf = push --force-with-lease
 
-	# Short aliases for simple commands, taken from the oh-my-zsh git plugin
+	# Short aliases for simple commands
 	a = add
 	apa = -c color.diff=true add --patch
 	b = branch
 	ba = branch -a
-	c = commit
+	c = commit -v
 	cmsg = commit -m
 	co = checkout
 	dc = diff --word-diff-regex=.
