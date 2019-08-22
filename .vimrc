@@ -253,6 +253,9 @@ nnoremap <leader>r :Rg
 nnoremap <leader>c :Commands<cr>
 command! -bang -nargs=* RgPerl call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case -t perl ".shellescape(<q-args>), 1, <bang>0)',
 
+" Make a new empty buffer
+nnoremap <leader>n :enew<cr>
+
 " Yank file path, optionally with line number
 nnoremap <leader>yf :let @+=expand("%")<cr>
 nnoremap <leader>yl :let @+=expand("%") . ':' . line(".")<cr>
