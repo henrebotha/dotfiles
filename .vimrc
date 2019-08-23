@@ -42,7 +42,6 @@ call plug#begin()
 
 Plug 'jeffkreeftmeijer/vim-dim'           " 4-bit colour scheme to force using terminal colours
 Plug 'noahfrederick/vim-noctu'            " 4-bit colour scheme to force using terminal colours
-Plug 'ap/vim-buftabline'                  " Show buffers in the tabline
 
 Plug 'elmcast/elm-vim', { 'for': ['elm'] }
                                           " Language pack for Elm
@@ -291,6 +290,8 @@ set smartindent
 " Add filetype to statusline
 " :h statusline for details on the defaults
 set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)%y\ %P
+set laststatus=2
+hi StatusLine ctermbg=none
 
 " Reduce prevalence of 'press enter to continue' on file write
 set shortmess=filnxtToOS
