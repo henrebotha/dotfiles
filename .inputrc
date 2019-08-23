@@ -1,4 +1,5 @@
 set editing-mode vi
+set show-mode-in-prompt on
 
 "\e[A": history-search-backward
 "\e[B": history-search-forward
