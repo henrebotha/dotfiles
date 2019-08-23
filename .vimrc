@@ -292,6 +292,8 @@ set smartindent
 set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)%y\ %P
 set laststatus=2
 hi StatusLine ctermbg=none
+hi StatusLineNC ctermbg=none
+hi VertSplit ctermbg=none
 
 " Reduce prevalence of 'press enter to continue' on file write
 set shortmess=filnxtToOS
