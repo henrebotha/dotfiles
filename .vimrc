@@ -252,6 +252,11 @@ nnoremap <leader>r :Rg
 nnoremap <leader>c :Commands<cr>
 command! -bang -nargs=* RgPerl call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case -t perl ".shellescape(<q-args>), 1, <bang>0)',
 
+" Tags stuff
+" Let Vim look upwards from pwd to find a tags file (it's the ;/ pattern that
+" does it, see :h file-searching)
+set tags=./tags;/,./TAGS;/,~/.tags/*tags,tags;/,TAGS;/
+
 " Make a new empty buffer
 nnoremap <leader>n :enew<cr>
 
