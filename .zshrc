@@ -172,28 +172,6 @@ alias elmp='elm-package'
 alias mvnq='mvn -q'
 
 # ------------------------------------------------------------------------------
-# Wine
-# ------------------------------------------------------------------------------
-
-alias swine='/Applications/Wine\ Staging.app/Contents/Resources/wine/bin/wine'
-alias swine64='/Applications/Wine\ Staging.app/Contents/Resources/wine/bin/wine64'
-alias swineboot='/Applications/Wine\ Staging.app/Contents/Resources/wine/bin/wineboot'
-# alias swinebuild='winebuild'
-alias swinecfg='/Applications/Wine\ Staging.app/Contents/Resources/wine/bin/winecfg'
-alias swineconsole='/Applications/Wine\ Staging.app/Contents/Resources/wine/bin/wineconsole'
-# alias swinecpp='winecpp'
-alias swinedbg='/Applications/Wine\ Staging.app/Contents/Resources/wine/bin/winedbg'
-# alias swinedump='winedump'
-alias swinefile='/Applications/Wine\ Staging.app/Contents/Resources/wine/bin/winefile'
-# alias swineg++='wineg++'
-# alias swinegcc='winegcc'
-# alias swinemaker='winemaker'
-alias swinemine='/Applications/Wine\ Staging.app/Contents/Resources/wine/bin/winemine'
-alias swinepath='/Applications/Wine\ Staging.app/Contents/Resources/wine/bin/winepath'
-alias swineserver='/Applications/Wine\ Staging.app/Contents/Resources/wine/bin/wineserver'
-# alias swinetricks='winetricks'
-
-# ------------------------------------------------------------------------------
 # Ripgrep
 # ------------------------------------------------------------------------------
 
