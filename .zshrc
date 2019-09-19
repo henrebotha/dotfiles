@@ -11,14 +11,12 @@ if [[ `uname` != 'Darwin' ]]; then
   COMPLETION_WAITING_DOTS="true"
 fi
 
-plugins=(git
-         osx
-         zsh-nvm
-         vi-mode
-         virtualbox
-         mvn
-         zsh-autosuggestions
-         docker)
+plugins=(
+  gitfast             # faster completions
+  ripgrep             # completions
+  vi-mode             # additional vi commands
+  zsh-autosuggestions # Fish-like suggestions as you type
+)
 
 # export PATH="/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
 # export MANPATH="/usr/local/man:$MANPATH"

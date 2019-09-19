@@ -25,8 +25,8 @@ git_string() {
     return
   fi
   local g_str="%{$fg[green]%}$(git_prompt_info) "
-  if [[ work_in_progress ]]; then
-    g_str+="%{$fg[red]%}$(work_in_progress) "
+  if $(git log -n 1 2>/dev/null | grep -q -c "\-\-wip\-\-"); then
+    g_str+="%{$fg[red]%}WIP "
   fi
   echo $g_str
 }
