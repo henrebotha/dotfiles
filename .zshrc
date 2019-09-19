@@ -5,9 +5,11 @@
 ZSH_THEME="henrebotha"
 export ZSH='/home/hbotha/.oh-my-zsh'
 
+os=`uname`
+
 # Disabled on macOS due to line-chomping behaviour
 # https://github.com/robbyrussell/oh-my-zsh/issues/5765
-if [[ `uname` != 'Darwin' ]]; then
+if [[ "$os" != 'Darwin' ]]; then
   COMPLETION_WAITING_DOTS="true"
 fi
 
@@ -184,7 +186,7 @@ rgl() {
 # ------------------------------------------------------------------------------
 
 if ! type "shellcheck" > /dev/null; then
-  if [[ `uname` == 'Darwin' ]]; then
+  if [[ "$os" == 'Darwin' ]]; then
     brew install shellcheck
   fi
 fi
@@ -193,7 +195,7 @@ fi
 # macOS
 # ------------------------------------------------------------------------------
 
-if [[ `uname` == 'Darwin' ]]; then
+if [[ "$os" == 'Darwin' ]]; then
   # Fix the macOS pasteboard when it breaks
   # alias fixpboard='ps aux | grep '\''[p]board'\'' | perl -p -e '\''s/ +/ /g'\'' | cut -d '\'' '\'' -f 2 | xargs kill -9'
   alias fixpboard='pkill -9 pboard'
