@@ -251,14 +251,27 @@ endfunction
 set grepprg=rg\ --vimgrep
 
 " Bindings for fzf
-nnoremap <leader>f :Files<cr>
-nnoremap <leader>t :Tags<cr>
-nnoremap <leader>i :Lines
-nnoremap <leader>/ :BLines<cr>
-nnoremap <leader>b :Buffers<cr>
-nnoremap <leader>r :Rg
-nnoremap <leader>c :Commands<cr>
-command! -bang -nargs=* RgPerl call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case -t perl ".shellescape(<q-args>), 1, <bang>0)',
+if executable('fzf')
+  nnoremap <leader>f :Files<cr>
+  nnoremap <leader>t :Tags<cr>
+  nnoremap <leader>i :Lines
+  nnoremap <leader>/ :BLines<cr>
+  nnoremap <leader>b :Buffers<cr>
+  nnoremap <leader>r :Rg
+  nnoremap <leader>c :Commands<cr>
+  command! -bang -nargs=* RgPerl call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case -t perl ".shellescape(<q-args>), 1, <bang>0)',
+
+  command! -bang -nargs=* Rg
+    \ call fzf#vim#grep(
+    \   'rg --vimgrep --color=always '.shellescape(<q-args>), 1,
+    \   <bang>0 ? fzf#vim#with_preview('down:80%')
+    \           : fzf#vim#with_preview('down:80%:hidden', '?'),
+    \   <bang>0)
+else
+  " Fallbacks just in case we're not set up yet
+  nnoremap <leader>f :e
+  nnoremap <leader>b :b
+endif
 
 " Tags stuff
 " Let Vim look upwards from pwd to find a tags file (it's the ;/ pattern that
