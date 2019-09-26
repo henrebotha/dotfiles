@@ -180,7 +180,7 @@ nnoremap <leader>l :set list!<cr>
 " Some experimental stuff for vim-gitgutter
 nnoremap <leader>gdargs :echo 'gitgutter diff args: ' . g:gitgutter_diff_args<cr>
 
-function! GitGutterToggleCached()
+function! GitGutterToggleCached() abort
   if g:gitgutter_diff_args =~ ' --cached'
     let g:gitgutter_diff_args = substitute(g:gitgutter_diff_args, ' --cached', '', '')
   else
@@ -191,7 +191,7 @@ endfunc
 
 nnoremap <leader>gdca :call GitGutterToggleCached()<cr>
 
-function! GitGutterToggleWhitespace()
+function! GitGutterToggleWhitespace() abort
   if g:gitgutter_diff_args =~ ' -w'
     let g:gitgutter_diff_args = substitute(g:gitgutter_diff_args, ' -w', '', '')
   else
@@ -236,7 +236,7 @@ cnoremap %s/ %s/\v
 
 " Use C-l to highlight the current cursor position
 nnoremap <c-l> :call HighlightNearCursor()<cr>
-function! HighlightNearCursor()
+function! HighlightNearCursor() abort
   if !exists('s:highlightcursor')
     match Todo /\k*\%#\k*/
     let s:highlightcursor=1
