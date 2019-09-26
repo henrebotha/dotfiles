@@ -324,9 +324,12 @@ set shiftround
 set autoindent
 set smartindent
 
+set statusline=%<
+set statusline+=%f
+set statusline+=\ %h%m%r%=%-14.(%l,%c%V%)
 " Add filetype to statusline
-" :h statusline for details on the defaults
-set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)%y\ %P
+set statusline+=%y
+set statusline+=\ %P
 set laststatus=2
 hi StatusLine ctermbg=none
 hi StatusLineNC ctermbg=none
