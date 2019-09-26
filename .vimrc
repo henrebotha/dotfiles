@@ -288,6 +288,10 @@ augroup END
 " Make a new empty buffer
 nnoremap <leader>n :enew<cr>
 
+" More convenient mappings for toggling a fold
+nnoremap <leader>z za
+nnoremap <leader>Z zA
+
 " Yank file path, optionally with line number
 nnoremap <leader>yf :let @+=expand("%")<cr>
 nnoremap <leader>yl :let @+=expand("%") . ':' . line(".")<cr>
