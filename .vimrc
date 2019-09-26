@@ -278,6 +278,13 @@ endif
 " does it, see :h file-searching)
 set tags=./tags;/,./TAGS;/,~/.tags/*tags,tags;/,TAGS;/
 
+" Update tags in-place when viewing or editing a file
+augroup ctags
+  autocmd!
+  " We scope this to only files that are in pwd using the stridx
+  autocmd BufEnter,BufRead,BufWritePost * if stridx(expand('%:p'), getcwd()) == 0 && len(tagfiles()) | call system("(sed -i '/^\\S\\+\\s" . escape(expand('%'), '/') . "\\>/d' " . tagfiles()[0] . " && ctags -a -f " . tagfiles()[0] . " " . expand('%') . ") &") | endif
+augroup END
+
 " Make a new empty buffer
 nnoremap <leader>n :enew<cr>
 
