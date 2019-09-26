@@ -170,6 +170,10 @@ hi DiffAdd term=underline cterm=underline ctermfg=4 ctermbg=NONE
 hi DiffChange term=underline cterm=underline ctermfg=5 ctermbg=NONE
 hi DiffDelete term=underline cterm=underline ctermfg=6 ctermbg=NONE
 hi DiffText term=underline cterm=underline ctermfg=9 ctermbg=NONE
+" Make comments italic, because it's nice
+hi Comment term=italic cterm=italic
+" Remove the black background from folds
+hi Folded ctermbg=NONE
 
 " Shortcut to rapidly toggle `set list`
 nnoremap <leader>l :set list!<cr>
