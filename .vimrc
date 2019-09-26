@@ -1,4 +1,3 @@
-set nocompatible              " be iMproved, required
 filetype off                  " required
 
 " Before we continue, detect which version of Vim we're running {{{
@@ -322,7 +321,6 @@ set smarttab
 set shiftround
 
 set autoindent
-set smartindent
 
 set statusline=%<
 set statusline+=%f
