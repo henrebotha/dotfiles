@@ -126,6 +126,11 @@ if has('clipboard')
   set clipboard=unnamedplus
 endif
 
+" If we're launching in diff mode, remap :q to :qa because I'm lazy
+if &diff
+  cnoreabbrev q qa
+endif
+
 " Sensible directions for splitting windows
 set splitbelow
 set splitright
