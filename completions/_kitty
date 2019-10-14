@@ -1,0 +1,5 @@
+#compdef kitty
+
+_arguments \
+  "--debug-config[Dump config & exit]" \
+  "--debug-keyboard[Print debug information for keyboard input]"

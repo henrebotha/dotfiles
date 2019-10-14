@@ -11,6 +11,7 @@ My various configs.
   * `.vim/ftplugin` (a directory) should live at `~/.vim/ftplugin`.
   * `kakrc` should go in `$(which kak)/../share/kak/kakrc`.
   * The contents of `xorg.conf.d` should go in `/etc/X11/xorg.conf.d`.
+  * `/completions` should be at `~/.oh-my-zsh/completions`.
 
 ## What goes where?
 
