@@ -14,6 +14,7 @@
 	pager = ifne vim -X -R - -n -c 'set filetype=git nowrap noro'
 [pager]
 	log = less
+	branch = less
 [color]
 	; Vim/Kakoune can syntax highlight just fine on their own, and don't understand
 	; colour codes, so we disable the colouring when using Vim-paged commands
