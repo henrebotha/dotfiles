@@ -4,7 +4,7 @@
 	compression = 0
 	autocrlf = input
 	excludesfile = ~/.gitignore_global
-	ignorecase=false
+	ignorecase = false
 	editor = vim -X
 	; -X:           don't talk to X11 on startup
 	; -R:           read only mode
