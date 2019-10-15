@@ -67,6 +67,7 @@
 	dcaw = diff --cached --word-diff
 	dw = diff --word-diff
 	fa = fetch --all --prune
+	fp = fetch --prune
 	l = -c color.diff=true log
 	lg = -c color.diff=true log --oneline --decorate --graph
 	lga = -c color.diff=true log --oneline --decorate --graph --all
@@ -128,5 +129,8 @@
 	wkrmf = ! "branch=$(git symbolic-ref --short HEAD) && \n\
 		git checkout --detach && \n\
 		git branch -D $branch && git worktree remove ."
+
+	# Copy the hash of the given ref to the system clipboard
+	cpref = ! "f() { git rev-parse --short $1 | xclip -sel clip;}; f"
 [push]
 	default = current
