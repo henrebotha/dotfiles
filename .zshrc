@@ -13,6 +13,15 @@ if [[ "$os" != 'Darwin' ]]; then
   COMPLETION_WAITING_DOTS="true"
 fi
 
+# This fixes slow Git tab completion. It needs to precede the Git plugin,
+# apparently.
+# https://stackoverflow.com/a/9810485/1966418
+# https://superuser.com/a/459057/317254
+# http://www.zsh.org/mla/workers/2011/msg00491.html
+__git_files () {
+    _wanted files expl 'local files' _files
+}
+
 plugins=(
   gitfast             # faster completions
   ripgrep             # completions
