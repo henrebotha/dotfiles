@@ -43,21 +43,27 @@ vagrant_string() {
 
 VIRTUAL_ENV_DISABLE_PROMPT=true
 
+jobs_status() {
+  echo "%1(j.%{$fg[blue]%}zᶻ %j%{$reset_color%} .)"
+}
+
 # http://web.cs.elte.hu/zsh-manual/zsh_15.html#SEC53 search for PS1
 local username="%{$fg[magenta]%}%n"
 local path_string="%3(c|%{$fg[green]%}…%{$fg[yellow]%}/|)%{$fg[yellow]%}%3C"
 local date_string=$(date +'%Y-%m-%d %H:%M:%S')
+local jobs_string=$(jobs_status)
 
 precmd() {
   # We do it here so that it _doesn't_ update on zle reset-prompt
   date_string=$(date +'%Y-%m-%d %H:%M:%S')
+  jobs_string=$(jobs_status)
 }
 
 # TMOUT=1
 # TRAPALRM() { zle reset-prompt }
 
 # We keep the prompt as a single var, so that reset-prompt redraws the whole thing
-PROMPT='${date_string} ${username} ${path_string} $(git_string)$(vagrant_string)%{$reset_color%}
+PROMPT='${date_string} ${username} ${path_string} $(git_string)${jobs_string}$(vagrant_string)%{$reset_color%}
 ${return_status} %{$reset_color%}'
 
 # Override oh-my-zsh vi-mode plugin prompt
