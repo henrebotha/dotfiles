@@ -120,7 +120,10 @@ set hidden
 nnoremap <c-n> :bnext<cr>
 nnoremap <c-p> :bprev<cr>
 
-" Hook into Linux clipboard
+" Hook into OS clipboard. On Linux and similar, this will use the ^C ^V
+" "CLIPBOARD" (register "+"), not the copy-on-select "PRIMARY" (which is
+" register "*"). See
+" https://specifications.freedesktop.org/clipboards-spec/clipboards-latest.txt
 if has('clipboard')
   set clipboard=unnamedplus
 endif
