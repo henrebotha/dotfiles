@@ -437,6 +437,12 @@ xnoremap <silent> a/ :<c-u>normal! F/vf/<cr>
 onoremap <silent> i/ :<c-u>normal! T/vt/<cr>
 xnoremap <silent> i/ :<c-u>normal! T/vt/<cr>
 
+" Most recent insert (mnemonic: edit)
+onoremap <silent> ae :normal `[v`]<cr>
+xnoremap <silent> ae :normal `[v`]<cr>
+" onoremap <silent> ie :normal `[v`]h<cr>
+" onoremap <silent> ie :normal `[v`]h<cr>
+
 " ------------------------
 " Abbreviations & snippets
 " ------------------------
