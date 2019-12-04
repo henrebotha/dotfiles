@@ -158,17 +158,10 @@ set updatetime=250
 
 " Colours go from 0 to 7: black, red, green, yellow, blue, magenta, cyan, white
 " Then from 8 to 15, bright versions of the above
-" 16 is pure black
 hi LineNr ctermfg=14
 hi CursorLineNr ctermfg=14
-" 'Fix' colors
-" set t_8f=[38;2;%lu;%lu;%lum
-" set t_8b=[48;2;%lu;%lu;%lum
-" set termguicolors
-" colorscheme Spacedust
 colorscheme noctu
 set bg=dark
-" let g:airline_theme='term'
 " Fix vimdiff colours to be not so eye-bleeding. Ugly, but better
 hi DiffAdd term=underline cterm=underline ctermfg=4 ctermbg=NONE
 hi DiffChange term=underline cterm=underline ctermfg=5 ctermbg=NONE
