@@ -297,8 +297,11 @@ nnoremap <leader>yl :let @+=expand("%") . ':' . line(".")<cr>
 " https://dockyard.com/blog/2018/06/01/simple-vim-session-management-part-1
 " Remove `options` from sessionoptions — options get mangled sometimes
 let sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,terminal"
-nnoremap <leader>ss :Obsession Session
-nnoremap <leader>sr :source Session
+
+" session save
+nnoremap <leader>ss :call mkdir(".vim", "p", 0700) <bar> Obsession .vim/Session.vim<cr>
+" session restore
+nnoremap <leader>sr :source .vim/Session.vim<cr>
 
 " Bindings for goyo ("prose mode")
 nnoremap <leader>p :Goyo <bar> highlight StatusLineNC ctermfg=white<cr>
