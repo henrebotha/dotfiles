@@ -385,6 +385,10 @@ set directory^=$HOME/.vim/tmp// " TODO: change for nvim? Or keep across Vim inst
 
 let g:nrrw_rgn_resize_window = 'relative'
 let g:nrrw_rgn_width = 100
+" Disallow NrrwRgn <leader>nr mapping, so we can map it ourselves
+let g:nrrw_rgn_nomap_nr = 1
+xnoremap <leader>nr :NR!<cr>
+nnoremap <leader>wr :WidenRegion!<cr>
 
 " Keep cursor centred
 nnoremap <leader>zz :let &scrolloff=999-&scrolloff<cr>
