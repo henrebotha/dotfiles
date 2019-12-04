@@ -128,6 +128,8 @@ if has('clipboard')
   set clipboard=unnamedplus
 endif
 
+set tildeop
+
 " If we're launching in diff mode, remap :q to :qa because I'm lazy
 if &diff
   cnoreabbrev q qa
