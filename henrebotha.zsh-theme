@@ -33,6 +33,9 @@ git_string() {
   if $(git log -n 1 2>/dev/null | grep -q -c "\-\-wip\-\-"); then
     g_str+="%{$fg[red]%}WIP "
   fi
+  if $(git stash list 2>/dev/null | grep -q -c "on $(git_prompt_info | cut -d/ -f2-)"); then
+    g_str+="%{$fg[yellow]%}(s) "
+  fi
   echo $g_str
 }
 # End git functionality
