@@ -326,7 +326,12 @@ function! FileInsidePwd() abort
   return stridx(expand('%:p'), getcwd()) == 0
 endfunction
 
-set statusline=%<
+function! Servername() abort
+  return v:servername
+endfunction
+
+set statusline=%#Directory#%{Servername()?'':Servername()}%*
+set statusline+=\ %<
 " Colour the file path conditional on its being outside the ocurrent pwd
 " https://gist.github.com/romainl/58245df413641497a02ffc06fd1f4747
 " Note: this may have performance implications due to the system() call on
