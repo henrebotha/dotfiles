@@ -303,7 +303,7 @@ nnoremap <leader>ss :call mkdir(".vim", "p", 0700) <bar> Obsession .vim/Session.
 nnoremap <leader>sr :source .vim/Session.vim<cr>
 
 " Bindings for goyo ("prose mode")
-nnoremap <leader>p :Goyo <bar> highlight StatusLineNC ctermfg=white<cr>
+nnoremap <leader>p :Goyo<cr>
 " Detect window resize with goyo active & maximize window size when it happens
 " Workaround for https://github.com/junegunn/goyo.vim/issues/159
 augroup goyohacks
