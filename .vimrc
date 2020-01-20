@@ -330,16 +330,16 @@ function! Servername() abort
   return v:servername
 endfunction
 
-set statusline=%#Directory#%{Servername()?'':Servername()}%*
-set statusline+=\ %<
+set statusline=%#Directory#%{Servername()\ ==\ ''?'':Servername().'\ '}%*
+set statusline+=%<
 " Colour the file path conditional on its being outside the ocurrent pwd
 " https://gist.github.com/romainl/58245df413641497a02ffc06fd1f4747
 " Note: this may have performance implications due to the system() call on
 " every redraw. If letters like h/j/k/l/w/b/o start showing up on the screen
 " without having been inserted, that's a sign that the performance here is not
 " good enough & we should rethink the FileInsidePwd() function.
-set statusline+=%#FileOutsidePwd#%{FileInsidePwd()?'':expand('%').'[🡕]'}%*%#StatusLine#%{FileInsidePwd()?expand('%'):''}%*
-set statusline+=\ %h%m%r%=%-14.(%l,%c%V%)
+set statusline+=%#FileOutsidePwd#%{FileInsidePwd()?'':expand('%').'[🡕]\ '}%*%#StatusLine#%{FileInsidePwd()?expand('%').'\ ':''}%*
+set statusline+=%h%m%r%=%-14.(%l,%c%V%)
 " Add filetype to statusline
 set statusline+=%y
 set statusline+=\ %P
