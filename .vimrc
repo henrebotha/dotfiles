@@ -113,7 +113,6 @@ call plug#end() " }}}
 
 set backspace=indent,eol,start
 set infercase
-set pastetoggle=<leader>pt
 set showmatch
 
 set hidden
