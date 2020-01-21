@@ -55,7 +55,7 @@
 
 	# Short aliases for simple commands
 	a = add
-	apa = -c color.diff=true add --patch
+	ap = -c color.diff=true add --patch
 	b = branch
 	ba = branch -a
 	c = commit -v
