@@ -88,6 +88,7 @@
 	sdw = show --word-diff
 	st = status
 	sw = switch
+	wk = worktree
 
 	wip = ! "f() { \
 		git add -A; \
