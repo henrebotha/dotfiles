@@ -157,9 +157,20 @@ alias tn='tmux new-session -s'
 # Vim
 # ------------------------------------------------------------------------------
 
+# If we're in a Git repo, name the server after that repo. Otherwise, give it a
+# misc name.
+vim_servername() {
+  if g rev-parse --is-inside-work-tree > /dev/null 2>&1; then
+    echo "$(git repo-and-branch-name)"
+  else
+    echo 'VIM'
+  fi
+}
 # Launch with -X to prevent communication with X11 on startup, improving startup
 # speed in Tmux
-alias v='vim -X'
+alias v='vim -X --servername $(vim_servername)'
+# Source ~/.vimrc in every running Vim server instance
+alias vu='for server in `vim --serverlist`; do; v --servername $server --remote-send '\'':source ~/.vimrc<cr>'\''; done'
 
 # ------------------------------------------------------------------------------
 # Tree

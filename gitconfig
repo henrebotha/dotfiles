@@ -132,5 +132,18 @@
 
 	# Copy the hash of the given ref to the system clipboard
 	cpref = ! "f() { git rev-parse --short $1 | xclip -sel clip;}; f"
+
+	# Get the "name" of the repo directory. This is the name of the directory in
+	# which the main working tree directory lies, or if there is only one working
+	# tree, the name of the working tree directory itself.
+	repo-name = ! "f() {\n\
+		if [ $(git worktree list | wc -l) -eq 1 ]; then\n\
+			basename $(git rev-parse --show-toplevel)\n\
+		else\n\
+			basename $(dirname $(git rev-parse --show-toplevel))\n\
+		fi\n\
+		}; f"
+	
+	repo-and-branch-name = ! "echo $(git repo-name)':'$(git rev-parse --abbrev-ref HEAD)"
 [push]
 	default = current
