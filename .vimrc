@@ -71,6 +71,9 @@ Plug 'tpope/vim-git' , {
                                           " Language pack for Git
 Plug 'chrisbra/NrrwRgn', { 'on': ['NR', 'NrrwRgn'] }
                                           " Emacs-style narrowing
+" TODO: Replace vim-surround with vim-sandwich. See here for some
+" justifications:
+" https://joereynoldsaudio.com/2020/01/22/vim-sandwich-is-better-than-surround.html
 Plug 'tpope/vim-surround'                 " Adds commands for surrounding chars
 Plug 'wellle/targets.vim'                 " More text objects
 Plug 'michaeljsmith/vim-indent-object'    " Text object for indentation blocks
@@ -109,6 +112,7 @@ if v:progname !=? 'view'
   Plug 'tpope/vim-fugitive'                 " Git
 endif
 
+" Automatically executes filetype plugin indent on and syntax enable.
 call plug#end() " }}}
 
 set backspace=indent,eol,start
@@ -278,6 +282,9 @@ set tags=./tags;/,./TAGS;/,~/.tags/*tags,tags;/,TAGS;/
 augroup ctags
   autocmd!
   " We scope this to only files that are in pwd using the stridx
+  " FIXME: The tags file has the wrong paths! It omits the `/worktree-name`
+  " part, so e.g. main.git paths are ~/git_tree/main/lib/…. Somehow I need to
+  " tell ctags to put the worktree name in there…
   autocmd BufEnter,BufRead,BufWritePost * if stridx(expand('%:p'), getcwd()) == 0 && len(tagfiles()) | call system("(sed -i '/^\\S\\+\\s" . escape(expand('%'), '/') . "\\>/d' " . tagfiles()[0] . " && ctags -a -f " . tagfiles()[0] . " " . expand('%') . ") &") | endif
 augroup END
 
@@ -463,6 +470,7 @@ xnoremap <silent> ae :normal `[v`]<cr>
 " ------------------------
 
 " Type <// to auto-close XML tags
+" TODO: this seems busted??
 inoremap <// </<c-x><c-o>
 
 " ------------------------
