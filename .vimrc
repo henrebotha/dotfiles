@@ -163,8 +163,10 @@ set updatetime=250
 " Then from 8 to 15, bright versions of the above
 hi LineNr ctermfg=14
 hi CursorLineNr ctermfg=14
-colorscheme noctu
-set bg=dark
+if exists('g:plugs') && has_key(g:plugs, 'vim-noctu')
+  colorscheme noctu
+  set bg=dark
+endif
 " Fix vimdiff colours to be not so eye-bleeding. Ugly, but better
 hi DiffAdd term=underline cterm=underline ctermfg=4 ctermbg=NONE
 hi DiffChange term=underline cterm=underline ctermfg=5 ctermbg=NONE
