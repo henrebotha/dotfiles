@@ -249,6 +249,13 @@ function! HighlightNearCursor() abort
   endif
 endfunction
 
+nnoremap <leader>gg :call OpenFileFromModuleInPlusRegister()<cr>
+function! OpenFileFromModuleInPlusRegister() abort
+  let l:fname = getreg('+')
+  let l:includeexpr = substitute(&includeexpr, 'v:fname', "'" . l:fname . "'", '')
+  exec("find " . eval(l:includeexpr))
+endfunction
+
 " Use ripgrep as our grep program
 set grepprg=rg\ --vimgrep
 
