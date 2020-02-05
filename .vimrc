@@ -161,6 +161,7 @@ set updatetime=250
 
 " Colours go from 0 to 7: black, red, green, yellow, blue, magenta, cyan, white
 " Then from 8 to 15, bright versions of the above
+set t_Co=16
 hi LineNr ctermfg=14
 hi CursorLineNr ctermfg=14
 if exists('g:plugs') && has_key(g:plugs, 'vim-noctu')
@@ -259,6 +260,12 @@ endfunction
 " Use ripgrep as our grep program
 set grepprg=rg\ --vimgrep
 
+if has('popupwin')
+  let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
+endif
+hi fzf1 ctermfg=red ctermbg=8
+hi fzf2 ctermfg=green ctermbg=8
+hi fzf3 ctermfg=white ctermbg=8
 " Bindings for fzf
 if executable('fzf')
   nnoremap <leader>f :Files<cr>
