@@ -151,7 +151,17 @@ alias ta='tmux a -t'
 alias tai='tmux new-session -t' # mnemonic: "tmux attach independent"
 alias tk='tmux kill-session -t'
 alias tl='tmux ls'
-alias tn='tmux new-session -s'
+tn() {
+  typeset -A sessions
+  sessions=(
+    [dev]=~/git_tree
+    [dotfiles]=~/dev
+    [notes]=~/git_tree
+  )
+  args=(${@:2})
+  session_root=${sessions[$1]:-$HOME}
+  tmux new-session -s $1 -c $session_root $args
+}
 
 # ------------------------------------------------------------------------------
 # Vim
