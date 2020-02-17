@@ -54,6 +54,38 @@ setopt HIST_VERIFY
 # Flag ~/dev/ as a common path to cd into
 cdpath=($cdpath ~/dev)
 
+# On dir change, run a function that, if we're in
+# ~/git_tree/agency-api-client/$branch_name, will add the subdirs of ./packages
+# to $cdpath.
+# TODO: Generalise this to read from a map of directory patterns to "package" dirs.
+chpwd_functions=($chpwd_functions chpwd_add_packages)
+chpwd_add_packages() {
+  if [[ $(pwd) =~ '^/home/hbotha/git_tree/attractions-content/([A-Za-z0-9\-_]+)/?\b' ]]; then
+    package_dir='/home/hbotha/git_tree/attractions-content/'$match[1]'/packages'
+    if [[ ! ${cdpath[(ie)$package_dir]} -le ${#cdpath} ]]; then
+      cdpath=($cdpath $package_dir)
+    fi
+  else
+    # Remove things that look like package_dir from cdpath
+    cdpath=(${cdpath:#/home/hbotha/git_tree/attractions-content/*/packages})
+  fi
+}
+
+# chpwd is not invoked on shell startup, so we define a self-destructing
+# function to do this once. Source:
+# https://gist.github.com/laggardkernel/b2cbc937aa1149530a4886c8bcc7cf7c
+_self_destruct_hook() {
+  local f
+  for f in ${chpwd_functions}; do
+    "$f"
+  done
+
+  # Remove self from precmd
+  precmd_functions=(${(@)precmd_functions:#_self_destruct_hook})
+  builtin unfunction _self_destruct_hook
+}
+(( $+functions[add-zsh-hook] )) || autoload -Uz add-zsh-hook
+add-zsh-hook precmd _self_destruct_hook
 # ------------------------------------------------------------------------------
 # Zsh-histdb
 # ------------------------------------------------------------------------------
