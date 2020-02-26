@@ -32,6 +32,10 @@
 	lineNumber = true
 	extendedRegexp = true
 	fallbackToNoIndex = true
+[fetch]
+	prune = true
+[merge]
+	conflictstyle = diff3
 [alias]
 	# Display all aliases :)
 	aliases = ! git config --list | awk '/alias/{ print $1 }' | perl -pe 's/alias\\.//g' | perl -pe 's/=.+//g'
