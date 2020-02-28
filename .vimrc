@@ -96,13 +96,12 @@ Plug 'metakirby5/codi.vim', { 'on': ['Codi'] }
 Plug 'chrisbra/recover.vim'               " Add 'compare' option to swap file recovery
 
 if v:progname !=? 'view'
-  Plug 'w0rp/ale'                           " Async linter
+  Plug 'dense-analysis/ale'                 " Async linter
   Plug 'junegunn/vim-easy-align'            " Align things, easily
   Plug 'tpope/vim-commentary'               " Toggle comments
   Plug 'tpope/vim-endwise'                  " Auto-insert Ruby end, etc
   Plug 'tpope/vim-sleuth'                   " Auto-detect indentation
   Plug 'mbbill/undotree'                    " Undo tree viewer
-  Plug 'chiel92/vim-autoformat'             " Automatically format various files
   Plug 'AndrewRadev/splitjoin.vim'          " Transform between single- and multiline code
   Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
                                             " Tree browser
@@ -285,21 +284,25 @@ endfunc
 
 nnoremap <leader>gdw :call GitGutterToggleWhitespace()<cr>
 
-" Shortcuts for ale to navigate between errors
-" go to previous error
 nmap <silent> <c-k> <Plug>(ale_previous_wrap)
-" go to next error
+nnoremap <leader>ap :ALEPreviousWrap<cr>
 nmap <silent> <c-j> <Plug>(ale_next_wrap)
+nnoremap <leader>an :ALENextWrap<cr>
+nnoremap <leader>af :ALEFix<cr>
 " Keep gutter open at all times. Causes flickering when toggling Goyo
 let g:ale_sign_column_always = 1
 " Slow it down a little
 let g:ale_lint_delay = 500
-" Only enable one JS linter... TODO: find a per-file solution
+" Only enable one JS linter
 let g:ale_linters = {
-      \   'javascript': ['jshint'],
+      \   'javascript': ['eslint'],
       \   'typescript': ['eslint'],
       \   'html': [],
       \   'scss': ['scsslint']
+      \}
+let g:ale_fixers = {
+      \   '*': ['trim_whitespace'],
+      \   'javascript': ['prettier'],
       \}
 let g:ale_set_highlights = 0
 let g:ale_lint_on_text_changed = 'normal'
@@ -515,8 +518,6 @@ nnoremap <leader>zz :let &scrolloff=999-&scrolloff<cr>
 
 " Show the undo viewer
 nnoremap <leader>u :UndotreeToggle<cr>
-
-nnoremap <leader>af :Autoformat<cr>
 
 " Detect & load changes to the file
 set autoread
