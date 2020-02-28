@@ -88,6 +88,9 @@ Plug 'junegunn/fzf.vim', { 'do': './install --bin' }
 Plug 'tpope/vim-apathy'                   " Some path values for various langs
 Plug 'dzeban/vim-log-syntax'              " Log syntax
 
+Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+                                          " Language server protocol & completion
+
 Plug 'metakirby5/codi.vim', { 'on': ['Codi'] }
                                           " In-buffer REPL
 Plug 'chrisbra/recover.vim'               " Add 'compare' option to swap file recovery
@@ -95,7 +98,6 @@ Plug 'chrisbra/recover.vim'               " Add 'compare' option to swap file re
 if v:progname !=? 'view'
   Plug 'w0rp/ale'                           " Async linter
   Plug 'junegunn/vim-easy-align'            " Align things, easily
-  Plug 'ervandew/supertab'                  " Tab completion
   Plug 'tpope/vim-commentary'               " Toggle comments
   Plug 'tpope/vim-endwise'                  " Auto-insert Ruby end, etc
   Plug 'tpope/vim-sleuth'                   " Auto-detect indentation
@@ -122,6 +124,83 @@ set showmatch
 set hidden
 nnoremap <c-n> :bnext<cr>
 nnoremap <c-p> :bprev<cr>
+
+" Disable endwise mappings as they conflict with coc accept
+" mapping
+let g:endwise_no_mappings=1
+" Settings for coc.nvim
+set nobackup
+set nowritebackup
+" set cmdheight=2
+set signcolumn=yes
+inoremap <silent><expr> <TAB>
+  \ pumvisible() ? "\<C-n>" :
+  \ <SID>check_back_space() ? "\<TAB>" :
+  \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+inoremap <silent><expr> <c-space> coc#refresh()
+
+if has('patch8.1.1068')
+  " Use `complete_info` if your (Neo)Vim version supports it.
+  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+else
+  imap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+endif
+
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+nmap <leader>rn <Plug>(coc-rename)
+
+xmap <leader>cf <Plug>(coc-format-selected)
+nmap <leader>cf <Plug>(coc-format-selected)
+
+augroup coc
+  autocmd!
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+xmap <leader>a <Plug>(coc-codeaction-selected)
+nmap <leader>a <Plug>(coc-codeaction-selected)
+
+nmap <leader>ac <Plug>(coc-codeaction)
+nmap <leader>qf <Plug>(coc-fix-current)
+
+" Function text object
+xmap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap if <Plug>(coc-funcobj-i)
+omap af <Plug>(coc-funcobj-a)
+
+nmap <silent> <TAB> <Plug>(coc-range-select)
+xmap <silent> <TAB> <Plug>(coc-range-select)
+
+command! -nargs=0 Format :call CocAction('format')
+command! -nargs=? Fold :call CocAction('fold', <f-args>)
+command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
 
 " Hook into OS clipboard. On Linux and similar, this will use the ^C ^V
 " "CLIPBOARD" (register "+"), not the copy-on-select "PRIMARY" (which is
@@ -361,6 +440,7 @@ set statusline+=%<
 " without having been inserted, that's a sign that the performance here is not
 " good enough & we should rethink the FileInsidePwd() function.
 set statusline+=%#FileOutsidePwd#%{FileInsidePwd()?'':expand('%').'[🡕]\ '}%*%#StatusLine#%{FileInsidePwd()?expand('%').'\ ':''}%*
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 set statusline+=%h%m%r%=%-14.(%l,%c%V%)
 " Add filetype to statusline
 set statusline+=%y
@@ -373,6 +453,8 @@ hi VertSplit ctermbg=none
 
 " Reduce prevalence of 'press enter to continue' on file write
 set shortmess=filnxtToOS
+" coc.nvim
+set shortmess+=c
 
 " relativenumber slows down rendering, so we use lazyredraw to buffer redraws
 " may not be needed since we no longer use relativenumber
