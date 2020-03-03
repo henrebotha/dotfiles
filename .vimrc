@@ -384,8 +384,10 @@ augroup ctags
   autocmd!
   " We scope this to only files that are in pwd using the stridx
   " FIXME: The tags file has the wrong paths! It omits the `/worktree-name`
-  " part, so e.g. main.git paths are ~/git_tree/main/lib/…. Somehow I need to
-  " tell ctags to put the worktree name in there…
+  " part, so e.g. main.git paths are ~/git_tree/main/lib/…. But of course,
+  " we're using a shared tags file across worktrees, so this is the correct
+  " behaviour. The fix for the feature is to intercept go-to-tag commands and
+  " insert the name of the current worktree.
   autocmd BufEnter,BufRead,BufWritePost * if stridx(expand('%:p'), getcwd()) == 0 && len(tagfiles()) | call system("(sed -i '/^\\S\\+\\s" . escape(expand('%'), '/') . "\\>/d' " . tagfiles()[0] . " && ctags -a -f " . tagfiles()[0] . " " . expand('%') . ") &") | endif
 augroup END
 
