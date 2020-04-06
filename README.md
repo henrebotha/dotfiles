@@ -27,18 +27,15 @@ TL;DR:
 
 From https://shreevatsa.wordpress.com/2008/03/30/zshbash-startup-files-loading-order-bashrc-zshrc-etc/:
 
-+----------------+-----------+-----------+------+
-|                |Interactive|Interactive|Script|
-|                |login      |non-login  |      |
-+----------------+-----------+-----------+------+
-|/etc/zshenv     |    A      |    A      |  A   |
-|~/.zshenv       |    B      |    B      |  B   |
-|/etc/zprofile   |    C      |           |      |
-|~/.zprofile     |    D      |           |      |
-|/etc/zshrc      |    E      |    C      |      |
-|~/.zshrc        |    F      |    D      |      |
-|/etc/zlogin     |    G      |           |      |
-|~/.zlogin       |    H      |           |      |
-|~/.zlogout      |    I      |           |      |
-|/etc/zlogout    |    J      |           |      |
-+----------------+-----------+-----------+------+
+|               | Interactive login | Interactive non-login | Script |
+| ---           | ---               | ---                   | ---    |
+| /etc/zshenv   | 1                 | 1                     | 1      |
+| ~/.zshenv     | 2                 | 2                     | 2      |
+| /etc/zprofile | 3                 |                       |        |
+| ~/.zprofile   | 4                 |                       |        |
+| /etc/zshrc    | 5                 | 3                     |        |
+| ~/.zshrc      | 6                 | 4                     |        |
+| /etc/zlogin   | 7                 |                       |        |
+| ~/.zlogin     | 8                 |                       |        |
+| ~/.zlogout    | 9                 |                       |        |
+| /etc/zlogout  | 10                |                       |        |
