@@ -194,6 +194,17 @@ tn() {
   session_root=${sessions[$1]:-$HOME}
   tmux new-session -s $1 -c $session_root $args
 }
+tna() {
+  sessions=(
+    dev
+    dotfiles
+    gp
+    notes
+  )
+  for session in $sessions; do
+    tn $session -d
+  done
+}
 
 # ------------------------------------------------------------------------------
 # Vim
