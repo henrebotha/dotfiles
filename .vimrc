@@ -402,6 +402,9 @@ nnoremap <leader>Z zA
 nnoremap <leader>yf :let @+=expand("%")<cr>
 nnoremap <leader>yl :let @+=expand("%") . ':' . line(".")<cr>
 
+" Yank entire buffer into clipboard, then quit
+nnoremap <leader>yq :w! /tmp/scratchpad.txt<CR>gg0vG$y:q!<CR>
+
 " Bindings for session management
 " https://dockyard.com/blog/2018/06/01/simple-vim-session-management-part-1
 " Remove `options` from sessionoptions — options get mangled sometimes
