@@ -188,7 +188,7 @@ tn() {
   sessions=(
     [dev]=~/git_tree
     [dotfiles]=~/dev
-    [notes]=~/git_tree
+    [notes]=~/git_tree/notes
   )
   args=(${@:2})
   session_root=${sessions[$1]:-$HOME}
