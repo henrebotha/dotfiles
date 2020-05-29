@@ -63,6 +63,7 @@
 	b = branch
 	ba = branch -a
 	c = commit -v
+	car = commit --amend --no-edit
 	cmsg = commit -m
 	co = checkout
 	dc = diff --word-diff-regex=.
@@ -70,6 +71,7 @@
 	dcac = diff --cached --word-diff-regex=.
 	dcaw = diff --cached --word-diff
 	dw = diff --word-diff
+	f = fetch
 	fa = fetch --all --prune
 	fp = fetch --prune
 	l = -c color.diff=true log
@@ -77,6 +79,7 @@
 	lga = -c color.diff=true log --oneline --decorate --graph --all
 	lgb = -c color.diff=true log --oneline --decorate --graph --branches
 	lo = -c color.diff=true log --oneline --decorate
+	mff = merge --ff-only --no-stat
 	r = remote
 	ra = remote add
 	rb = ! "f() { \
@@ -90,6 +93,7 @@
 	rv = remote -v
 	sdc = show --word-diff-regex=.
 	sdw = show --word-diff
+	sp = sparse-checkout
 	st = status
 	sw = switch
 	wk = worktree
