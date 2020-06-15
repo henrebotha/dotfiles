@@ -12,6 +12,7 @@
 	; -c:           run command on start, after autocmd/modeline
 	; --not-a-term: don't show the stupid "reading from stdin" message
 	pager = ifne vim -X -R - -n -c 'set filetype=git nowrap noro'
+	sparseCheckoutCone = 1
 [pager]
 	log = less
 	branch = less
