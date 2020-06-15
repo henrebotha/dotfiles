@@ -370,6 +370,11 @@ alias fzfp='fzf --preview '\''[[ $(file --mime {}) =~ binary ]] &&
                   rougify {} ||
                   cat {}) 2> /dev/null | head -200'\'
 
+if [ ! -e ~/isomorphic-copy ]; then
+  g clone git@github.com:ms-jpq/isomorphic-copy.git ~/isomorphic-copy
+fi
+export PATH="$HOME/isomorphic-copy/bin:$PATH"
+
 # # zsh-async
 # # Installation
 # if [[ ! -a ~/.zsh-async ]]; then
