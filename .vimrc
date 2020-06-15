@@ -319,6 +319,8 @@ augroup vimrc-incsearch-highlight
 augroup END
 nnoremap / /\v
 cnoremap %s/ %s/\v
+" Search for visual mode selection
+vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
 
 " Use C-l to highlight the current cursor position
 nnoremap <c-l> :call HighlightNearCursor()<cr>
