@@ -19,6 +19,8 @@ export PATH="/Applications/Postgres.app/Contents/Versions/9.6/bin:$PATH"
 export FZF_DEFAULT_COMMAND='rg --files --glob "!.git/*" --hidden --no-ignore'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
+export FZF_DEFAULT_OPTS='--bind "f1:execute(less -f {})"'
+
 export LANG=en_GB.utf-8
 
 export PATH="$HOME/.cargo/bin:$PATH"
