@@ -334,6 +334,17 @@ function! HighlightNearCursor() abort
   endif
 endfunction
 
+" Toggle todo items
+nnoremap <silent> <leader>td :call ToggleToDoItem()<cr>
+function! ToggleToDoItem() abort
+  let l:line = getbufline("%", line('.'))[0]
+  if l:line =~ '\([*\-]\s*\)\[ \]'
+    s/\v([*\-]\s*)\[ \]/\1[x]/
+  elseif l:line =~ '\([*\-]\s*\)\[x\]'
+    s/\v([*\-]\s*)\[x\]/\1[ ]/
+  endif
+endfunction
+
 nnoremap <leader>gg :call OpenFileFromModuleInPlusRegister()<cr>
 function! OpenFileFromModuleInPlusRegister() abort
   let l:fname = getreg('+')
