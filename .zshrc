@@ -184,6 +184,7 @@ alias tai='tmux new-session -t' # mnemonic: "tmux attach independent"
 alias tk='tmux kill-session -t'
 alias tl='tmux ls'
 tn() {
+  : ${1:?tn needs a session name.}
   typeset -A sessions
   sessions=(
     [dev]=~/git_tree
