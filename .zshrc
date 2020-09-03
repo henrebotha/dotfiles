@@ -223,6 +223,7 @@ vim_servername() {
 # Launch with -X to prevent communication with X11 on startup, improving startup
 # speed in Tmux
 alias v='vim -X --servername $(vim_servername)'
+export MANPAGER='vim -X -R +MANPAGER - -n'
 # Source ~/.vimrc in every running Vim server instance
 alias vu='for server in `vim --serverlist`; do; v --servername $server --remote-send '\'':source ~/.vimrc<cr>'\''; done'
 
