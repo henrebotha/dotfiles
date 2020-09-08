@@ -397,6 +397,11 @@ if [ ! -e ~/isomorphic-copy ]; then
 fi
 export PATH="$HOME/isomorphic-copy/bin:$PATH"
 
+if [ ! -e ~/sandboxd ]; then
+  g clone git@github.com:benvan/sandboxd.git ~/sandboxd
+fi
+source ~/sandboxd/sandboxd
+
 # # zsh-async
 # # Installation
 # if [[ ! -a ~/.zsh-async ]]; then
