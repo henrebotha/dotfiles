@@ -35,6 +35,7 @@
 	fallbackToNoIndex = true
 [fetch]
 	prune = true
+	writeCommitGraph = true
 [merge]
 	conflictstyle = diff3
 [alias]
