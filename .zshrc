@@ -373,6 +373,14 @@ export FZF_DEFAULT_OPTS='--bind "f1:execute(less -f {})"'
 # --no-ignore: Do not respect .gitignore and the like
 export FZF_DEFAULT_COMMAND='rg --files --glob "!.git/*" --hidden --no-ignore'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND=altc
+
+altc() {
+  cdup=$(git rev-parse --show-cdup 2>/dev/null)
+  packages=$(fdfind -t d --maxdepth=1 . 'packages/' 2>/dev/null)
+  sibling_packages=$($(test -z "$(git rev-parse --show-cdup)") || fdfind -t d --maxdepth=1 . "$(git rev-parse --show-cdup)packages/" 2>/dev/null)
+  cat <(echo $cdup) <(echo $packages) <(echo $sibling_packages) | sed -r '/^\s*$/d'
+}
 
 alias fzfp='fzf --preview '\''[[ $(file --mime {}) =~ binary ]] &&
                  echo {} is a binary file ||
