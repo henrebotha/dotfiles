@@ -3,7 +3,6 @@
 # ------------------------------------------------------------------------------
 
 ZSH_THEME="henrebotha"
-export ZSH='/home/hbotha/.oh-my-zsh'
 
 os=`uname`
 

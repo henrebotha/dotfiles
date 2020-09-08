@@ -1,3 +1,4 @@
+export ZSH='/home/hbotha/.oh-my-zsh'
 if [[ `uname` == 'Darwin' ]]; then
   export EDITOR='nvim'
   export MANPAGER='nvim -n -c '\''set ft=man'\'' -'
