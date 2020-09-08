@@ -11,15 +11,6 @@ export PATH="/Applications/Postgres.app/Contents/Versions/9.6/bin:$PATH"
 # Don't export TERM! The terminal app should handle this
 # export TERM="xterm-256color"
 
-# --files: List files, do not search them
-# --follow: Follow symlinks
-# --hidden: Search hidden paths
-# --glob: Additional conditions (exclude .git)
-# --no-ignore: Do not respect .gitignore and the like
-export FZF_DEFAULT_COMMAND='rg --files --glob "!.git/*" --hidden --no-ignore'
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-
-export FZF_DEFAULT_OPTS='--bind "f1:execute(less -f {})"'
 
 export LANG=en_GB.utf-8
 

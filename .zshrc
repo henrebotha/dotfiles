@@ -365,6 +365,15 @@ command_not_found_handler() {
 # fzf keybinds/completion
 [ -f ~/.fzf.zsh ] && . ~/.fzf.zsh
 
+export FZF_DEFAULT_OPTS='--bind "f1:execute(less -f {})"'
+# --files: List files, do not search them
+# --follow: Follow symlinks
+# --hidden: Search hidden paths
+# --glob: Additional conditions (exclude .git)
+# --no-ignore: Do not respect .gitignore and the like
+export FZF_DEFAULT_COMMAND='rg --files --glob "!.git/*" --hidden --no-ignore'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
 alias fzfp='fzf --preview '\''[[ $(file --mime {}) =~ binary ]] &&
                  echo {} is a binary file ||
                  (highlight -O ansi -l {} ||
