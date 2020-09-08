@@ -1,3 +1,4 @@
+export LANG=en_GB.utf-8
 export ZSH='/home/hbotha/.oh-my-zsh'
 if [[ `uname` == 'Darwin' ]]; then
   export EDITOR='nvim'
