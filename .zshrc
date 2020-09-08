@@ -177,6 +177,11 @@ autocommit() {
 # Tmux
 # ------------------------------------------------------------------------------
 
+# Let's install tpm, if we have Tmux but not tpm
+if [ -d "$HOME/.tmux" -a ! -d "$HOME/.tmux/plugins/tpm" ]; then
+    git clone git@github.com:/tmux-plugins/tpm ~/.tmux/plugins/tpm
+fi
+
 alias tx='tmuxinator s'
 alias txe='tmuxinator new'
 alias ta='tmux a -t'
