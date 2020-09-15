@@ -37,6 +37,8 @@
 	writeCommitGraph = true
 [merge]
 	conflictstyle = diff3
+[pull]
+	ff = only
 [alias]
 	# Display all aliases :)
 	aliases = ! git config --list | awk '/alias/{ print $1 }' | perl -pe 's/alias\\.//g' | perl -pe 's/=.+//g'
