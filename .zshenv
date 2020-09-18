@@ -6,5 +6,6 @@ if [[ `uname` == 'Darwin' ]]; then
 else
   export EDITOR='vim -X'
   export MANPAGER='vim -n -X -R +MANPAGER -'
+  export MANWIDTH=80
 fi
 alias vi=$EDITOR
