@@ -188,26 +188,28 @@ alias ta='tmux a -t'
 alias tai='tmux new-session -t' # mnemonic: "tmux attach independent"
 alias tk='tmux kill-session -t'
 alias tl='tmux ls'
+typeset -A tmux_sessions
+export tmux_sessions=(
+  [dev]=~/git_tree
+  [dotfiles]=~/dev
+  [games]=~/Games
+  [gp]=~/git_tree
+  [notes]=~/git_tree/notes
+)
 tn() {
   : ${1:?tn needs a session name.}
-  typeset -A sessions
-  sessions=(
-    [dev]=~/git_tree
-    [dotfiles]=~/dev
-    [notes]=~/git_tree/notes
-  )
   args=(${@:2})
-  session_root=${sessions[$1]:-$HOME}
+  session_root=${tmux_sessions[$1]:-$HOME}
   tmux new-session -s $1 -c $session_root $args
 }
 tna() {
-  sessions=(
+  auto_sessions=(
     dev
     dotfiles
     gp
     notes
   )
-  for session in $sessions; do
+  for session in ${(@k)tmux_sessions:*auto_sessions}; do
     tn $session -d
   done
 }
