@@ -85,11 +85,12 @@ _self_destruct_hook() {
 }
 (( $+functions[add-zsh-hook] )) || autoload -Uz add-zsh-hook
 add-zsh-hook precmd _self_destruct_hook
+
 # ------------------------------------------------------------------------------
 # Zsh-histdb
 # ------------------------------------------------------------------------------
 
-if type sqlite3 > /dev/null; then
+if type sqlite3 > /dev/null && [[ -d ~/.oh-my-zsh/custom/plugins/zsh-histdb ]]; then
   source ~/.oh-my-zsh/custom/plugins/zsh-histdb/sqlite-history.zsh
   autoload -Uz add-zsh-hook # disable this if term gets slow
 fi
