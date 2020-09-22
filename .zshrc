@@ -94,6 +94,7 @@ if type sqlite3 > /dev/null && [[ -d ~/.oh-my-zsh/custom/plugins/zsh-histdb ]]; 
   source ~/.oh-my-zsh/custom/plugins/zsh-histdb/sqlite-history.zsh
   autoload -Uz add-zsh-hook # disable this if term gets slow
 fi
+alias hf=histdb\ --forget\ --exact
 
 # ------------------------------------------------------------------------------
 # Zsh-autosuggestions
