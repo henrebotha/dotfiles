@@ -1,0 +1,8 @@
+#compdef tn
+
+_sub_commands \
+  dev \
+  dotfiles \
+  games \
+  gp \
+  notes
