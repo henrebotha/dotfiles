@@ -92,7 +92,6 @@ add-zsh-hook precmd _self_destruct_hook
 if type sqlite3 > /dev/null; then
   source ~/.oh-my-zsh/custom/plugins/zsh-histdb/sqlite-history.zsh
   autoload -Uz add-zsh-hook # disable this if term gets slow
-  add-zsh-hook precmd histdb-update-outcome
 fi
 
 # ------------------------------------------------------------------------------
