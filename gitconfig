@@ -151,5 +151,8 @@
 	# remote URL doesn't match the typical $host/$org/$repo.git pattern.
 	repo-name = ! "git remote -v | head -1 | cut -d ' ' -f 1 | grep -E --only-matching '([^:/ ]+/[^/ ]+)(\\.git)?$' | sed 's/\\.git$//'"
 	repo-and-branch-name = ! "echo $(git repo-name)':'$(git rev-parse --abbrev-ref HEAD)"
+
+	# Graph the divergence between two histories from their shared parent onwards.
+	diverge = ! "git lg $(git merge-base $1 $2)^..$1 $(git merge-base $1 $2)^..$2"
 [push]
 	default = current
