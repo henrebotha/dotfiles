@@ -1,10 +1,25 @@
+function prompt_char {
+  # $1 is the exit code of the most recent command.
+  echo -n "%{"
+  case $KEYMAP in
+    vicmd)
+      case $1 in
+        0) echo -n "$fg[green]";;
+        *) echo -n "$fg[yellow]";;
+      esac;
+      echo '%}›';;
+    viins|main)
+      case $1 in
+        0) echo -n "$fg[cyan]";;
+        *) echo -n "$fg[red]";;
+      esac;
+      echo '%}»';;
+  esac
+}
+
 # Functionality for displaying normal mode indicator in Vi mode.
 function zle-line-init zle-keymap-select {
-  local visual_mode="%{$fg[green]%}›"
-  local prompt_char="${${KEYMAP/vicmd/$visual_mode}/(main|viins)/»}"
-  # Make prompt_char red if the last executed command failed. This needs to be
-  # here because outside the function body, precedence breaks it. ¯\_(ツ)_/¯
-  return_status="%(?:%{$fg[cyan]%}$prompt_char:%{$fg[red]%}$prompt_char)"
+  return_status="%{$(prompt_char $exit_code)%}"
   zle reset-prompt
 }
 zle -N zle-line-init
@@ -57,6 +72,7 @@ local date_string=$(date +'%Y-%m-%d %H:%M:%S')
 local jobs_string=$(jobs_status)
 
 precmd() {
+  exit_code=$?
   # We do it here so that it _doesn't_ update on zle reset-prompt
   date_string=$(date +'%Y-%m-%d %H:%M:%S')
   jobs_string=$(jobs_status)
