@@ -3,15 +3,15 @@ function prompt_char {
   echo -n "%{"
   case $KEYMAP in
     vicmd)
-      case $1 in
-        0) echo -n "$fg[green]";;
-        *) echo -n "$fg[yellow]";;
+      case "$1" in
+        0) echo -n "%F{green}";;
+        *) echo -n "%F{yellow}";;
       esac;
       echo '%}›';;
     viins|main)
-      case $1 in
-        0) echo -n "$fg[cyan]";;
-        *) echo -n "$fg[red]";;
+      case "$1" in
+        0) echo -n "%F{cyan}";;
+        *) echo -n "%F{red}";;
       esac;
       echo '%}»';;
   esac
@@ -19,37 +19,33 @@ function prompt_char {
 
 # Functionality for displaying normal mode indicator in Vi mode.
 function zle-line-init zle-keymap-select {
-  return_status="%{$(prompt_char $exit_code)%}"
+  return_status="$(prompt_char $exit_code)"
   zle reset-prompt
 }
 zle -N zle-line-init
 zle -N zle-keymap-select
 # End Vi mode functionality
 
-# Detect git repo
 parse_git_branch() {
   (git symbolic-ref -q HEAD || git name-rev --name-only --no-undefined --always HEAD) 2> /dev/null
 }
-# Override built-in function with faster version
-function git_prompt_info() {
+function fast_git_prompt_info() {
   ref=$(git symbolic-ref HEAD 2> /dev/null) || return
-  echo "$ZSH_THEME_GIT_PROMPT_PREFIX${ref#refs/heads/}$ZSH_THEME_GIT_PROMPT_SUFFIX"
+  echo "${ref#refs/heads/}"
 }
-# Print git info if we're in a repo
-ZSH_THEME_GIT_PROMPT_PREFIX=''
-ZSH_THEME_GIT_PROMPT_SUFFIX=''
-ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[blue]%}*"
+ZSH_THEME_GIT_PROMPT_DIRTY="%{%F{blue}%}*"
 git_string() {
   local git_where="$(parse_git_branch)"
   if [[ ! -n "$git_where" ]]; then
     return
   fi
-  local g_str="%{$fg[green]%}$(git_prompt_info) "
+  local git_prompt_info="$(fast_git_prompt_info)"
+  local g_str="%{%F{green}%}$git_prompt_info "
   if $(git log -n 1 2>/dev/null | grep -q -c "\-\-wip\-\-"); then
-    g_str+="%{$fg[red]%}WIP "
+    g_str+="%{%F{red}%}WIP "
   fi
-  if $(git stash list 2>/dev/null | grep -q -c "on $(git_prompt_info | cut -d/ -f2-)"); then
-    g_str+="%{$fg[yellow]%}(s) "
+  if $(git stash list 2>/dev/null | grep -q -c "on $(echo $git_prompt_info | cut -d/ -f2-)"); then
+    g_str+="%{%F{yellow}%}(s) "
   fi
   echo $g_str
 }
@@ -62,12 +58,12 @@ vagrant_string() {
 VIRTUAL_ENV_DISABLE_PROMPT=true
 
 jobs_status() {
-  echo "%1(j.%{$fg[blue]%}zᶻ %j%{$reset_color%} .)"
+  echo "%1(j.%{%F{blue}%}zᶻ %j%{%f%} .)"
 }
 
 # http://web.cs.elte.hu/zsh-manual/zsh_15.html#SEC53 search for PS1
-local username="%{$fg[magenta]%}%n"
-local path_string="%4(c|%{$fg[green]%}…%{$fg[yellow]%}/|)%{$fg[yellow]%}%3c"
+local username="%{%F{magenta}%}%n"
+local path_string="%4(c|%{%F{green}%}…%{%F{yellow}%}/|)%{%F{yellow}%}%3c"
 local date_string=$(date +'%Y-%m-%d %H:%M:%S')
 local jobs_string=$(jobs_status)
 
@@ -82,8 +78,8 @@ precmd() {
 # TRAPALRM() { zle reset-prompt }
 
 # We keep the prompt as a single var, so that reset-prompt redraws the whole thing
-PROMPT='${date_string} ${username} ${path_string} $(git_string)${jobs_string}$(vagrant_string)%{$reset_color%}
-${return_status} %{$reset_color%}'
+PROMPT='${date_string} ${username} ${path_string} $(git_string)${jobs_string}$(vagrant_string)%f
+${return_status} %{%f%}'
 
 # Override oh-my-zsh vi-mode plugin prompt
 RPS1=''

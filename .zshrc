@@ -1,15 +1,22 @@
 # ------------------------------------------------------------------------------
-# Zsh & oh-my-zsh
+# Zsh
 # ------------------------------------------------------------------------------
-
-ZSH_THEME="henrebotha"
 
 os=`uname`
 
-# Disabled on macOS due to line-chomping behaviour
+# Disabled on macOS due to line-chomping behaviour.
 # https://github.com/robbyrussell/oh-my-zsh/issues/5765
 if [[ "$os" != 'Darwin' ]]; then
-  COMPLETION_WAITING_DOTS="true"
+  # http://stackoverflow.com/a/844299
+  expand-or-complete-with-dots() {
+    echo -n "\e[31m…\e[0m"
+    zle expand-or-complete
+    zle redisplay
+  }
+  zle -N expand-or-complete-with-dots
+  bindkey -M emacs "^I" expand-or-complete-with-dots
+  bindkey -M viins "^I" expand-or-complete-with-dots
+  bindkey -M vicmd "^I" expand-or-complete-with-dots
 fi
 
 # This fixes slow Git tab completion. It needs to precede the Git plugin,
@@ -21,17 +28,41 @@ __git_files () {
     _wanted files expl 'local files' _files
 }
 
-plugins=(
-  gitfast             # faster completions
-  ripgrep             # completions
-  vi-mode             # additional vi commands
-  zsh-autosuggestions # Fish-like suggestions as you type
-)
+if [[ ! -d ~/.zinit ]]; then
+  mkdir ~/.zinit
+  git clone https://github.com/zdharma/zinit.git ~/.zinit/bin
+fi
+source ~/.zinit/bin/zinit.zsh
+
+zinit wait'!' lucid for \
+  OMZL::git.zsh #\
+  # OMZP::git
+# zinit snippet OMZP::gitfast
+# zinit snippet OMZP::ripgrep
+zinit snippet OMZP::vi-mode
+zinit wait lucid atload'_zsh_autosuggest_start' light-mode for \
+  zsh-users/zsh-autosuggestions
+zinit wait lucid light-mode for \
+  larkery/zsh-histdb
+zinit lucid light-mode for \
+  benvan/sandboxd
+
+. ~/dev/dotfiles/henrebotha.zsh-theme
+setopt promptsubst
+
+# https://github.com/nickmccurdy/sane-defaults/blob/master/home/.zshrc
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+setopt no_list_ambiguous
 
 # export PATH="/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
 # export MANPATH="/usr/local/man:$MANPATH"
 
-. $ZSH/oh-my-zsh.sh
+# TODO: Try to make this work. The idea is that we set ZSH_COMPDUMP before we
+# (OMZ) call compinit, so that the dump doesn't end up in our home dir.
+# if [ ! -d ~/.cache/zsh ]; then
+#   mkdir -p ~/.cache/zsh
+# fi
+# export $ZSH_COMPDUMP="~/.cache/zsh/zcompdump-$ZSH_VERSION"
 
 if [ -d ~/zsh_help ]; then
   export HELPDIR=~/zsh_help
@@ -44,11 +75,17 @@ alias help=run-help
 alias s='. ~/.zshrc'
 alias :q=exit # Welp
 
-# Allow **foo as shorthand for **/*foo
-setopt GLOBSTARSHORT
+# Allow **foo as shorthand for **/*foo.
+setopt glob_star_short
 
-# Don't expand history inline
-setopt HIST_VERIFY
+# Don't expand history inline.
+setopt hist_verify
+
+# Store history & share it across sessions.
+setopt share_history
+export HISTSIZE=1000
+export SAVEHIST=1000
+export HISTFILE=~/.zsh_history
 
 # Flag ~/dev/ as a common path to cd into
 cdpath=($cdpath ~/dev)
@@ -89,11 +126,8 @@ add-zsh-hook precmd _self_destruct_hook
 # ------------------------------------------------------------------------------
 # Zsh-histdb
 # ------------------------------------------------------------------------------
-
-if type sqlite3 > /dev/null && [[ -d ~/.oh-my-zsh/custom/plugins/zsh-histdb ]]; then
-  source ~/.oh-my-zsh/custom/plugins/zsh-histdb/sqlite-history.zsh
-  autoload -Uz add-zsh-hook # disable this if term gets slow
-fi
+source $HOME/.zinit/plugins/larkery---zsh-histdb/sqlite-history.zsh
+autoload -Uz add-zsh-hook
 alias hf=histdb\ --forget\ --exact
 
 # ------------------------------------------------------------------------------
@@ -132,6 +166,7 @@ alias d=docker
 # Java
 # ------------------------------------------------------------------------------
 
+# TODO: Lazy-load with sandboxd.
 if which jenv > /dev/null; then
   eval "$(jenv init -)"
   export PATH="$HOME/.jenv/shims:$PATH"
@@ -142,6 +177,7 @@ fi
 # ------------------------------------------------------------------------------
 
 # Enable rbenv
+# TODO: Lazy-load with sandboxd.
 if type rbenv > /dev/null; then
   export PATH="$HOME/.rbenv/bin:$PATH"
   eval "$(rbenv init -)"
@@ -337,19 +373,7 @@ setopt globdots
 #
 # replace foo bar **/*.rb
 
-replace() {
-  find_this="$1"
-  shift
-  replace_with="$1"
-  shift
-
-  items=("${(@f)$(ag -l --nocolor "$find_this" "$@")}")
-  temp="${TMPDIR:-/tmp}/replace_temp_file.$$"
-  IFS=$'\n'
-  for item in $items; do
-    sed "s/$find_this/$replace_with/g" "$item" > "$temp" && mv "$temp" "$item"
-  done
-}
+alias l='ls -Ahlp --color=auto --group-directories-first --hyperlink --time-style=long-iso'
 
 # Whenever a command is not found, prompt the user to install it via homebrew.
 # command_not_found_handler is a built-in Zsh hook, called automatically.
@@ -395,15 +419,14 @@ alias fzfp='fzf --preview '\''[[ $(file --mime {}) =~ binary ]] &&
                   rougify {} ||
                   cat {}) 2> /dev/null | head -200'\'
 
-if [ ! -e ~/isomorphic-copy ]; then
-  g clone git@github.com:ms-jpq/isomorphic-copy.git ~/isomorphic-copy
-fi
-export PATH="$HOME/isomorphic-copy/bin:$PATH"
+fh() {
+  print -z $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed 's/ *[0-9]* *//')
+}
 
-if [ ! -e ~/sandboxd ]; then
-  g clone git@github.com:benvan/sandboxd.git ~/sandboxd
-fi
-source ~/sandboxd/sandboxd
+# if [ ! -e ~/isomorphic-copy ]; then
+#   g clone git@github.com:ms-jpq/isomorphic-copy.git ~/isomorphic-copy
+# fi
+# export PATH="$HOME/isomorphic-copy/bin:$PATH"
 
 # # zsh-async
 # # Installation
@@ -532,3 +555,25 @@ export COL_RESET="\e[0m"
 # ------------------------------------------------------------------------------
 
 eval "$(direnv hook zsh)"
+
+# https://gist.github.com/ctechols/ca1035271ad134841284
+# On slow systems, checking the cached .zcompdump file to see if it must be
+# regenerated adds a noticable delay to zsh startup.  This little hack restricts
+# it to once a day.  It should be pasted into your own completion file.
+#
+# The globbing is a little complicated here:
+# - '#q' is an explicit glob qualifier that makes globbing work within zsh's [[ ]] construct.
+# - 'N' makes the glob pattern evaluate to nothing when it doesn't match (rather than throw a globbing error)
+# - '.' matches "regular files"
+# - 'mh+24' matches files (or directories or whatever) that are older than 24 hours.
+autoload -Uz compinit
+for dump in ~/.zcompdump(N.mh+24); do
+  compinit
+done
+compinit -C
+autoload -U +X bashcompinit && bashcompinit
+
+export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
+
+# zprof
+# zmodload -u zsh/zprof
