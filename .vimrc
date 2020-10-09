@@ -396,13 +396,14 @@ set tags=./tags;/,./TAGS;/,~/.tags/*tags,tags;/,TAGS;/
 " Update tags in-place when viewing or editing a file
 augroup ctags
   autocmd!
+  " fnamemodify(tagfiles()[0], ':p:h') gives the dir containing tagfile.
+  " expand('%:p') gives the full path to the current file.
+  " The substitute() therefore gives the current file path relative to the dir
+  " containing the tagfile.
   " We scope this to only files that are in pwd using the stridx
-  " FIXME: The tags file has the wrong paths! It omits the `/worktree-name`
-  " part, so e.g. main.git paths are ~/git_tree/main/lib/…. But of course,
-  " we're using a shared tags file across worktrees, so this is the correct
-  " behaviour. The fix for the feature is to intercept go-to-tag commands and
-  " insert the name of the current worktree.
-  autocmd BufEnter,BufRead,BufWritePost * if stridx(expand('%:p'), getcwd()) == 0 && len(tagfiles()) | call system("(sed -i '/^\\S\\+\\s" . escape(expand('%'), '/') . "\\>/d' " . tagfiles()[0] . " && ctags -a -f " . tagfiles()[0] . " " . expand('%') . ") &") | endif
+  " The system call here reads: "Delete all tags for the current file, then
+  " generate & append tags for the current file."
+  autocmd BufEnter,BufRead,BufWritePost * if stridx(expand('%:p'), getcwd()) == 0 && len(tagfiles()) | call system("(sed -i '/^\\S\\+\\s" . escape(expand('%'), '{}*/.') . "\\>/d' " . tagfiles()[0] . " && ctags -a -f " . tagfiles()[0] . " " . expand('%') . ") &") | endif
 augroup END
 
 " Make a new empty buffer
