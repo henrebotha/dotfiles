@@ -449,7 +449,11 @@ set shiftround
 set autoindent
 
 function! FileInsidePwd() abort
-  return stridx(expand('%:p'), getcwd()) == 0
+  " Consider the current file to be outside the cwd if the cwd is not an
+  " initial substring of the file path. Additionally, if the current file is
+  " [No Name], we consider it to be inside the cwd (until such time as it
+  " gets saved to a different location).
+  return strlen(expand('%:p')) == 0 || stridx(expand('%:p'), getcwd()) == 0
 endfunction
 
 set statusline=%#Directory#%{v\:servername\ ==\ ''?'':v\:servername.'\ '}%*
