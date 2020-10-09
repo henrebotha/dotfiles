@@ -369,7 +369,7 @@ if executable('fzf')
   nnoremap <leader>i :Lines
   nnoremap <leader>/ :BLines<cr>
   nnoremap <leader>b :Buffers<cr>
-  nnoremap <leader>r :Rg
+  nnoremap <leader>r :Rg!
   nnoremap <leader>c :Commands<cr>
   nnoremap <leader>m :Marks<cr>
   command! -bang -nargs=* RgPerl call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case -t perl ".shellescape(<q-args>), 1, <bang>0)',
