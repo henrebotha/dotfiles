@@ -30,6 +30,10 @@ if empty(glob(autoload_path))
   autocmd VimEnter * close
 endif " }}}
 
+" Disable polyglot's built-in Elm
+" Disable Git so we can get the newer version
+let g:polyglot_disabled = ['elm', 'git', 'ocaml', 'markdown', 'sh']
+
 " Install plugins {{{
 
 " TODO: Rework this. Detect whether we're launching as read-only. If so, set
@@ -227,10 +231,6 @@ if has('nvim')
       \ 'ocaml': ['ocaml-language-server', '--stdio'],
       \ }
 endif
-
-" Disable polyglot's built-in Elm
-" Disable Git so we can get the newer version
-let g:polyglot_disabled = ['elm', 'git', 'ocaml']
 
 let g:elm_format_autosave = 1
 
