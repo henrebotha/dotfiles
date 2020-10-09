@@ -297,6 +297,7 @@ let g:ale_lint_delay = 500
 let g:ale_linters = {
       \   'javascript': ['eslint'],
       \   'typescript': ['eslint'],
+      \   'graphql': ['gqlint'],
       \   'html': [],
       \   'scss': ['scsslint']
       \}
