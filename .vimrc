@@ -450,6 +450,15 @@ set shiftround
 
 set autoindent
 
+function! s:find_git_root()
+  return system('git rev-parse --show-toplevel 2>/dev/null' . ' || ' . 'hg root 2>/dev/null')[:-2]->escape(' ')
+endfunction
+
+" Allow gf (and similar) to find things relative to the repo root.
+if isdirectory(s:find_git_root())
+  execute "set path+=" . s:find_git_root()
+endif
+
 function! FileInsidePwd() abort
   " Consider the current file to be outside the cwd if the cwd is not an
   " initial substring of the file path. Additionally, if the current file is
