@@ -28,24 +28,19 @@ __git_files () {
     _wanted files expl 'local files' _files
 }
 
-if [[ ! -d ~/.zinit ]]; then
-  mkdir ~/.zinit
-  git clone https://github.com/zdharma/zinit.git ~/.zinit/bin
+if [[ ! -d ~/.zplug ]]; then
+  export ZPLUG_HOME=~/.zplug
+  git clone https://github.com/zplug/zplug $ZPLUG_HOME
 fi
-source ~/.zinit/bin/zinit.zsh
+source ~/.zplug/init.zsh
 
-zinit wait'!' lucid for \
-  OMZL::git.zsh #\
-  # OMZP::git
-# zinit snippet OMZP::gitfast
-# zinit snippet OMZP::ripgrep
-zinit snippet OMZP::vi-mode
-zinit wait lucid atload'_zsh_autosuggest_start' light-mode for \
-  zsh-users/zsh-autosuggestions
-zinit wait lucid light-mode for \
-  larkery/zsh-histdb
-zinit lucid light-mode for \
-  benvan/sandboxd
+zplug 'plugins/vi-mode', from:oh-my-zsh
+zplug 'plugins/gitfast', from:oh-my-zsh
+zplug 'plugins/ripgrep', from:oh-my-zsh
+zplug 'zsh-users/zsh-autosuggestions'
+zplug 'larkery/zsh-histdb'
+zplug 'benvan/sandboxd'
+zplug load
 
 . ~/dev/dotfiles/henrebotha.zsh-theme
 setopt promptsubst
@@ -126,8 +121,6 @@ add-zsh-hook precmd _self_destruct_hook
 # ------------------------------------------------------------------------------
 # Zsh-histdb
 # ------------------------------------------------------------------------------
-source $HOME/.zinit/plugins/larkery---zsh-histdb/sqlite-history.zsh
-autoload -Uz add-zsh-hook
 alias hf=histdb\ --forget\ --exact
 
 # ------------------------------------------------------------------------------
