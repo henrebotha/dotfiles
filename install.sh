@@ -6,7 +6,7 @@ stow git --dotfiles -t $HOME
 stow hg -t $HOME
 # stow kakoune
 # stow karabiner-elements
-stow kitty -t $HOME/.config/kitty
+stow kitty -t $XDG_CONFIG_HOME
 stow mysql -t $HOME
 stow ruby -t $HOME
 stow shell -t $HOME
