@@ -333,8 +333,9 @@ fi
 # Enable Vi mode.
 bindkey -v
 
-bindkey '^P' up-history
-bindkey '^N' down-history
+autoload -Uz copy-earlier-word
+zle -N copy-earlier-word
+bindkey -M viins '^N' copy-earlier-word
 bindkey '^?' backward-delete-char
 bindkey '^h' backward-delete-char
 bindkey '^r' history-incremental-search-backward
@@ -372,30 +373,10 @@ setopt globdots
 # Misc
 # ------------------------------------------------------------------------------
 
-# https://github.com/thoughtbot/dotfiles/blob/master/bin/replace
-# Find and replace by a given list of files.
-#
-# replace foo bar **/*.rb
 
 alias l='ls -Ahlp --color=auto --group-directories-first --hyperlink --time-style=long-iso'
 alias ld='ls -Ahl --color=auto --directory --hyperlink --time-style=long-iso'
 
-# Whenever a command is not found, prompt the user to install it via homebrew.
-# command_not_found_handler is a built-in Zsh hook, called automatically.
-command_not_found_handler() {
-  echo "Command $1 not found. Install it with b for brew, g for gem, n for npm."
-  read -sk answer
-  if [[ $answer = "b" || $answer = "B" ]]; then
-    echo "brew install $1"
-    brew install "$1"
-  elif [[ $answer = "g" || $answer = "G" ]]; then
-    echo "gem install $1"
-    gem install "$1"
-  elif [[ $answer = "n" || $answer = "N" ]]; then
-    echo "npm install $1"
-    npm install -g "$1"
-  fi
-}
 alias fd='fdfind'
 
 # fzf keybinds/completion
@@ -464,9 +445,6 @@ fh() {
 
 # async_job vagrant_prompt_worker vagrant_status $(pwd)
 # # end zsh-async
-
-# autojump
-[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 
 . ~/.dev
 
