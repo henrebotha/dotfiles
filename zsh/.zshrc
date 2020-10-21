@@ -49,7 +49,6 @@ setopt promptsubst
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 setopt no_list_ambiguous
 
-# export PATH="/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # TODO: Try to make this work. The idea is that we set ZSH_COMPDUMP before we
@@ -82,8 +81,9 @@ export HISTSIZE=1000
 export SAVEHIST=1000
 export HISTFILE=~/.zsh_history
 
-# Flag ~/dev/ as a common path to cd into
-cdpath=($cdpath ~/dev)
+# Create the alias ~dev for ~/dev. This will be reflected in both the prompt,
+# and in completion for commands such as cd or ls.
+hash -d -- dev=/home/hbotha/dev
 
 # On dir change, run a function that, if we're in
 # ~/git_tree/agency-api-client/$branch_name, will add the subdirs of ./packages
@@ -182,10 +182,7 @@ fi
 
 # Fix yarn binary issue https://github.com/yarnpkg/yarn/issues/648
 # Do `yarn global bin` to get the path
-export PATH="/usr/local/Cellar/node/8.2.1/bin:$PATH"
-
-# # zsh-autoenv
-# . ~/.dotfiles/lib/zsh-autoenv/autoenv.zsh
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 # ------------------------------------------------------------------------------
 # Git
