@@ -12,4 +12,4 @@ stow ruby -t $HOME
 stow shell -t $HOME
 # stow xfce
 # stow xorg.conf.d
-stow zsh -t $HOME
+stow zsh -t $HOME --no-folding

@@ -42,7 +42,7 @@ zplug 'larkery/zsh-histdb'
 zplug 'benvan/sandboxd'
 zplug load
 
-. ~/henrebotha.zsh-theme
+. "$ZDOTDIR/henrebotha.zsh-theme"
 setopt promptsubst
 
 # https://github.com/nickmccurdy/sane-defaults/blob/master/home/.zshrc
@@ -66,7 +66,7 @@ fi
 
 alias help=run-help
 
-alias s='. ~/.zshrc'
+alias s=". $ZDOTDIR/.zshrc"
 alias :q=exit # Welp
 
 # Allow **foo as shorthand for **/*foo.
@@ -79,7 +79,7 @@ setopt hist_verify
 setopt share_history
 export HISTSIZE=1000
 export SAVEHIST=1000
-export HISTFILE=~/.zsh_history
+export HISTFILE="$XDG_DATA_HOME/zsh/.zsh_history"
 
 # Create the alias ~dev for ~/dev. This will be reflected in both the prompt,
 # and in completion for commands such as cd or ls.
@@ -380,7 +380,7 @@ alias ld='ls -Ahl --color=auto --directory --hyperlink --time-style=long-iso'
 alias fd='fdfind'
 
 # fzf keybinds/completion
-[ -f ~/.fzf.zsh ] && . ~/.fzf.zsh
+[ -f "$ZDOTDIR/.fzf.zsh" ] && . "$ZDOTDIR/.fzf.zsh"
 
 export FZF_DEFAULT_OPTS='--bind "f1:execute(less -f {})"'
 # --files: List files, do not search them
@@ -551,7 +551,7 @@ eval "$(direnv hook zsh)"
 # - '.' matches "regular files"
 # - 'mh+24' matches files (or directories or whatever) that are older than 24 hours.
 autoload -Uz compinit
-for dump in ~/.zcompdump(N.mh+24); do
+for dump in $XDG_CACHE_HOME/zsh/.zcompdump(N.mh+24); do
   compinit
 done
 compinit -C
