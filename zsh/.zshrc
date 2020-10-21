@@ -42,7 +42,7 @@ zplug 'larkery/zsh-histdb'
 zplug 'benvan/sandboxd'
 zplug load
 
-. ~/dev/dotfiles/henrebotha.zsh-theme
+. ~/henrebotha.zsh-theme
 setopt promptsubst
 
 # https://github.com/nickmccurdy/sane-defaults/blob/master/home/.zshrc

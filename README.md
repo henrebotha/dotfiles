@@ -4,14 +4,9 @@ My various configs.
 
 ## Instructions
 
-1. Clone the repo by doing `git clone https://github.com/henrebotha/dotfiles`.
-2. Head to your home directory by doing `cd ~`.
-3. Make a symlink for each file by doing `ln -s ~/path/to/dotfiles/filename .filename` per file.
-  * `karabiner.json` is different - it goes in `~/.config/karabiner/karabiner.json`.
-  * `.vim/ftplugin` (a directory) should live at `~/.vim/ftplugin`.
-  * `kakrc` should go in `$(which kak)/../share/kak/kakrc`.
-  * The contents of `xorg.conf.d` should go in `/etc/X11/xorg.conf.d`.
-  * `/completions` should be at `~/.oh-my-zsh/completions`.
+1. Clone this repo by running `git clone https://github.com/henrebotha/dotfiles`.
+2. Ensure that [Stow](https://www.gnu.org/software/stow/) is installed.
+3. Install the configs by running `./install.sh`. Alternatively, execute `stow $package_name`, where `$package_name` is the name of one of the subdirectories in this repo (e.g. `stow zsh`).
 
 ## What goes where?
 
