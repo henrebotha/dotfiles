@@ -154,6 +154,15 @@ fi
 # ------------------------------------------------------------------------------
 
 alias d=docker
+alias dc=docker-compose
+
+# ------------------------------------------------------------------------------
+# Kubernetes
+# ------------------------------------------------------------------------------
+
+source ~/.kubectl.zsh
+source ~/.bkcloud.zsh
+alias k=kubectl
 
 # ------------------------------------------------------------------------------
 # Java
@@ -240,6 +249,9 @@ tna() {
   done
 }
 
+# Fix broken mouse reporting after ssh exits abruptly
+alias fix-mouse-reporting='printf '\''\e[?1000l'\'''
+
 # ------------------------------------------------------------------------------
 # Vim
 # ------------------------------------------------------------------------------
@@ -256,6 +268,8 @@ vim_servername() {
 # Launch with -X to prevent communication with X11 on startup, improving startup
 # speed in Tmux
 alias v='vim -X --servername $(vim_servername)'
+# Use as pager
+alias vpage='ifne vim -X -R - -n'
 # Source ~/.vimrc in every running Vim server instance
 alias vu='for server in `vim --serverlist`; do; v --servername $server --remote-send '\'':source ~/.vimrc<cr>'\''; done'
 
@@ -364,6 +378,7 @@ setopt globdots
 # replace foo bar **/*.rb
 
 alias l='ls -Ahlp --color=auto --group-directories-first --hyperlink --time-style=long-iso'
+alias ld='ls -Ahl --color=auto --directory --hyperlink --time-style=long-iso'
 
 # Whenever a command is not found, prompt the user to install it via homebrew.
 # command_not_found_handler is a built-in Zsh hook, called automatically.
@@ -381,6 +396,7 @@ command_not_found_handler() {
     npm install -g "$1"
   fi
 }
+alias fd='fdfind'
 
 # fzf keybinds/completion
 [ -f ~/.fzf.zsh ] && . ~/.fzf.zsh
