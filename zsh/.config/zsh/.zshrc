@@ -382,7 +382,7 @@ alias fd='fdfind'
 # fzf keybinds/completion
 [ -f "$ZDOTDIR/.fzf.zsh" ] && . "$ZDOTDIR/.fzf.zsh"
 
-export FZF_DEFAULT_OPTS='--bind "f1:execute(less -f {})"'
+export FZF_DEFAULT_OPTS='--color=16 --bind "f1:execute(less -f {})"'
 # --files: List files, do not search them
 # --follow: Follow symlinks
 # --hidden: Search hidden paths
