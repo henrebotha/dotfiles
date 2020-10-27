@@ -37,7 +37,8 @@ source ~/.zplug/init.zsh
 zplug 'plugins/vi-mode', from:oh-my-zsh
 zplug 'plugins/gitfast', from:oh-my-zsh
 zplug 'plugins/ripgrep', from:oh-my-zsh
-zplug 'zsh-users/zsh-autosuggestions'
+zplug 'zsh-users/zsh-autosuggestions', defer:3
+zplug 'Aloxaf/fzf-tab', defer:2
 zplug 'larkery/zsh-histdb'
 zplug 'benvan/sandboxd'
 zplug load
