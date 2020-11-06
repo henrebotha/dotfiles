@@ -94,6 +94,7 @@
 	rmv = remote rename
 	rrm = remote remove
 	rv = remote -v
+	s = status --short --branch
 	sdc = show --word-diff-regex=.
 	sdw = show --word-diff
 	sp = sparse-checkout
