@@ -161,8 +161,7 @@ alias dc=docker-compose
 # Kubernetes
 # ------------------------------------------------------------------------------
 
-source ~/.kubectl.zsh
-source ~/.bkcloud.zsh
+[ -f "$HOME/.kubectl.zsh" ] && . "$HOME/.kubectl.zsh"
 alias k=kubectl
 
 # ------------------------------------------------------------------------------
@@ -447,7 +446,7 @@ fh() {
 # async_job vagrant_prompt_worker vagrant_status $(pwd)
 # # end zsh-async
 
-. ~/.dev
+[ -f "$ZDOTDIR/.dev" ] && . "$ZDOTDIR/.dev"
 
 bindkey '^f' reset-prompt
 
