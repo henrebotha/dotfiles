@@ -505,7 +505,7 @@ set linebreak
 " Indent line breaks on indented blocks, and indicate it
 set breakindent
 set breakindentopt=sbr
-set showbreak=↪
+let &showbreak = '⤷ '
 
 " Persist undo state across sessions
 " https://www.reddit.com/r/vim/comments/2ib9au/why_does_exiting_vim_make_the_next_prompt_appear/cl0zb7m/
