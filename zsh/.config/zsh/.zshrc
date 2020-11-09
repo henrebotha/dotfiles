@@ -451,7 +451,7 @@ fh() {
 bindkey '^f' reset-prompt
 
 # OPAM configuration
-. /Users/henrebotha/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+[ -f "$HOME"/.opam/opam-init/init.zsh ] && . "$HOME"/.opam/opam-init/init.zsh
 
 # Regular Colors
 
