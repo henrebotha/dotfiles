@@ -29,7 +29,16 @@ zle -N zle-keymap-select
 parse_git_branch() {
   (git symbolic-ref -q HEAD || git name-rev --name-only --no-undefined --always HEAD) 2> /dev/null
 }
-function fast_git_prompt_info() {
+parse_git_tag() {
+  local tags=$(git describe --tags 2> /dev/null)
+  local tag=$(echo $tags | head -1)
+  if [[ $(echo $tags | wc -l) > 1 ]]; then
+    echo "$tag…"
+  else
+    echo "$tag"
+  fi
+}
+function git_branch_info() {
   ref=$(git symbolic-ref HEAD 2> /dev/null) || return
   echo "${ref#refs/heads/}"
 }
@@ -39,12 +48,21 @@ git_string() {
   if [[ ! -n "$git_where" ]]; then
     return
   fi
-  local git_prompt_info="$(fast_git_prompt_info)"
-  local g_str="%{%F{green}%}$git_prompt_info "
+  local git_branch_info="$(git_branch_info)"
+  local g_str
+  if [ $git_branch_info ]; then;
+    g_str+="%{%F{green}%}$git_branch_info"
+  fi
+  local git_tag_info="$(parse_git_tag)"
+  if [ $git_tag_info ]; then;
+    g_str+="%{%F{blue}%}#$git_tag_info "
+  else
+    g_str+=' '
+  fi
   if $(git log -n 1 2>/dev/null | grep -q -c "\-\-wip\-\-"); then
     g_str+="%{%F{red}%}WIP "
   fi
-  if $(git stash list 2>/dev/null | grep -q -c "on $(echo $git_prompt_info | cut -d/ -f2-)"); then
+  if $(git stash list 2>/dev/null | grep -q -c "on $(echo $git_branch_info | cut -d/ -f2-)"); then
     g_str+="%{%F{yellow}%}(s) "
   fi
   echo $g_str
