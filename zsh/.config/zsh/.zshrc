@@ -45,6 +45,8 @@ zplug load
 . "$ZDOTDIR/henrebotha.zsh-theme"
 setopt promptsubst
 
+fpath=( "$ZDOTDIR"/completions "${fpath[@]}" )
+
 # https://github.com/nickmccurdy/sane-defaults/blob/master/home/.zshrc
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 setopt no_list_ambiguous
