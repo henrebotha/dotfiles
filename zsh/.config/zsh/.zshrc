@@ -372,8 +372,12 @@ setopt globdots
 # Misc
 # ------------------------------------------------------------------------------
 
+if command -v exa &> /dev/null; then
+  alias l='exa -aFl --git --group-directories-first --time-style=long-iso'
+else
+  alias l='ls -Ahlp --color=auto --group-directories-first --hyperlink --time-style=long-iso'
+fi
 
-alias l='ls -Ahlp --color=auto --group-directories-first --hyperlink --time-style=long-iso'
 alias ld='ls -Ahl --color=auto --directory --hyperlink --time-style=long-iso'
 
 alias fd='fdfind'
