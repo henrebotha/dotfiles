@@ -129,7 +129,7 @@ alias hf=histdb\ --forget\ --exact
 
 export ZSH_AUTOSUGGEST_USE_ASYNC=1
 
-if type histdb > /dev/null; then
+if command -v histdb &> /dev/null; then
   ZSH_AUTOSUGGEST_STRATEGY=histdb # (histdb history completion)
 
   _zsh_autosuggest_strategy_histdb() {
@@ -168,7 +168,7 @@ alias k=kubectl
 # ------------------------------------------------------------------------------
 
 # TODO: Lazy-load with sandboxd.
-if which jenv > /dev/null; then
+if command -v jenv &> /dev/null; then
   eval "$(jenv init -)"
   export PATH="$HOME/.jenv/shims:$PATH"
 fi
@@ -179,7 +179,7 @@ fi
 
 # Enable rbenv
 # TODO: Lazy-load with sandboxd.
-if type rbenv > /dev/null; then
+if command -v rbenv &> /dev/null; then
   export PATH="$HOME/.rbenv/bin:$PATH"
   eval "$(rbenv init -)"
 fi
@@ -305,7 +305,7 @@ rgl() {
 # shellcheck
 # ------------------------------------------------------------------------------
 
-if ! type "shellcheck" > /dev/null; then
+if ! command -v shellcheck &> /dev/null; then
   if [[ "$os" == 'Darwin' ]]; then
     brew install shellcheck
   fi
