@@ -478,9 +478,9 @@ set statusline+=%<
 set statusline+=%#FileOutsidePwd#%{FileInsidePwd()?'':expand('%')}%*%#StatusLine#%{FileInsidePwd()?expand('%').'\ ':''}%*
 set statusline+=%#FileOutsidePwdIcon#%{FileInsidePwd()?'':'[🡕]'}%*%#StatusLine#%{FileInsidePwd()?'\ ':''}%*
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
-set statusline+=\ %h%m%r%=%-14.(%l,%c%V%)
+set statusline+=\ %h%m%r%=%-.(%l,%c%V%)
 " Add filetype to statusline
-set statusline+=%y
+set statusline+=\ %y
 set statusline+=\ %P
 set laststatus=2
 hi FileOutsidePwd ctermfg=yellow
