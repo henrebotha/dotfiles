@@ -475,14 +475,17 @@ set statusline+=%<
 " every redraw. If letters like h/j/k/l/w/b/o start showing up on the screen
 " without having been inserted, that's a sign that the performance here is not
 " good enough & we should rethink the FileInsidePwd() function.
-set statusline+=%#FileOutsidePwd#%{FileInsidePwd()?'':expand('%').'[🡕]\ '}%*%#StatusLine#%{FileInsidePwd()?expand('%').'\ ':''}%*
+set statusline+=%#FileOutsidePwd#%{FileInsidePwd()?'':expand('%')}%*%#StatusLine#%{FileInsidePwd()?expand('%').'\ ':''}%*
+set statusline+=%#FileOutsidePwdIcon#%{FileInsidePwd()?'':'[🡕]'}%*%#StatusLine#%{FileInsidePwd()?'\ ':''}%*
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
-set statusline+=%h%m%r%=%-14.(%l,%c%V%)
+set statusline+=\ %h%m%r%=%-14.(%l,%c%V%)
 " Add filetype to statusline
 set statusline+=%y
 set statusline+=\ %P
 set laststatus=2
 hi FileOutsidePwd ctermfg=yellow
+hi FileOutsidePwdIcon ctermbg=yellow
+hi FileOutsidePwdIcon ctermfg=black
 hi StatusLine ctermbg=none
 hi StatusLineNC ctermbg=none
 hi VertSplit ctermbg=none
