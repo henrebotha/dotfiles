@@ -42,7 +42,7 @@ zplug 'larkery/zsh-histdb'
 zplug 'benvan/sandboxd'
 zplug load
 
-. "$ZDOTDIR/henrebotha.zsh-theme"
+. "$ZDOTDIR/prompt.zsh"
 setopt promptsubst
 
 fpath=( "$ZDOTDIR"/completions "${fpath[@]}" )
