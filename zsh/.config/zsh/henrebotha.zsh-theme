@@ -19,7 +19,7 @@ function prompt_char {
 
 # Functionality for displaying normal mode indicator in Vi mode.
 function zle-line-init zle-keymap-select {
-  return_status="$(prompt_char $exit_code)"
+  prompt_char_with_exit_status="$(prompt_char $exit_code)"
   zle reset-prompt
 }
 zle -N zle-line-init
@@ -101,7 +101,7 @@ precmd() {
 
 # We keep the prompt as a single var, so that reset-prompt redraws the whole thing
 PROMPT='${date_string} ${username} ${path_string} $(git_string)${jobs_string}$(vagrant_string)%f
-${return_status} %{%f%}'
+${prompt_char_with_exit_status} %{%f%}'
 
 # Override oh-my-zsh vi-mode plugin prompt
 RPS1=''
