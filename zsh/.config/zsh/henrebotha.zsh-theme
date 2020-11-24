@@ -59,11 +59,15 @@ git_string() {
   else
     g_str+=' '
   fi
+  local wip_stash
   if $(git log -n 1 2>/dev/null | grep -q -c "\-\-wip\-\-"); then
-    g_str+="%{%F{red}%}WIP "
+    wip_stash+="%{%F{red}%}W"
   fi
   if $(git stash list 2>/dev/null | grep -q -c "on $(echo $git_branch_info | cut -d/ -f2-)"); then
-    g_str+="%{%F{yellow}%}(s) "
+    wip_stash+="%{%F{yellow}%}S"
+  fi
+  if [ -n "$wip_stash" ]; then
+    g_str+="$wip_stash "
   fi
   echo $g_str
 }
