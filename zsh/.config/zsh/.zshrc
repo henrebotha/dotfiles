@@ -51,6 +51,9 @@ fpath=( "$ZDOTDIR"/completions "${fpath[@]}" )
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 setopt no_list_ambiguous
 
+# Key bindings for fzf-tab
+zstyle ':fzf-tab:*' fzf-bindings 'right:accept'
+
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # TODO: Try to make this work. The idea is that we set ZSH_COMPDUMP before we
