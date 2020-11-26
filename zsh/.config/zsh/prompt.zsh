@@ -48,17 +48,19 @@ git_string() {
   if [[ ! -n "$git_where" ]]; then
     return
   fi
-  local git_branch_info="$(git_branch_info)"
+
   local g_str
+
+  local git_branch_info="$(git_branch_info)"
   if [ $git_branch_info ]; then;
     g_str+="%{%F{green}%}$git_branch_info"
   fi
+
   local git_tag_info="$(parse_git_tag)"
   if [ $git_tag_info ]; then;
-    g_str+="%{%F{blue}%}#$git_tag_info "
-  else
-    g_str+=' '
+    g_str+="%{%F{blue}%}#$git_tag_info"
   fi
+
   local wip_stash
   if $(git log -n 1 2>/dev/null | grep -q -c "\-\-wip\-\-"); then
     wip_stash+="%{%F{red}%}W"
@@ -67,8 +69,12 @@ git_string() {
     wip_stash+="%{%F{yellow}%}S"
   fi
   if [ -n "$wip_stash" ]; then
-    g_str+="$wip_stash "
+    if [ -n "$g_str" ]; then
+      g_str+=" "
+    fi
+    g_str+="$wip_stash"
   fi
+
   echo $g_str
 }
 # End git functionality
