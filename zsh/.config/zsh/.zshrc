@@ -454,8 +454,6 @@ fh() {
 # async_job vagrant_prompt_worker vagrant_status $(pwd)
 # # end zsh-async
 
-[ -f "$ZDOTDIR/.dev" ] && . "$ZDOTDIR/.dev"
-
 bindkey '^f' reset-prompt
 
 # OPAM configuration
@@ -483,6 +481,8 @@ for dump in $XDG_CACHE_HOME/zsh/.zcompdump(N.mh+24); do
 done
 compinit -C
 autoload -U +X bashcompinit && bashcompinit
+
+[ -f "$ZDOTDIR/.dev" ] && . "$ZDOTDIR/.dev"
 
 export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
 
