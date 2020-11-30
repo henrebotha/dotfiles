@@ -482,7 +482,7 @@ done
 compinit -C
 autoload -U +X bashcompinit && bashcompinit
 
-[ -f "$ZDOTDIR/.dev" ] && . "$ZDOTDIR/.dev"
+[ -f "$ZDOTDIR"/.zsh-work ] && . "$ZDOTDIR"/.zsh-work
 
 export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
 
