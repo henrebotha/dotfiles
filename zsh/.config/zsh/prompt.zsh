@@ -75,6 +75,10 @@ git_string() {
     g_str+="$wip_stash"
   fi
 
+  if [ -n "$g_str" ]; then
+    g_str+=" "
+  fi
+
   echo $g_str
 }
 # End git functionality
