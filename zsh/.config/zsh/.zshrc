@@ -1,7 +1,3 @@
-# ------------------------------------------------------------------------------
-# Zsh
-# ------------------------------------------------------------------------------
-
 os=`uname`
 
 # Disabled on macOS due to line-chomping behaviour.
@@ -123,15 +119,10 @@ _self_destruct_hook() {
 (( $+functions[add-zsh-hook] )) || autoload -Uz add-zsh-hook
 add-zsh-hook precmd _self_destruct_hook
 
-# ------------------------------------------------------------------------------
 # Zsh-histdb
-# ------------------------------------------------------------------------------
 alias hf=histdb\ --forget\ --exact
 
-# ------------------------------------------------------------------------------
 # Zsh-autosuggestions
-# ------------------------------------------------------------------------------
-
 export ZSH_AUTOSUGGEST_USE_ASYNC=1
 
 if command -v histdb &> /dev/null; then
@@ -154,34 +145,22 @@ if command -v histdb &> /dev/null; then
   }
 fi
 
-# ------------------------------------------------------------------------------
 # Docker
-# ------------------------------------------------------------------------------
-
 alias d=docker
 alias dc=docker-compose
 
-# ------------------------------------------------------------------------------
 # Kubernetes
-# ------------------------------------------------------------------------------
-
 [ -f "$HOME/.kubectl.zsh" ] && . "$HOME/.kubectl.zsh"
 alias k=kubectl
 
-# ------------------------------------------------------------------------------
 # Java
-# ------------------------------------------------------------------------------
-
 # TODO: Lazy-load with sandboxd.
 if command -v jenv &> /dev/null; then
   eval "$(jenv init -)"
   export PATH="$HOME/.jenv/shims:$PATH"
 fi
 
-# ------------------------------------------------------------------------------
 # Ruby
-# ------------------------------------------------------------------------------
-
 # Enable rbenv
 # TODO: Lazy-load with sandboxd.
 if command -v rbenv &> /dev/null; then
@@ -189,18 +168,12 @@ if command -v rbenv &> /dev/null; then
   eval "$(rbenv init -)"
 fi
 
-# ------------------------------------------------------------------------------
 # Yarn
-# ------------------------------------------------------------------------------
-
 # Fix yarn binary issue https://github.com/yarnpkg/yarn/issues/648
 # Do `yarn global bin` to get the path
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
-# ------------------------------------------------------------------------------
 # Git
-# ------------------------------------------------------------------------------
-
 alias g='noglob git'
 
 # A lovely script that watches files for changes and automatically commits them
@@ -212,10 +185,7 @@ autocommit() {
   fswatch -0 $@ | xargs -0 -n 1 sh -c "date +%Y-%m-%dT%H:%M:%S%z; git add .; git commit -m \"AUTOCOMMIT\"; echo"
 }
 
-# ------------------------------------------------------------------------------
 # Tmux
-# ------------------------------------------------------------------------------
-
 # Let's install tpm, if we have Tmux but not tpm
 if [ -d "$HOME/.tmux" -a ! -d "$HOME/.tmux/plugins/tpm" ]; then
     git clone git@github.com:/tmux-plugins/tpm ~/.tmux/plugins/tpm
@@ -256,10 +226,7 @@ tna() {
 # Fix broken mouse reporting after ssh exits abruptly
 alias fix-mouse-reporting='printf '\''\e[?1000l'\'''
 
-# ------------------------------------------------------------------------------
 # Vim
-# ------------------------------------------------------------------------------
-
 # If we're in a Git repo, name the server after that repo. Otherwise, give it a
 # misc name.
 vim_servername() {
@@ -277,49 +244,31 @@ alias vpage='ifne vim -X -R - -n'
 # Source ~/.vimrc in every running Vim server instance
 alias vu='for server in `vim --serverlist`; do; v --servername $server --remote-send '\'':source ~/.vimrc<cr>'\''; done'
 
-# ------------------------------------------------------------------------------
 # Tree
-# ------------------------------------------------------------------------------
-
 alias t='tree -L'
 
-# ------------------------------------------------------------------------------
 # Elm
-# ------------------------------------------------------------------------------
-
 alias elmc='elm-repl'
 alias elmr='elm-reactor'
 alias elmm='elm-make'
 alias elmp='elm-package'
 
-# ------------------------------------------------------------------------------
 # Maven
-# ------------------------------------------------------------------------------
-
 alias mvnq='mvn -q'
 
-# ------------------------------------------------------------------------------
 # Ripgrep
-# ------------------------------------------------------------------------------
-
 rgl() {
   rg --color=always $@ | less -R
 }
 
-# ------------------------------------------------------------------------------
 # shellcheck
-# ------------------------------------------------------------------------------
-
 if ! command -v shellcheck &> /dev/null; then
   if [[ "$os" == 'Darwin' ]]; then
     brew install shellcheck
   fi
 fi
 
-# ------------------------------------------------------------------------------
 # macOS
-# ------------------------------------------------------------------------------
-
 if [[ "$os" == 'Darwin' ]]; then
   # Fix the macOS pasteboard when it breaks
   # alias fixpboard='ps aux | grep '\''[p]board'\'' | perl -p -e '\''s/ +/ /g'\'' | cut -d '\'' '\'' -f 2 | xargs kill -9'
@@ -329,10 +278,7 @@ if [[ "$os" == 'Darwin' ]]; then
   alias ip-wifi="ipconfig getifaddr en1"
 fi
 
-# ------------------------------------------------------------------------------
 # Key bindings & related config
-# ------------------------------------------------------------------------------
-
 # https://dougblack.io/words/zsh-vi-mode.html
 # Enable Vi mode.
 bindkey -v
@@ -366,17 +312,11 @@ done
 # other commands that depend on the delay.
 export KEYTIMEOUT=1 # 100 ms
 
-# ------------------------------------------------------------------------------
 # Completion
-# ------------------------------------------------------------------------------
-
 # Allow tab completion to match hidden files always
 setopt globdots
 
-# ------------------------------------------------------------------------------
 # Misc
-# ------------------------------------------------------------------------------
-
 if command -v exa &> /dev/null; then
   alias l='exa -aFl --git --group-directories-first --time-style=long-iso'
 else
@@ -459,10 +399,7 @@ bindkey '^f' reset-prompt
 # OPAM configuration
 [ -f "$HOME"/.opam/opam-init/init.zsh ] && . "$HOME"/.opam/opam-init/init.zsh
 
-# ------------------------------------------------------------------------------
 # Direnv
-# ------------------------------------------------------------------------------
-
 eval "$(direnv hook zsh)"
 
 # https://gist.github.com/ctechols/ca1035271ad134841284
