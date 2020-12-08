@@ -95,7 +95,7 @@ jobs_status() {
 
 # http://web.cs.elte.hu/zsh-manual/zsh_15.html#SEC53 search for PS1
 local username="%{%F{magenta}%}%n"
-local path_string="%4(c|%{%F{green}%}…%{%F{yellow}%}/|)%{%F{yellow}%}%3c"
+local path_string="%4(~|%{%F{green}%}…%{%F{yellow}%}/|)%{%F{yellow}%}%3~"
 local date_string=$(date +'%Y-%m-%d %H:%M:%S')
 local jobs_string=$(jobs_status)
 
