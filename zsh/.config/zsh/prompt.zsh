@@ -1,19 +1,18 @@
 function prompt_char {
   # $1 is the exit code of the most recent command.
-  echo -n "%{"
   case $KEYMAP in
     vicmd)
       case "$1" in
         0) echo -n "%F{green}";;
         *) echo -n "%F{yellow}";;
       esac;
-      echo '%}›';;
+      echo '›';;
     viins|main)
       case "$1" in
         0) echo -n "%F{cyan}";;
         *) echo -n "%F{red}";;
       esac;
-      echo '%}»';;
+      echo '»';;
   esac
 }
 
@@ -38,12 +37,48 @@ parse_git_tag() {
     echo "$tag"
   fi
 }
-function git_branch_info() {
-  ref=$(git symbolic-ref HEAD 2> /dev/null) || return
-  echo "${ref#refs/heads/}"
+function git-branch-info() {
+  git symbolic-ref --short -q HEAD 2> /dev/null
 }
 ZSH_THEME_GIT_PROMPT_DIRTY="%{%F{blue}%}*"
-git_string() {
+
+function path-to-branch {
+  echo "$@" | sed 's:--:/:g'
+}
+
+function branch-to-path {
+  echo "$@" | sed 's:/:--:g'
+}
+
+function branch-matches-path {
+  local branch="$(git-branch-info)"
+  local path_="$@"
+  [[ -n "$branch" ]] && [[ "$path_" =~ "$(branch-to-path $branch)" ]]
+}
+# local path_string="%4(~|%{%F{green}%}…%{%F{yellow}%}/|)%{%F{yellow}%}%3~"
+local path_string="%4(~|%{%F{green}%}…%{%F{yellow}%}/|)%{%F{yellow}%}PATH_START$(print -P '%3~')PATH_END"
+
+git-highlight-root() {
+  local path_string_raw="$@"
+  local git_root="$(git rev-parse --show-toplevel 2> /dev/null)"
+  if [[ ! -n "$git_root" ]]; then
+    echo "$path_string_raw" | sed -e 's:PATH_\(START\|END\)::g'
+    return
+  fi
+
+  if ! branch-matches-path "$@"; then
+    echo "$path_string_raw" | sed -e 's:PATH_\(START\|END\)::g'
+    return
+  fi
+
+  local git_root_basename="$(basename $git_root)"
+
+  local path_string_expanded=$(print -P "$path_string_raw")
+  echo $path_string_expanded | sed -e \
+    's:PATH_START\(.\+\b\)\?'"$git_root_basename"'\(\b\/\)\?\(.*\)\?PATH_END:\1%F{green}'"$git_root_basename"'%F{yellow}\2\3:'
+}
+
+git-string() {
   local git_where="$(parse_git_branch)"
   if [[ ! -n "$git_where" ]]; then
     return
@@ -51,9 +86,13 @@ git_string() {
 
   local g_str
 
-  local git_branch_info="$(git_branch_info)"
-  if [ $git_branch_info ]; then;
-    g_str+="%{%F{green}%}$git_branch_info"
+  local git_branch_info="$(git-branch-info)"
+  if ! branch-matches-path "$path_string"; then;
+    if [[ -n "$git_branch_info" ]]; then
+      g_str+="%{%F{green}%}$git_branch_info"
+    else
+      g_str+="%{%F{red}%}D"
+    fi
   fi
 
   local git_tag_info="$(parse_git_tag)"
@@ -95,12 +134,14 @@ jobs_status() {
 
 # http://web.cs.elte.hu/zsh-manual/zsh_15.html#SEC53 search for PS1
 local username="%{%F{magenta}%}%n"
-local path_string="%4(~|%{%F{green}%}…%{%F{yellow}%}/|)%{%F{yellow}%}%3~"
 local date_string=$(date +'%Y-%m-%d %H:%M:%S')
 local jobs_string=$(jobs_status)
 
 precmd() {
   exit_code=$?
+  local git_where="$(parse_git_branch)"
+  path_string="%4(~|%{%F{green}%}…%{%F{yellow}%}/|)%{%F{yellow}%}$(git-highlight-root "PATH_START$(print -P '%3~')PATH_END")"
+
   # We do it here so that it _doesn't_ update on zle reset-prompt
   date_string=$(date +'%Y-%m-%d %H:%M:%S')
   jobs_string=$(jobs_status)
@@ -110,7 +151,7 @@ precmd() {
 # TRAPALRM() { zle reset-prompt }
 
 # We keep the prompt as a single var, so that reset-prompt redraws the whole thing
-PROMPT='${date_string} ${username} ${path_string} $(git_string)${jobs_string}$(vagrant_string)%f
+PROMPT='${date_string} ${username} ${path_string} $(git-string)${jobs_string}$(vagrant_string)%f
 ${prompt_char_with_exit_status} %{%f%}'
 
 # Override oh-my-zsh vi-mode plugin prompt
