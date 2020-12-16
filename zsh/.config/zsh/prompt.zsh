@@ -128,14 +128,10 @@ vagrant_string() {
 
 VIRTUAL_ENV_DISABLE_PROMPT=true
 
-jobs_status() {
-  echo "%1(j.%{%F{blue}%}zᶻ %j%{%f%} .)"
-}
-
 # http://web.cs.elte.hu/zsh-manual/zsh_15.html#SEC53 search for PS1
 local username="%{%F{magenta}%}%n"
 local date_string=$(date +'%Y-%m-%d %H:%M:%S')
-local jobs_string=$(jobs_status)
+local jobs_string="%1(j.%{%F{blue}%}zᶻ %j%{%f%} .)"
 
 precmd() {
   exit_code=$?
@@ -144,7 +140,6 @@ precmd() {
 
   # We do it here so that it _doesn't_ update on zle reset-prompt
   date_string=$(date +'%Y-%m-%d %H:%M:%S')
-  jobs_string=$(jobs_status)
 }
 
 # TMOUT=1
