@@ -377,7 +377,8 @@ if executable('fzf')
 
   command! -bang -nargs=* Rg
     \ call fzf#vim#grep(
-    \   'rg --vimgrep --color=always '.shellescape(<q-args>), 1,
+    \   'rg --hidden -g "!.git" --vimgrep --color=always -- '.shellescape(<q-args>),
+    \   1,
     \   <bang>0 ? fzf#vim#with_preview('down:80%')
     \           : fzf#vim#with_preview('down:80%:hidden', '?'),
     \   <bang>0)
