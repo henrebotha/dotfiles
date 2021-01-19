@@ -157,3 +157,5 @@
 	diverge = ! "git lg $(git merge-base $1 $2)^..$1 $(git merge-base $1 $2)^..$2"
 [push]
 	default = current
+[init]
+	defaultBranch = main
