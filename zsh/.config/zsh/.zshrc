@@ -36,6 +36,9 @@ zplug 'zsh-users/zsh-autosuggestions', defer:3
 zplug 'Aloxaf/fzf-tab', defer:2
 zplug 'larkery/zsh-histdb'
 zplug 'benvan/sandboxd'
+if ! zplug check; then
+  zplug install
+fi
 zplug load
 
 . "$ZDOTDIR/prompt.zsh"
