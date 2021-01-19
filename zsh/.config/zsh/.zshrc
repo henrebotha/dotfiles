@@ -177,7 +177,7 @@ fi
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 # Git
-alias g='noglob git'
+alias g='git'
 
 # A lovely script that watches files for changes and automatically commits them
 # to git. Nice to use for note-taking.
