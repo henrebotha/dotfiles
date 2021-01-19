@@ -261,6 +261,10 @@ rgl() {
   rg --color=always $@ | less -R
 }
 
+fzcp() {
+  fzf --tac $@ | xclip -sel clip
+}
+
 # shellcheck
 if ! command -v shellcheck &> /dev/null; then
   if [[ "$os" == 'Darwin' ]]; then
