@@ -28,4 +28,5 @@ else
   export MANPAGER='vim -n -X -R +MANPAGER -'
   export MANWIDTH=80
 fi
+export MANOPT='--nh --nj'
 alias vi=$EDITOR
