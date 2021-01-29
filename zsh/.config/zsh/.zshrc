@@ -247,9 +247,6 @@ alias vpage='ifne vim -X -R - -n'
 # Source ~/.vimrc in every running Vim server instance
 alias vu='for server in `vim --serverlist`; do; v --servername $server --remote-send '\'':source ~/.vimrc<cr>'\''; done'
 
-# Tree
-alias t='tree -L'
-
 # Elm
 alias elmc='elm-repl'
 alias elmr='elm-reactor'
@@ -325,9 +322,14 @@ setopt globdots
 
 # Misc
 if command -v exa &> /dev/null; then
-  alias l='exa -aFl --git --group-directories-first --time-style=long-iso'
+  alias ls='exa -aFl --git --group-directories-first --time-style=long-iso'
+  alias l=ls
+  alias tree='exa -aFlT --git --time-style=long-iso'
+  alias t=tree
 else
-  alias l='ls -Ahlp --color=auto --group-directories-first --hyperlink --time-style=long-iso'
+  alias ls='ls -Ahlp --color=auto --group-directories-first --hyperlink --time-style=long-iso'
+  alias l=ls
+  alias t=tree
 fi
 
 alias ld='ls -Ahl --color=auto --directory --hyperlink --time-style=long-iso'
