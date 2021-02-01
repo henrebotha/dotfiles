@@ -150,7 +150,7 @@
 	# org name) & repo name from the first remote URL listed by git remote -v.
 	# This will probably break if there is no remote (easy to fix), or if the
 	# remote URL doesn't match the typical $host/$org/$repo.git pattern.
-	repo-name = ! "git remote -v | head -1 | cut -d ' ' -f 1 | grep -E --only-matching '([^:/ ]+/[^/ ]+)(\\.git)?$' | sed 's/\\.git$//'"
+	repo-name = ! "[ -n \"$(git remote)\" ] && git remote -v | head -1 | cut -d ' ' -f 1 | grep -E --only-matching '([^:/ ]+/[^/ ]+)(\\.git)?$' | sed 's/\\.git$//' || basename $(pwd)"
 	repo-and-branch-name = ! "echo $(git repo-name)':'$(git rev-parse --abbrev-ref HEAD)"
 
 	# Graph the divergence between two histories from their shared parent onwards.
