@@ -81,8 +81,8 @@ setopt hist_verify
 
 # Store history & share it across sessions.
 setopt share_history
-export HISTSIZE=1000
-export SAVEHIST=1000
+export HISTSIZE=1000000000
+export SAVEHIST=1000000000
 export HISTFILE="$XDG_DATA_HOME/zsh/.zsh_history"
 
 # Create the alias ~dev for ~/dev. This will be reflected in both the prompt,
