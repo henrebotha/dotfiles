@@ -241,7 +241,11 @@ vim_servername() {
 }
 # Launch with -X to prevent communication with X11 on startup, improving startup
 # speed in Tmux
-alias v='vim -X --servername $(vim_servername)'
+if vim --version | grep '\+clientserver' > /dev/null; then
+  alias vim='vim -X --servername $(vim_servername)'
+else
+  alias vim='vim -X'
+fi
 # Use as pager
 alias vpage='ifne vim -X -R - -n'
 # Source ~/.vimrc in every running Vim server instance
