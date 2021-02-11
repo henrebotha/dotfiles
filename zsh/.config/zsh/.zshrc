@@ -84,6 +84,10 @@ setopt share_history
 export HISTSIZE=1000000000
 export SAVEHIST=1000000000
 export HISTFILE="$XDG_DATA_HOME/zsh/.zsh_history"
+# Record timestamps.
+setopt extended_history
+# When looking up history, ignore duplicates.
+setopt hist_find_no_dups
 
 # Create the alias ~dev for ~/dev. This will be reflected in both the prompt,
 # and in completion for commands such as cd or ls.
