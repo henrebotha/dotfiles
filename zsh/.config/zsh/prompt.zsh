@@ -53,7 +53,7 @@ function branch-to-path {
 function branch-matches-path {
   local branch="$(git-branch-info)"
   local path_="$@"
-  [[ -n "$branch" ]] && [[ "$path_" =~ "$(branch-to-path $branch)" ]]
+  [[ -n "$branch" ]] && ([[ "$path_" =~ "$(branch-to-path $branch)" ]] || [[ "$path_" =~ "$branch" ]])
 }
 # local path_string="%4(~|%{%F{green}%}…%{%F{yellow}%}/|)%{%F{yellow}%}%3~"
 local path_string="%4(~|%{%F{green}%}…%{%F{yellow}%}/|)%{%F{yellow}%}PATH_START$(print -P '%3~')PATH_END"
@@ -75,7 +75,7 @@ git-highlight-root() {
 
   local path_string_expanded=$(print -P "$path_string_raw")
   echo $path_string_expanded | sed -e \
-    's:PATH_START\(.\+\b\)\?'"$git_root_basename"'\(\b\/\)\?\(.*\)\?PATH_END:\1%F{green}'"$git_root_basename"'%F{yellow}\2\3:'
+    's:PATH_START\(.\+\b\)\?'"$git_root_basename"'\(\b\/\)\?\(.*\)\?PATH_END:\1%F{green}'"$(git-branch-info)"'%F{yellow}\2\3:'
 }
 
 git-string() {
