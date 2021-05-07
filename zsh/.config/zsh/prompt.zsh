@@ -130,6 +130,14 @@ VIRTUAL_ENV_DISABLE_PROMPT=true
 
 # http://web.cs.elte.hu/zsh-manual/zsh_15.html#SEC53 search for PS1
 local username="%{%F{magenta}%}%n"
+if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+  if [ -n "$HOST" ]; then
+    username+="%{%F{red}%}@$HOST"
+  else
+    # Unknown host, just call it ssh
+    username+="%{%F{red}%}@ssh"
+  fi
+fi
 local date_string=$(date +'%Y-%m-%d %H:%M:%S')
 local jobs_string="%1(j.%{%F{blue}%}zᶻ %j%{%f%} .)"
 
