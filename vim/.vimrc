@@ -205,6 +205,17 @@ command! -nargs=0 Format :call CocAction('format')
 command! -nargs=? Fold :call CocAction('fold', <f-args>)
 command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
 
+command! -nargs=1 -complete=shellcmd Man :call Man(<q-args>)
+
+function! Man(command) abort
+  enew
+  execute "read !man " . a:command
+  norm ggdd
+  setlocal nomodified
+  setlocal ro
+  setlocal ft=man
+endfunction
+
 " Hook into OS clipboard. On Linux and similar, this will use the ^C ^V
 " "CLIPBOARD" (register "+"), not the copy-on-select "PRIMARY" (which is
 " register "*"). See
