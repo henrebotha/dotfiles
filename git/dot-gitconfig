@@ -95,6 +95,7 @@
 	rrm = remote remove
 	rv = remote -v
 	s = status --short --branch
+	sc = show --compact-summary
 	sdc = show --word-diff-regex=.
 	sdw = show --word-diff
 	sp = sparse-checkout
