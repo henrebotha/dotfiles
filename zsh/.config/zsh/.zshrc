@@ -344,6 +344,8 @@ alias ld='ls -Ahl --color=auto --directory --hyperlink --time-style=long-iso'
 
 alias fd='fdfind'
 
+export RIPGREP_CONFIG_PATH='/home/hbotha/.ripgreprc'
+
 # fzf keybinds/completion
 [ -f "$ZDOTDIR/.fzf.zsh" ] && . "$ZDOTDIR/.fzf.zsh"
 

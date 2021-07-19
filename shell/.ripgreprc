@@ -1,0 +1,4 @@
+# Truncate lines that exceed this many characters.
+--max-columns=150
+# Show a preview when truncating the line.
+--max-columns-preview
