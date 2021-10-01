@@ -85,6 +85,7 @@ Plug 'airblade/vim-gitgutter'             " Show git status in gutter, async
 Plug 'tpope/vim-unimpaired'               " Pairwise commands
 Plug 'junegunn/goyo.vim', { 'on': ['Goyo'] }
                                           " Distraction-free mode
+Plug 'preservim/tagbar'                   " File outline viewer
 Plug 'andymass/matchup.vim'               " Movement between matching if/ends etc
 Plug '~/.fzf'
 Plug 'junegunn/fzf.vim', { 'do': './install --bin' }
@@ -417,6 +418,10 @@ augroup ctags
   " generate & append tags for the current file."
   autocmd BufEnter,BufRead,BufWritePost * if stridx(expand('%:p'), getcwd()) == 0 && len(tagfiles()) | call system("(sed -i '/^\\S\\+\\s" . escape(expand('%'), '{}*/.') . "\\>/d' " . tagfiles()[0] . " && ctags -a -f " . tagfiles()[0] . " " . expand('%') . ") &") | endif
 augroup END
+
+" Only show tagbar when we are trying to navigate to a tag.
+let g:tagbar_autoclose = 1
+nnoremap <silent> <F8> :TagbarToggle<CR>
 
 " Make a new empty buffer
 nnoremap <leader>n :enew<cr>
