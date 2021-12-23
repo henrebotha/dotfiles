@@ -1,5 +1,5 @@
 sandbox_init_nvm(){
-  source "$HOME"/nvm.sh
+  source "$NVM_DIR"/nvm.sh
   autoload -U add-zsh-hook
   load-nvmrc() {
     local node_version="$(nvm version)"
