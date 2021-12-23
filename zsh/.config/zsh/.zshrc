@@ -36,6 +36,7 @@ zplug 'zsh-users/zsh-autosuggestions', defer:3
 zplug 'Aloxaf/fzf-tab', defer:2
 zplug 'larkery/zsh-histdb'
 zplug 'benvan/sandboxd'
+zplug 'olets/zsh-abbr', at:multi-word-abbreviations
 if ! zplug check; then
   zplug install
 fi
@@ -439,6 +440,27 @@ compinit -C
 autoload -U +X bashcompinit && bashcompinit
 
 [ -f "$ZDOTDIR"/.zsh-work ] && . "$ZDOTDIR"/.zsh-work
+
+typeset -A abbr_abbreviations
+export abbr_abbreviations=(
+  ['bk a']='bk auth:login'
+  ['bk d']='bk deploy'
+  ['bk sb']='bk shipper:blocks'
+  ['bk sdi']='bk sd:installations'
+  ['bk sps']='bk shipper:pods:status'
+  [g]=git
+  [k]=kubectl
+  ['kubectl e']='kubectl exec $pod -it --'
+  ['kubectl gp']='kubectl get pods'
+  ['kubectl g']='kubectl get'
+  ['kubectl get p']='kubectl get pods'
+  ['kubectl l']='kubectl logs -c app $pod'
+  ['kubectl lf']='kubectl logs -c app --tail=20 -f $pod'
+  [v]=vim
+)
+for abbreviation phrase in ${(@kv)abbr_abbreviations}; do
+  [ -z "$(abbr x $abbreviation)" ] && abbr "$abbreviation"="$phrase"
+done
 
 export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
 
