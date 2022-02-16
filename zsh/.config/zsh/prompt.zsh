@@ -104,8 +104,14 @@ git-string() {
   if $(git log -n 1 2>/dev/null | grep -q -c "\-\-wip\-\-"); then
     wip_stash+="%{%F{red}%}W"
   fi
-  if $(git stash list 2>/dev/null | grep -q -c "on $(echo $git_branch_info | cut -d/ -f2-)"); then
-    wip_stash+="%{%F{yellow}%}S"
+  local stashes="$(git stash list 2>/dev/null)"
+  if [ -n "$stashes" ]; then
+    if $(grep -q -c "on $(echo $git_branch_info | cut -d/ -f2-)" <(echo $stashes)); then
+      wip_stash+="%{%F{green}%}"
+    else
+      wip_stash+="%{%F{yellow}%}"
+    fi
+    wip_stash+="S"
   fi
   if [ -n "$wip_stash" ]; then
     if [ -n "$g_str" ]; then
