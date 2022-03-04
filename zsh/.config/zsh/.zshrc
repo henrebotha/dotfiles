@@ -176,10 +176,9 @@ if command -v rbenv &> /dev/null; then
   eval "$(rbenv init -)"
 fi
 
-# Yarn
-# Fix yarn binary issue https://github.com/yarnpkg/yarn/issues/648
-# Do `yarn global bin` to get the path
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+# Node
+export NVM_DIR="$HOME/.config/nvm"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # Git
 alias g='git'

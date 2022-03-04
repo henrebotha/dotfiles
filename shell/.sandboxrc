@@ -20,6 +20,15 @@ sandbox_init_nvm(){
   }
   add-zsh-hook chpwd load-nvmrc
   load-nvmrc
+
+  # Fix yarn binary issue https://github.com/yarnpkg/yarn/issues/648
+  # This has to happen in sandbox init, because the naive solution — doing it
+  # in .zshrc — would invoke `yarn` on shell startup, thereby precluding
+  # lazy-loading. Should this create problems with Yarn global binaries, try a
+  # workaround such as computing the Yarn global binary path on dotfiles
+  # install and caching it in a file to be read by .zshrc on startup.
+  export PATH="$(yarn global bin):$PATH"
 }
 sandbox_hook nvm node
 sandbox_hook nvm nodemon
+sandbox_hook nvm yarn
