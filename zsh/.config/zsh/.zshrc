@@ -279,6 +279,8 @@ fzcp() {
 if ! command -v shellcheck &> /dev/null; then
   if [[ "$os" == 'Darwin' ]]; then
     brew install shellcheck
+  else
+    sudo apt-get install shellcheck
   fi
 fi
 
