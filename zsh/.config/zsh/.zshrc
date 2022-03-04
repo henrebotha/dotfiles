@@ -74,6 +74,7 @@ alias help=run-help
 alias s=". $ZDOTDIR/.zshrc"
 alias :q=exit # Welp
 
+setopt extended_glob
 # Allow **foo as shorthand for **/*foo.
 setopt glob_star_short
 
