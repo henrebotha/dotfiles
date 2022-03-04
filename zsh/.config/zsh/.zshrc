@@ -101,14 +101,14 @@ hash -d -- dev=/home/hbotha/dev
 # TODO: Generalise this to read from a map of directory patterns to "package" dirs.
 chpwd_functions=($chpwd_functions chpwd_add_packages)
 chpwd_add_packages() {
-  if [[ $(pwd) =~ '^/home/hbotha/git_tree/attractions-content/([A-Za-z0-9\-_]+)/?\b' ]]; then
-    package_dir='/home/hbotha/git_tree/attractions-content/'$match[1]'/packages'
+  if [[ $(print -rD $PWD) =~ '^~/git_tree/attractions/content/([A-Za-z0-9\-_]+)/?\b' ]]; then
+    package_dir='/home/hbotha/git_tree/attractions/content/'$match[1]'/packages'
     if [[ ! ${cdpath[(ie)$package_dir]} -le ${#cdpath} ]]; then
       cdpath=($cdpath $package_dir)
     fi
   else
     # Remove things that look like package_dir from cdpath
-    cdpath=(${cdpath:#/home/hbotha/git_tree/attractions-content/*/packages})
+    cdpath=(${cdpath:#'/home/hbotha/git_tree/attractions/content/'$match[1]'/packages'})
   fi
 }
 
