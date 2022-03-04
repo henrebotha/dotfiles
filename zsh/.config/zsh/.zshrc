@@ -255,7 +255,7 @@ fi
 # Use as pager
 alias vpage='ifne vim -X -R - -n'
 # Source ~/.vimrc in every running Vim server instance
-alias vu='for server in `vim --serverlist`; do; v --servername $server --remote-send '\'':source ~/.vimrc<cr>'\''; done'
+alias vu='for server in `vim --serverlist`; do; vim --servername $server --remote-send '\'':source ~/.vimrc<cr>'\''; done'
 
 # Elm
 alias elmc='elm-repl'
