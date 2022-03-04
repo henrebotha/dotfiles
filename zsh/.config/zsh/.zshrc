@@ -208,10 +208,11 @@ alias tl='tmux ls'
 typeset -A tmux_sessions
 export tmux_sessions=(
   [dev]=~/git_tree
+  [diy]=~/Documents/DIY
   [dotfiles]=~/dev
   [games]=~/Games
-  [gp]=~/git_tree
   [notes]=~/git_tree/notes
+  [personal-dev]=~/dev
 )
 tn() {
   : ${1:?tn needs a session name.}
@@ -223,8 +224,8 @@ tna() {
   auto_sessions=(
     dev
     dotfiles
-    gp
     notes
+    personal-dev
   )
   for session in ${(@k)tmux_sessions:*auto_sessions}; do
     tn $session -d
