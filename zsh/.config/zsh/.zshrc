@@ -336,15 +336,15 @@ setopt globdots
 if command -v exa &> /dev/null; then
   alias ls='exa -aFl --git --group-directories-first --time-style=long-iso'
   alias l=ls
+  alias ld='ls -D'
   alias tree='exa -aFlT --git --time-style=long-iso'
   alias t=tree
 else
   alias ls='ls -Ahlp --color=auto --group-directories-first --hyperlink --time-style=long-iso'
   alias l=ls
+  alias ld='ls -Ahl --color=auto --directory --hyperlink --time-style=long-iso'
   alias t=tree
 fi
-
-alias ld='ls -Ahl --color=auto --directory --hyperlink --time-style=long-iso'
 
 alias fd='fdfind'
 
