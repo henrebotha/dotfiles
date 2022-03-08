@@ -430,6 +430,8 @@ nnoremap <leader>n :enew<cr>
 nnoremap <leader>z za
 nnoremap <leader>Z zA
 
+nnoremap <leader>W :set wrap!<cr>
+
 " Yank file path, optionally with line number
 nnoremap <leader>yf :let @+=expand("%")<cr>
 nnoremap <leader>yl :let @+=expand("%") . ':' . line(".")<cr>
