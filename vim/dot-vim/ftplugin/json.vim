@@ -1,4 +1,8 @@
-setlocal formatprg=python\ -mjson.tool
+if executable('jq')
+  setlocal formatprg=jq
+else
+  setlocal formatprg=python\ -mjson.tool
+endif
 if exists('b:undo_ftplugin')
   let b:undo_ftplugin .= '|'
 else
