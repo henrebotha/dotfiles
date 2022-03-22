@@ -346,7 +346,22 @@ else
   alias t=tree
 fi
 
-alias fd='fdfind'
+if command -v fdfind &> /dev/null; then
+  alias fd='fdfind'
+  altc_find_packages() {
+    fdfind -t d --maxdepth=1 . 'packages/' 2>/dev/null
+  }
+  altc_find_sibling_packages() {
+    test -z "$(git rev-parse --show-cdup)" || fdfind -t d --maxdepth=1 . "$(git rev-parse --show-cdup)packages/" 2>/dev/null
+  }
+else
+  altc_find_packages() {
+    test -d 'packages' && find 'packages/' -mindepth 1 -maxdepth 1 -type d | sort 2>/dev/null
+  }
+  altc_find_sibling_packages() {
+    test -z "$(git rev-parse --show-cdup)" || find "$(git rev-parse --show-cdup)packages/" -mindepth 1 -maxdepth 1 -type d | sort 2>/dev/null
+  }
+fi
 
 export RIPGREP_CONFIG_PATH='/home/hbotha/.ripgreprc'
 
@@ -365,8 +380,8 @@ export FZF_ALT_C_COMMAND=altc
 
 altc() {
   cdup=$(git rev-parse --show-cdup 2>/dev/null)
-  packages=$(fdfind -t d --maxdepth=1 . 'packages/' 2>/dev/null)
-  sibling_packages=$($(test -z "$(git rev-parse --show-cdup)") || fdfind -t d --maxdepth=1 . "$(git rev-parse --show-cdup)packages/" 2>/dev/null)
+  packages=$(altc_find_packages)
+  sibling_packages=$(altc_find_sibling_packages)
   cat <(echo $cdup) <(echo $packages) <(echo $sibling_packages) | sed -r '/^\s*$/d'
 }
 
