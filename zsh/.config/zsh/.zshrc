@@ -232,6 +232,15 @@ tna() {
   done
 }
 
+load_tmux_user_env() {
+  for var in $(tmux show-environment | grep '^TMUX_USER_ENV_' | sed 's/^TMUX_USER_ENV_//'); do
+    export $var
+  done
+}
+if [ -n "$TMUX" ]; then
+  load_tmux_user_env
+fi
+
 # Fix broken mouse reporting after ssh exits abruptly
 alias fix-mouse-reporting='printf '\''\e[?1000l'\'''
 
