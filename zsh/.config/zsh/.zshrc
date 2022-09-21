@@ -42,6 +42,8 @@ if ! zplug check; then
 fi
 zplug load
 
+export PATH="$HOME/.local/bin:$PATH"
+
 . "$ZDOTDIR/prompt.zsh"
 setopt promptsubst
 
