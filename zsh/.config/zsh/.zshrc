@@ -243,6 +243,21 @@ if [ -n "$TMUX" ]; then
   load_tmux_user_env
 fi
 
+# Wait for a string to appear in another pane before executing a command
+tmux_await() {
+  # Args: window & pane (ints), then grep pattern to match, then command to run
+  : ${1:?tmux_await needs a window number.}
+  : ${2:?tmux_await needs a pane number.}
+  : ${3:?tmux_await needs a pattern to look for.}
+  : ${4:?tmux_await needs a command to execute.}
+  # args=(${@:2})
+  # session_root=${tmux_sessions[$1]:-$HOME}
+  # tmux new-session -s $1 -c $session_root $args
+  while ! tmux capture-pane -p -t @"$1".%"$2" | grep "$3"; do
+    sleep 1
+  done; ${@:4}
+}
+
 # Fix broken mouse reporting after ssh exits abruptly
 alias fix-mouse-reporting='printf '\''\e[?1000l'\'''
 
