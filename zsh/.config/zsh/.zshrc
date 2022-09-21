@@ -91,9 +91,10 @@ setopt extended_history
 # When looking up history, ignore duplicates.
 setopt hist_find_no_dups
 
-# Create the alias ~dev for ~/dev. This will be reflected in both the prompt,
-# and in completion for commands such as cd or ls.
-hash -d -- dev=/home/hbotha/dev
+# Create aliases such as ~dev for ~/dev. This will be reflected in both the
+# prompt, and in completion for commands such as cd or ls.
+hash -d -- dev="$HOME"/dev
+hash -d -- dotfiles="$HOME"/dev/dotfiles
 
 # On dir change, run a function that, if we're in
 # ~/git_tree/agency-api-client/$branch_name, will add the subdirs of ./packages
