@@ -391,7 +391,7 @@ else
   }
 fi
 
-export RIPGREP_CONFIG_PATH='/home/hbotha/.ripgreprc'
+export RIPGREP_CONFIG_PATH="$HOME"'/.ripgreprc'
 
 # fzf keybinds/completion
 [ -f "$ZDOTDIR/.fzf.zsh" ] && . "$ZDOTDIR/.fzf.zsh"
