@@ -206,7 +206,7 @@ alias txe='tmuxinator new'
 alias ta='tmux a -t'
 alias tai='tmux new-session -t' # mnemonic: "tmux attach independent"
 alias tk='tmux kill-session -t'
-alias tl='tmux ls'
+alias tl='tmux ls 2> /dev/null || echo '\''Tmux is not running.'\'
 typeset -A tmux_sessions
 export tmux_sessions=(
   [dev]=~/git_tree
@@ -304,6 +304,8 @@ if [[ "$os" == 'Darwin' ]]; then
   alias ip-eth="ipconfig getifaddr en0"
   alias ip-wifi="ipconfig getifaddr en1"
 fi
+
+alias s='sudo'
 
 # Key bindings & related config
 # https://dougblack.io/words/zsh-vi-mode.html
@@ -478,6 +480,7 @@ export abbr_abbreviations=(
   ['bk sdi']='bk sd:installations'
   ['bk sps']='bk shipper:pods:status'
   [g]=git
+  [hf]='histdb --forget --exact'
   [k]=kubectl
   ['kubectl e']='kubectl exec $pod -it --'
   ['kubectl gp']='kubectl get pods'
@@ -485,6 +488,11 @@ export abbr_abbreviations=(
   ['kubectl get p']='kubectl get pods'
   ['kubectl l']='kubectl logs -c app $pod'
   ['kubectl lf']='kubectl logs -c app --tail=20 -f $pod'
+  [s]=sudo
+  ['sudo a']='sudo apt'
+  ['sudo apt i']='sudo apt install'
+  ['sudo apt install y']='sudo apt install -y'
+  ['sudo aiy']='sudo apt install -y'
   [v]=vim
 )
 for abbreviation phrase in ${(@kv)abbr_abbreviations}; do
