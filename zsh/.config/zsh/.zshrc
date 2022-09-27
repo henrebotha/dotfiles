@@ -516,6 +516,35 @@ for abbreviation phrase in ${(@kv)abbr_abbreviations}; do
   [ -z "$(abbr x $abbreviation)" ] && abbr "$abbreviation"="$phrase"
 done
 
+repl() {
+  case $1 in
+    java)
+      jshell;;
+    javascript|js)
+      node;;
+    python)
+      python;;
+    python2)
+      python2;;
+    python3)
+      python3;;
+    ruby)
+      if command -v rbenv &> /dev/null; then
+        if rbenv which pry > /dev/null 2>&1; then
+          pry
+        else
+          irb
+        fi
+      else
+        if command -v pry > /dev/null 2>&1; then
+          pry
+        else
+          irb
+        fi
+      fi;;
+  esac
+}
+
 export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
 
 # zprof
