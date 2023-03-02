@@ -553,6 +553,8 @@ repl() {
   esac
 }
 
+unset os
+
 export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
 
 # zprof
