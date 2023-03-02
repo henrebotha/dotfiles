@@ -36,7 +36,7 @@ zplug 'zsh-users/zsh-autosuggestions', defer:3
 zplug 'Aloxaf/fzf-tab', defer:2
 zplug 'larkery/zsh-histdb'
 zplug 'benvan/sandboxd'
-zplug 'olets/zsh-abbr', at:multi-word-abbreviations
+zplug 'olets/zsh-abbr', at:v5
 if ! zplug check; then
   zplug install
 fi
@@ -512,9 +512,17 @@ export abbr_abbreviations=(
   ['sudo aiy']='sudo apt install -y'
   [v]=vim
 )
+
+abbrs=$(abbr list-abbreviations)
 for abbreviation phrase in ${(@kv)abbr_abbreviations}; do
-  [ -z "$(abbr x $abbreviation)" ] && abbr "$abbreviation"="$phrase"
+  if [[ ! "$abbrs" =~ "\"$abbreviation\"" ]]; then
+    abbr "$abbreviation"="$phrase"
+  fi
 done
+unset abbrs
+unset abbr_abbreviations
+
+bindkey "^E" abbr-expand
 
 repl() {
   case $1 in
