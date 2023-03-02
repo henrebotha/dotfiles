@@ -147,6 +147,12 @@ fi
 local date_string=$(date +'%Y-%m-%d %H:%M:%S')
 local jobs_string="%1(j.%{%F{blue}%}zᶻ %j%{%f%} .)"
 
+preexec() {
+  # Before running any command, update Tmux user variables.
+  # FIXME: Tab completion doesn't run preexec, so can tab-complete the wrong value.
+  typeset -f load_tmux_user_env > /dev/null && load_tmux_user_env
+}
+
 precmd() {
   exit_code=$?
   local git_where="$(parse_git_branch)"
