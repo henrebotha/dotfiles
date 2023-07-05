@@ -32,6 +32,10 @@
 	lineNumber = true
 	extendedRegexp = true
 	fallbackToNoIndex = true
+[blame]
+	ignoreRevsFile = .git-blame-ignore-revs
+	markIgnoredLines = true
+	markUnblamableLines = true
 [fetch]
 	prune = true
 	writeCommitGraph = true
