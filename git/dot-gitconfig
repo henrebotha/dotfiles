@@ -126,6 +126,8 @@
 	# Worktree workflow
 	wkls = worktree list
 
+	# Usage:
+	# git wkadd dirname branchname
 	# We have to unset the upstream if $2 is a remote branch, otherwise $1 will
 	# track $2, which will affect pushing
 	wkadd = ! "f() { \n\
@@ -135,12 +137,14 @@
 	wkrb = ! "f() { \n\
 		git fetch --prune && git rebase $1; \n\
 		}; f"
-	wkrm = ! "branch=$(git symbolic-ref --short HEAD) && \n\
+	wkrm = ! "test -f .git && \n\
+	  branch=$(git symbolic-ref --short HEAD) && \n\
 		default_branch=$(git symbolic-ref --short refs/remotes/origin/HEAD) && \n\
 		test $(git merge-base $default_branch HEAD) = $(git rev-parse HEAD) && \n\
 		git checkout --detach && \n\
 		git branch -d $branch && git worktree remove ."
-	wkrmf = ! "branch=$(git symbolic-ref --short HEAD) && \n\
+	wkrmf = ! "test -f .git && \n\
+	  branch=$(git symbolic-ref --short HEAD) && \n\
 		git checkout --detach && \n\
 		git branch -D $branch && git worktree remove ."
 
