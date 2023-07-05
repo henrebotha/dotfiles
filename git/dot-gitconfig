@@ -12,6 +12,9 @@
 	; -c:           run command on start, after autocmd/modeline
 	pager = ifne vim -X -R - -n -c 'set filetype=git nowrap noro'
 	sparseCheckoutCone = 1
+[user]
+	name = Henré Botha
+	useConfigOnly = true ; force me to set email in repo local config
 [pager]
 	log = less
 	branch = less
@@ -20,9 +23,10 @@
 	; colour codes, so we disable the colouring when using Vim-paged commands
 	diff = false
 	show = false
-[user]
-	name = Henré Botha
-	useConfigOnly = true ; force me to set email in repo local config
+[init]
+	defaultBranch = main
+[push]
+	default = current
 [diff]
 	colorMoved = true ; give moved lines their own colour. Only works when paging with colour
 	compactionheuristic = true
@@ -47,23 +51,6 @@
 	# Display all aliases :)
 	aliases = ! git config --list | awk '/alias/{ print $1 }' | perl -pe 's/alias\\.//g' | perl -pe 's/=.+//g'
 
-	# https://twitter.com/DotProto/status/991112367323824128
-	orphan = ! git log --pretty=oneline --abbrev-commit --graph --decorate `git reflog | cut -d \" \" -f 1`
-
-	# Hide files from git
-	hidden = ! git ls-files -v . | grep ^S | awk '{ print $2 }'
-	hide = update-index --skip-worktree
-	unhide = update-index --no-skip-worktree
-	unhide-all = ! cd $(git rev-parse --show-toplevel || echo ".") && git hidden | xargs git unhide
-
-	# # Alternative to git status - also shows hidden files! Currently broken...
-	# s = ! sh -c 'git status $1' - && [ '$git hidden | wc -l' != '0' ] && echo '\n  Hidden files present!'
-
-	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
-
-	# Safer alternative to --force
-	pf = push --force-with-lease
-
 	# Short aliases for simple commands
 	a = add
 	ap = -c color.diff=true add --patch
@@ -87,6 +74,8 @@
 	lgb = -c color.diff=true log --oneline --decorate --graph --branches
 	lo = -c color.diff=true log --oneline --decorate
 	mff = merge --ff-only --no-stat
+	# Safer alternative to --force
+	pf = push --force-with-lease
 	r = remote
 	ra = remote add
 	rb = ! "f() { \
@@ -106,6 +95,20 @@
 	st = status
 	sw = switch
 	wk = worktree
+
+	# https://twitter.com/DotProto/status/991112367323824128
+	orphan = ! git log --pretty=oneline --abbrev-commit --graph --decorate `git reflog | cut -d \" \" -f 1`
+
+	# Hide files from git
+	hidden = ! git ls-files -v . | grep ^S | awk '{ print $2 }'
+	hide = update-index --skip-worktree
+	unhide = update-index --no-skip-worktree
+	unhide-all = ! cd $(git rev-parse --show-toplevel || echo ".") && git hidden | xargs git unhide
+
+	# # Alternative to git status - also shows hidden files! Currently broken...
+	# s = ! sh -c 'git status $1' - && [ '$git hidden | wc -l' != '0' ] && echo '\n  Hidden files present!'
+
+	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
 
 	wip = ! "f() { \
 		git add -A; \
@@ -165,7 +168,3 @@
 
 	# Graph the divergence between two histories from their shared parent onwards.
 	diverge = ! "git lg $(git merge-base $1 $2)^..$1 $(git merge-base $1 $2)^..$2"
-[push]
-	default = current
-[init]
-	defaultBranch = main
