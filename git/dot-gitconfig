@@ -156,7 +156,8 @@
 	# This will probably break if there is no remote (easy to fix), or if the
 	# remote URL doesn't match the typical $host/$org/$repo.git pattern.
 	repo-name = ! "[ -n \"$(git remote)\" ] && git remote -v | head -1 | cut -d ' ' -f 1 | grep -E --only-matching '([^:/ ]+/[^/ ]+)(\\.git)?$' | sed 's/\\.git$//' || basename $(pwd)"
-	repo-and-branch-name = ! "echo $(git repo-name)':'$(git rev-parse --abbrev-ref HEAD)"
+	branch-name = ! "git rev-parse HEAD >/dev/null 2>&1 && git rev-parse --abbrev-ref HEAD || echo '???no-branch???'"
+	repo-and-branch-name = ! "echo $(git repo-name)':'$(git branch-name)"
 
 	# Graph the divergence between two histories from their shared parent onwards.
 	diverge = ! "git lg $(git merge-base $1 $2)^..$1 $(git merge-base $1 $2)^..$2"
