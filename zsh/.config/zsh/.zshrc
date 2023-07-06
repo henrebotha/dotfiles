@@ -300,7 +300,7 @@ rgl() {
 }
 
 fzcp() {
-  fzf --tac $@ | xclip -sel clip
+  fzf -m --tac $@ | xclip -sel clip
 }
 
 # shellcheck
