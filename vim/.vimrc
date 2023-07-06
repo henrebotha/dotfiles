@@ -2,7 +2,7 @@ filetype off                  " required
 
 " Before we continue, detect which version of Vim we're running {{{
 if has('nvim')
-  let config_path = '~/.config/nvim'
+  let config_path = stdpath('config')
   let g:python2_host_prog = '/usr/local/bin/python2'
   let g:python3_host_prog = '/usr/local/bin/python3'
 else
@@ -22,11 +22,12 @@ set visualbell
 set ruler
 
 " Manage autoload & plugins {{{
+" https://github.com/junegunn/vim-plug/wiki/tips#automatic-installation
 let autoload_path = config_path . '/autoload'
 let plug_path = autoload_path . '/plug.vim'
 if empty(glob(autoload_path))
-  execute 'silent !curl -fLo ' . plug_path . ' --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-  autocmd VimEnter * PlugInstall
+  silent execute '!curl -fLo ' . plug_path . ' --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
   autocmd VimEnter * close
 endif " }}}
 
