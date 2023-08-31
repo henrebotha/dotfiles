@@ -513,11 +513,21 @@ export abbr_abbreviations=(
   [v]=vim
 )
 
+modifier_commands=(
+  sudo
+  watch
+)
+
 abbrs=$(abbr list-abbreviations)
 for abbreviation phrase in ${(@kv)abbr_abbreviations}; do
   if [[ ! "$abbrs" =~ "\"$abbreviation\"" ]]; then
     abbr "$abbreviation"="$phrase"
   fi
+  for modifier in $modifier_commands; do
+    if [[ ! "$abbrs" =~ "\"$modifier $abbreviation\"" ]]; then
+      abbr "$modifier $abbreviation"="$modifier $phrase"
+    fi
+  done
 done
 unset abbrs
 unset abbr_abbreviations
