@@ -1,19 +1,17 @@
 os=`uname`
 
-# Disabled on macOS due to line-chomping behaviour.
-# https://github.com/robbyrussell/oh-my-zsh/issues/5765
-if [[ "$os" != 'Darwin' ]]; then
-  # http://stackoverflow.com/a/844299
-  expand-or-complete-with-dots() {
-    echo -n "\e[31m…\e[0m"
-    zle expand-or-complete
-    zle redisplay
-  }
-  zle -N expand-or-complete-with-dots
-  bindkey -M emacs "^I" expand-or-complete-with-dots
-  bindkey -M viins "^I" expand-or-complete-with-dots
-  bindkey -M vicmd "^I" expand-or-complete-with-dots
-fi
+expand-or-complete-custom() {
+  # https://github.com/ohmyzsh/ohmyzsh/blob/02d07f3e3dba0d50b1d907a8062bbaca18f88478/lib/completion.zsh#L62
+  print -Pn "%F{red}…%f"
+  load_tmux_user_env
+  zle expand-or-complete
+  zle redisplay
+}
+
+zle -N expand-or-complete-custom
+bindkey -M emacs "^I" expand-or-complete-custom
+bindkey -M viins "^I" expand-or-complete-custom
+bindkey -M vicmd "^I" expand-or-complete-custom
 
 # This fixes slow Git tab completion. It needs to precede the Git plugin,
 # apparently.
