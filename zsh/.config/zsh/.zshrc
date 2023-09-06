@@ -410,7 +410,7 @@ altc() {
   cdup=$(git rev-parse --show-cdup 2>/dev/null)
   packages=$(altc_find_packages)
   sibling_packages=$(altc_find_sibling_packages)
-  cat <(echo $cdup) <(echo $packages) <(echo $sibling_packages) | sed -r '/^\s*$/d'
+  sed -r '/^\s*$/d' <<< $cdup <<< $packages <<< $sibling_packages
 }
 
 alias fzfp='fzf --preview '\''[[ $(file --mime {}) =~ binary ]] &&

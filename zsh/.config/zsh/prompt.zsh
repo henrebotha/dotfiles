@@ -59,10 +59,10 @@ parse_git_branch() {
 }
 parse_git_tag() {
   local tags=$(git tag --points-at HEAD 2> /dev/null)
-  local tag=$(echo $tags | head -1)
+  local tag=$(head -1 <<< $tags)
   local tag_short="$(truncate_middle $tag)"
   echo -n "$tag_short"
-  if [[ $(echo $tags | wc -l) > 1 ]]; then
+  if [[ $(wc -l <<< $tags) > 1 ]]; then
     echo -n " +"
   fi
 }
@@ -72,11 +72,11 @@ function git-branch-info() {
 ZSH_THEME_GIT_PROMPT_DIRTY="%{%F{blue}%}*"
 
 function path-to-branch {
-  echo "$@" | sed 's:--:/:g'
+  sed 's:--:/:g' <<< "$@"
 }
 
 function branch-to-path {
-  echo "$@" | sed 's:/:--:g'
+  sed 's:/:--:g' <<< "$@"
 }
 
 function branch-matches-path {
@@ -91,20 +91,21 @@ git-highlight-root() {
   local path_string_raw="$@"
   local git_root="$(git rev-parse --show-toplevel 2> /dev/null)"
   if [[ ! -n "$git_root" ]]; then
-    echo "$path_string_raw" | sed -e 's:PATH_\(START\|END\)::g'
+    sed 's:PATH_\(START\|END\)::g' <<< "$path_string_raw"
     return
   fi
 
   if ! branch-matches-path "$@"; then
-    echo "$path_string_raw" | sed -e 's:PATH_\(START\|END\)::g'
+    sed 's:PATH_\(START\|END\)::g' <<< "$path_string_raw"
     return
   fi
 
   local git_root_basename="$(basename $git_root)"
 
   local path_string_expanded=$(print -P "$path_string_raw")
-  echo $path_string_expanded | sed -e \
-    's:PATH_START\(.\+\b\)\?'"$git_root_basename"'\(\b\/\)\?\(.*\)\?PATH_END:\1%F{green}'"$(git-branch-info)"'%F{yellow}\2\3:'
+  sed \
+    's:PATH_START\(.\+\b\)\?'"$git_root_basename"'\(\b\/\)\?\(.*\)\?PATH_END:\1%F{green}'"$(git-branch-info)"'%F{yellow}\2\3:' \
+    <<< $path_string_expanded
 }
 
 git-string() {
@@ -135,7 +136,7 @@ git-string() {
   fi
   local stashes="$(git stash list 2>/dev/null)"
   if [ -n "$stashes" ]; then
-    if $(grep -q -c "on $(echo $git_branch_info | cut -d/ -f2-)" <(echo $stashes)); then
+    if $(grep -q -c "on $(cut -d/ -f2- <<< $git_branch_info)" <(echo $stashes)); then
       wip_stash+="%{%F{green}%}"
     else
       wip_stash+="%{%F{yellow}%}"
