@@ -58,7 +58,7 @@ parse_git_branch() {
   (git symbolic-ref -q HEAD || git name-rev --name-only --no-undefined --always HEAD) 2> /dev/null
 }
 parse_git_tag() {
-  local tags=$(git describe --tags 2> /dev/null)
+  local tags=$(git tag --points-at HEAD 2> /dev/null)
   local tag=$(echo $tags | head -1)
   local tag_short="$(truncate_middle $tag)"
   echo -n "$tag_short"
