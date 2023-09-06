@@ -25,16 +25,45 @@ zle -N zle-line-init
 zle -N zle-keymap-select
 # End Vi mode functionality
 
+truncate_middle() {
+  local max_length=15
+  local section_length=7
+  local string=$1
+  # https://stackoverflow.com/a/10564427/1966418
+  local zero='%([BSUbfksu]|([FK]|){*})'
+  local length=${#${(S%%)string//$~zero/}}
+  if [[ $length -le $max_length ]]; then
+    echo $string
+    return
+  fi
+  if [[ $string =~ '([a-zA-Z0-9]+[_\/\-]){2,}' ]]; then
+    # Do nice truncation of a UUID or similar hyphen-/underscore-/slash-separated string
+    if [[ $string =~ '^[a-zA-Z0-9][_\/\-]([a-zA-Z0-9]+[_\/\-]){2,}' ]]; then
+      # Special case for Booking.com b-servicename-123-456 pattern
+      local start_chunk=$(sed 's/\([a-zA-Z0-9][_\/\-][a-zA-Z0-9]\+[_\/\-]\).\+$/\1/' <<< $string)
+      local end_chunk=$(sed 's/^.\+\([_\/\-]\)/\1/' <<< $string)
+      echo $start_chunk…$end_chunk
+    else
+      local start_chunk=$(sed 's/\([_\/\-]\).\+$/\1/' <<< $string)
+      local end_chunk=$(sed 's/^.\+\([_\/\-]\)/\1/' <<< $string)
+      echo $start_chunk…$end_chunk
+    fi
+    return
+  fi
+  # Fall back to simple truncation of a number of characters
+  echo "$string[0,$section_length]…$string[-$section_length,-1]"
+}
+
 parse_git_branch() {
   (git symbolic-ref -q HEAD || git name-rev --name-only --no-undefined --always HEAD) 2> /dev/null
 }
 parse_git_tag() {
   local tags=$(git describe --tags 2> /dev/null)
   local tag=$(echo $tags | head -1)
+  local tag_short="$(truncate_middle $tag)"
+  echo -n "$tag_short"
   if [[ $(echo $tags | wc -l) > 1 ]]; then
-    echo "$tag…"
-  else
-    echo "$tag"
+    echo -n " +"
   fi
 }
 function git-branch-info() {
