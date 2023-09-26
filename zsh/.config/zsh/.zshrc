@@ -235,13 +235,13 @@ tna() {
 }
 
 load_tmux_user_env() {
-  for var in $(tmux show-environment | grep '^TMUX_USER_ENV_' | sed 's/^TMUX_USER_ENV_//'); do
-    export $var
-  done
+  if [ -n "$TMUX" ]; then
+    for var in $(tmux show-environment | grep '^TMUX_USER_ENV_' | sed 's/^TMUX_USER_ENV_//'); do
+      export $var
+    done
+  fi
 }
-if [ -n "$TMUX" ]; then
-  load_tmux_user_env
-fi
+load_tmux_user_env
 
 # Wait for a string to appear in another pane before executing a command
 tmux_await() {
