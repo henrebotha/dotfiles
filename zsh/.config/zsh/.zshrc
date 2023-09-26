@@ -246,8 +246,8 @@ load_tmux_user_env
 # Wait for a string to appear in another pane before executing a command
 tmux_await() {
   # Args: window & pane (ints), then grep pattern to match, then command to run
-  : ${1:?tmux_await needs a window number.}
-  : ${2:?tmux_await needs a pane number.}
+  : ${1:?tmux_await needs a window number (prefix-i).}
+  : ${2:?tmux_await needs a pane number (prefix-i or prefix-q).}
   : ${3:?tmux_await needs a pattern to look for.}
   : ${4:?tmux_await needs a command to execute.}
   # args=(${@:2})
