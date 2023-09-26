@@ -20,13 +20,8 @@ export LC_TELEPHONE=en_GB.UTF-8
 export LC_MEASUREMENT=en_GB.UTF-8
 export LC_IDENTIFICATION=en_GB.UTF-8
 
-if [[ `uname` == 'Darwin' ]]; then
-  export EDITOR='nvim'
-  export MANPAGER='nvim -n -c '\''set ft=man'\'' -'
-else
-  export EDITOR='vim -X'
-  export MANPAGER='vim -n -X -R +MANPAGER -'
-  export MANWIDTH=80
-fi
+export EDITOR='vim -X'
+export MANPAGER='vim -n -X -R +MANPAGER -'
+export MANWIDTH=80
 export MANOPT='--nh --nj'
 alias vi=$EDITOR
