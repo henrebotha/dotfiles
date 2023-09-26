@@ -361,7 +361,13 @@ export KEYTIMEOUT=1 # 100 ms
 setopt globdots
 
 # Misc
-if command -v exa &> /dev/null; then
+if command -v eza &> /dev/null; then
+  alias ls='eza -aFl --git --group-directories-first --time-style=long-iso'
+  alias l=ls
+  alias ld='ls -D'
+  alias tree='eza -aFlT --git --time-style=long-iso'
+  alias t=tree
+elif command -v exa &> /dev/null; then
   alias ls='exa -aFl --git --group-directories-first --time-style=long-iso'
   alias l=ls
   alias ld='ls -D'
