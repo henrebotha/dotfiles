@@ -361,10 +361,11 @@ setopt globdots
 
 # Misc
 if command -v eza &> /dev/null; then
-  alias ls='eza -aFl --git --group-directories-first --time-style=long-iso'
+  # -F cannot come before other bundled single-char flags
+  alias ls='eza -alF --git --group-directories-first --time-style=long-iso'
   alias l=ls
   alias ld='ls -D'
-  alias tree='eza -aFlT --git --time-style=long-iso'
+  alias tree='eza -alTF --git --time-style=long-iso'
   alias t=tree
 elif command -v exa &> /dev/null; then
   alias ls='exa -aFl --git --group-directories-first --time-style=long-iso'
