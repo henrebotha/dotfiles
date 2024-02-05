@@ -109,8 +109,7 @@ chpwd_add_packages() {
     fi
   else
     # Remove things that look like package_dir from cdpath
-    # TODO: use $HOME
-    cdpath=(${cdpath:#'/home/hbotha/git_tree/attractions/content/'$match[1]'/packages'})
+    cdpath=(${cdpath:#"$HOME"'/git_tree/attractions/content/'$match[1]'/packages'})
   fi
 }
 
