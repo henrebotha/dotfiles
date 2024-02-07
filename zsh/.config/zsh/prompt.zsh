@@ -40,12 +40,22 @@ truncate_middle() {
     # Do nice truncation of a UUID or similar hyphen-/underscore-/slash-separated string
     if [[ $string =~ '^[a-zA-Z0-9][_\/\-]([a-zA-Z0-9]+[_\/\-]){2,}' ]]; then
       # Special case for Booking.com b-servicename-123-456 pattern
-      local start_chunk=$(sed 's/\([a-zA-Z0-9][_\/\-][a-zA-Z0-9]\+[_\/\-]\).\+$/\1/' <<< $string)
-      local end_chunk=$(sed 's/^.\+\([_\/\-]\)/\1/' <<< $string)
+      if is_gnu_sed; then
+        local start_chunk=$(sed 's/\([a-zA-Z0-9][_\/\-][a-zA-Z0-9]\+[_\/\-]\).\+$/\1/' <<< $string)
+        local end_chunk=$(sed 's/^.\+\([_\/\-]\)/\1/' <<< $string)
+      else
+        local start_chunk=$(sed -E 's:([a-zA-Z0-9][_/\-][a-zA-Z0-9]+[_/\-]).+$:\1:' <<< $string)
+        local end_chunk=$(sed -E 's:^.+([_/\-]):\1:' <<< $string)
+      fi
       echo $start_chunk…$end_chunk
     else
-      local start_chunk=$(sed 's/\([_\/\-]\).\+$/\1/' <<< $string)
-      local end_chunk=$(sed 's/^.\+\([_\/\-]\)/\1/' <<< $string)
+      if is_gnu_sed; then
+        local start_chunk=$(sed 's/\([_\/\-]\).\+$/\1/' <<< $string)
+        local end_chunk=$(sed 's/^.\+\([_\/\-]\)/\1/' <<< $string)
+      else
+        local start_chunk=$(sed -E 's:([_\\-]).+$:\1:' <<< $string)
+        local end_chunk=$(sed -E 's:^.+([_\:\-]):\1:' <<< $string)
+      fi
       echo $start_chunk…$end_chunk
     fi
     return
@@ -72,11 +82,23 @@ function git-branch-info() {
 ZSH_THEME_GIT_PROMPT_DIRTY="%{%F{blue}%}*"
 
 function path-to-branch {
-  sed 's:--:/:g' <<< "$@"
+  if is_gnu_sed; then
+    sed 's:--:/:g' <<< "$@"
+    return
+  else
+    sed -E 's:--:/:g' <<< "$@"
+    return
+  fi
 }
 
 function branch-to-path {
-  sed 's:/:--:g' <<< "$@"
+  if is_gnu_sed; then
+    sed 's:/:--:g' <<< "$@"
+    return
+  else
+    sed -E 's:/:--:g' <<< "$@"
+    return
+  fi
 }
 
 function branch-matches-path {
@@ -91,21 +113,38 @@ git-highlight-root() {
   local path_string_raw="$@"
   local git_root="$(git rev-parse --show-toplevel 2> /dev/null)"
   if [[ ! -n "$git_root" ]]; then
-    sed 's:PATH_\(START\|END\)::g' <<< "$path_string_raw"
-    return
+    if is_gnu_sed; then
+      sed 's:PATH_\(START\|END\)::g' <<< "$path_string_raw"
+      return
+    else
+      sed -E 's:PATH_(START|END)::g' <<< "$path_string_raw"
+      return
+    fi
   fi
 
   if ! branch-matches-path "$@"; then
-    sed 's:PATH_\(START\|END\)::g' <<< "$path_string_raw"
-    return
+    if is_gnu_sed; then
+      sed 's:PATH_\(START\|END\)::g' <<< "$path_string_raw"
+      return
+    else
+      sed -E 's:PATH_(START|END)::g' <<< "$path_string_raw"
+      return
+    fi
   fi
 
   local git_root_basename="$(basename $git_root)"
 
   local path_string_expanded=$(print -P "$path_string_raw")
-  sed \
-    's:PATH_START\(.\+\b\)\?'"$git_root_basename"'\(\b\/\)\?\(.*\)\?PATH_END:\1%F{green}'"$(git-branch-info)"'%F{yellow}\2\3:' \
-    <<< $path_string_expanded
+  if is_gnu_sed; then
+    sed \
+      's:PATH_START\(.\+\b\)\?'"$git_root_basename"'\(\b\/\)\?\(.*\)\?PATH_END:\1%F{green}'"$(git-branch-info)"'%F{yellow}\2\3:' \
+    return
+  else
+    sed -E \
+      's:PATH_START(.+)?'"$git_root_basename"'(/)?(.*)?PATH_END:\1%F{green}'"$(git-branch-info)"'%F{yellow}\2\3:' \
+      <<< $path_string_expanded
+    return
+  fi
 }
 
 git-string() {

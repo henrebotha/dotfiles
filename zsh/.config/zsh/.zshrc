@@ -319,6 +319,10 @@ if [[ "$os" == 'Darwin' ]]; then
   alias ip-wifi="ipconfig getifaddr en1"
 fi
 
+is_gnu_sed() {
+  sed --version >/dev/null 2>&1
+}
+
 alias s='sudo'
 
 # Key bindings & related config
