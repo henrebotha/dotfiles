@@ -145,7 +145,11 @@ endfunction
 " register "*"). See
 " https://specifications.freedesktop.org/clipboards-spec/clipboards-latest.txt
 if has('clipboard')
-  set clipboard=unnamedplus
+  if has('mac')
+    set clipboard=unnamed
+  else
+    set clipboard=unnamedplus
+  endif
 endif
 
 set tildeop
