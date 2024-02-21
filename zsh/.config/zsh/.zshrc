@@ -262,10 +262,12 @@ alias fix-mouse-reporting='printf '\''\e[?1000l'\'''
 
 # Vim
 # If we're in a Git repo, name the server after that repo. Otherwise, give it a
-# misc name.
+# misc name, based either on Tmux session or otherwise just "VIM".
 vim_servername() {
-  if g rev-parse --is-inside-work-tree > /dev/null 2>&1; then
+  if git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
     echo "$(git repo-and-branch-name)"
+  elif [ -n "$TMUX" ]; then
+    echo "$(tmux display-message -p '#{session_name}')"
   else
     echo 'VIM'
   fi
