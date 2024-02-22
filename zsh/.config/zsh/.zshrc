@@ -210,7 +210,7 @@ typeset -A tmux_sessions
 export tmux_sessions=(
   [dev]=~/git_tree
   [diy]=~/Documents/DIY
-  [dotfiles]=~/dev
+  [dotfiles]=~/dev/dotfiles
   [games]=~/Games
   [notes]=~/git_tree/notes
   [personal-dev]=~/dev
