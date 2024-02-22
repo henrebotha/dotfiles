@@ -88,7 +88,11 @@ Plug 'junegunn/goyo.vim', { 'on': ['Goyo'] }
                                           " Distraction-free mode
 Plug 'preservim/tagbar'                   " File outline viewer
 Plug 'andymass/matchup.vim'               " Movement between matching if/ends etc
-Plug '~/.fzf'
+if has('mac')
+  Plug '/opt/homebrew/opt/fzf'
+else
+  Plug '~/.fzf'
+endif
 Plug 'junegunn/fzf.vim', { 'do': './install --bin' }
                                           " Fast fuzzy finder
 Plug 'tpope/vim-apathy'                   " Some path values for various langs
