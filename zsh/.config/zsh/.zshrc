@@ -131,6 +131,8 @@ add-zsh-hook precmd _self_destruct_hook
 
 # Zsh-histdb
 alias hf=histdb\ --forget\ --exact
+# Forget last command
+alias hfl='hf "$(fc -n -l -1)"'
 
 # Zsh-autosuggestions
 export ZSH_AUTOSUGGEST_USE_ASYNC=1
