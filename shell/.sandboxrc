@@ -1,3 +1,4 @@
+# shellcheck shell=zsh
 sandbox_init_nvm(){
   source "$NVM_DIR"/nvm.sh
   autoload -U add-zsh-hook
