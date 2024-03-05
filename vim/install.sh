@@ -1,7 +1,7 @@
 #! /usr/bin/env sh
 
 # Ensure this is run from the directory the script is in
-cd "${0%/*}"
-stow . --dotfiles -t $HOME --no-folding
+cd "${0%/*}" || exit
+stow . --dotfiles -t "$HOME" --no-folding
 
 dot-vim/install.sh
