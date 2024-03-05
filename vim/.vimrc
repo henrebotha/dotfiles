@@ -634,6 +634,8 @@ inoremap <// </<c-x><c-o>
 
 set cmdwinheight=1
 
-source ~/.vim-work
+if filereadable(expand('~/.vim-work'))
+  source ~/.vim-work
+endif
 
 " vim: set foldmethod=marker foldlevel=0:
