@@ -1,5 +1,7 @@
 os=`uname`
 
+. "$ZDOTDIR"/.zsh_util_install
+
 expand-or-complete-custom() {
   # https://github.com/ohmyzsh/ohmyzsh/blob/02d07f3e3dba0d50b1d907a8062bbaca18f88478/lib/completion.zsh#L62
   print -Pn "%F{red}…%f"
@@ -303,15 +305,6 @@ rgl() {
 fzcp() {
   fzf -m --tac $@ | xclip -sel clip
 }
-
-# shellcheck
-if ! command -v shellcheck &> /dev/null; then
-  if [[ "$os" == 'Darwin' ]]; then
-    brew install shellcheck
-  else
-    sudo apt-get install shellcheck
-  fi
-fi
 
 # macOS
 if [[ "$os" == 'Darwin' ]]; then

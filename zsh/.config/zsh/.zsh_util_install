@@ -1,0 +1,36 @@
+typeset -A utils
+utils=(
+  direnv direnv
+  eza eza
+  fzf fzf
+  ifne moreutils
+  shellcheck shellcheck
+  tmux tmux
+  watch watch
+)
+to_install=()
+for binary pkg in ${(@kv)utils}; do
+  if ! command -v $binary &> /dev/null; then
+    to_install+=$pkg
+  fi
+done
+
+if [[ "${#to_install[@]}" -eq 0 ]]; then
+  return
+fi
+
+echo "The following utilities are not yet installed: $to_install"
+read -t 2 -qs "response?Install them?"
+case "$response" in
+  y)
+    echo "\nInstalling."
+    if [[ "$os" == 'Darwin' ]]; then
+      brew install $to_install
+    else
+      sudo apt-get install $to_install
+    fi
+    ;;
+  *)
+    echo "\nSkipping install."
+    ;;
+esac
