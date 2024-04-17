@@ -501,6 +501,7 @@ export abbr_abbreviations=(
   ['bk sb']='bk shipper:blocks'
   ['bk sdi']='bk sd:installations'
   ['bk sps']='bk shipper:pods:status'
+  [d]=docker
   [g]=git
   [hf]='histdb --forget --exact'
   [k]=kubectl
@@ -511,10 +512,10 @@ export abbr_abbreviations=(
   ['kubectl l']='kubectl logs -c app $pod'
   ['kubectl lf']='kubectl logs -c app --tail=20 -f $pod'
   [s]=sudo
-  ['sudo a']='sudo apt'
-  ['sudo apt i']='sudo apt install'
-  ['sudo apt install y']='sudo apt install -y'
-  ['sudo aiy']='sudo apt install -y'
+  ['a']='apt'
+  ['apt i']='apt install'
+  ['apt install y']='apt install -y'
+  ['aiy']='apt install -y'
   [v]=vim
 )
 
@@ -534,8 +535,25 @@ for abbreviation phrase in ${(@kv)abbr_abbreviations}; do
     fi
   done
 done
+unset modifier_commands
 unset abbrs
 unset abbr_abbreviations
+
+typeset -A abbr_global_abbreviations
+export abbr_global_abbreviations=(
+  ['@q']='2> /dev/null'
+  ['@qq']='>/dev/null 2>&1'
+  ['@errout']='2>&1'
+)
+
+global_abbrs=$(abbr list-abbreviations)
+for abbreviation phrase in ${(@kv)abbr_global_abbreviations}; do
+  if [[ ! "$global_abbrs" =~ "\"$abbreviation\"" ]]; then
+    abbr -g "$abbreviation"="$phrase"
+  fi
+done
+unset global_abbrs
+unset abbr_global_abbreviations
 
 bindkey "^E" abbr-expand
 
