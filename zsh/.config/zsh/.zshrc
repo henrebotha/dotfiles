@@ -36,7 +36,7 @@ zplug 'zsh-users/zsh-autosuggestions', defer:3
 zplug 'Aloxaf/fzf-tab', defer:2
 zplug 'larkery/zsh-histdb'
 zplug 'benvan/sandboxd'
-zplug 'olets/zsh-abbr', at:v5
+zplug 'olets/zsh-abbr'
 if ! zplug check; then
   zplug install
 fi
