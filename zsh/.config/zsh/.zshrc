@@ -159,6 +159,11 @@ if command -v histdb &> /dev/null; then
   }
 fi
 
+# Zsh global aliases
+alias -g @q="2> /dev/null"
+alias -g @qq=">/dev/null 2>&1"
+alias -g @errout="2>&1"
+
 # Docker
 alias d=docker
 alias dc=docker-compose
