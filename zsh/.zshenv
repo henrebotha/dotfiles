@@ -25,3 +25,30 @@ export MANPAGER='vim -n -X -R +MANPAGER -'
 export MANWIDTH=80
 export MANOPT='--nh --nj'
 alias vi=$EDITOR
+
+# Functions defined here because the way Fzf now invokes them as of 0.50.0ish
+# means it doesn't have access to the contents of .zshrc. See
+# https://github.com/junegunn/fzf/issues/3743#issuecomment-2065239517
+altc() {
+  cdup=$(git rev-parse --show-cdup 2>/dev/null)
+  packages=$(altc_find_packages)
+  sibling_packages=$(altc_find_sibling_packages)
+  sed -r '/^\s*$/d' <<< $cdup <<< $packages <<< $sibling_packages
+}
+
+if command -v fdfind &> /dev/null; then
+  alias fd='fdfind'
+  altc_find_packages() {
+    fdfind -t d --maxdepth=1 . 'packages/' 2>/dev/null
+  }
+  altc_find_sibling_packages() {
+    test -z "$(git rev-parse --show-cdup)" || fdfind -t d --maxdepth=1 . "$(git rev-parse --show-cdup)packages/" 2>/dev/null
+  }
+else
+  altc_find_packages() {
+    test -d 'packages' && find 'packages' -mindepth 1 -maxdepth 1 -type d | sort 2>/dev/null
+  }
+  altc_find_sibling_packages() {
+    test -z "$(git rev-parse --show-cdup)" || find "$(git rev-parse --show-cdup)packages" -mindepth 1 -maxdepth 1 -type d | sort 2>/dev/null
+  }
+fi

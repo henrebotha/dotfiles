@@ -386,26 +386,10 @@ else
   alias t=tree
 fi
 
-if command -v fdfind &> /dev/null; then
-  alias fd='fdfind'
-  altc_find_packages() {
-    fdfind -t d --maxdepth=1 . 'packages/' 2>/dev/null
-  }
-  altc_find_sibling_packages() {
-    test -z "$(git rev-parse --show-cdup)" || fdfind -t d --maxdepth=1 . "$(git rev-parse --show-cdup)packages/" 2>/dev/null
-  }
-else
-  altc_find_packages() {
-    test -d 'packages' && find 'packages/' -mindepth 1 -maxdepth 1 -type d | sort 2>/dev/null
-  }
-  altc_find_sibling_packages() {
-    test -z "$(git rev-parse --show-cdup)" || find "$(git rev-parse --show-cdup)packages/" -mindepth 1 -maxdepth 1 -type d | sort 2>/dev/null
-  }
-fi
-
 export RIPGREP_CONFIG_PATH="$HOME"'/.ripgreprc'
 
 # fzf keybinds/completion
+eval "$(fzf --zsh)"
 [ -f "$ZDOTDIR/.fzf.zsh" ] && . "$ZDOTDIR/.fzf.zsh"
 
 export FZF_DEFAULT_OPTS='--color=16 --bind "f1:execute(less -f {})"'
@@ -417,13 +401,6 @@ export FZF_DEFAULT_OPTS='--color=16 --bind "f1:execute(less -f {})"'
 export FZF_DEFAULT_COMMAND='rg --files --glob "!.git/*" --hidden --no-ignore'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND=altc
-
-altc() {
-  cdup=$(git rev-parse --show-cdup 2>/dev/null)
-  packages=$(altc_find_packages)
-  sibling_packages=$(altc_find_sibling_packages)
-  sed -r '/^\s*$/d' <<< $cdup <<< $packages <<< $sibling_packages
-}
 
 alias fzfp='fzf --preview '\''[[ $(file --mime {}) =~ binary ]] &&
                  echo {} is a binary file ||
