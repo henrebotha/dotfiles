@@ -26,3 +26,11 @@ From https://shreevatsa.wordpress.com/2008/03/30/zshbash-startup-files-loading-o
 | ~/.zlogin     | 8                 |                       |        |
 | ~/.zlogout    | 9                 |                       |        |
 | /etc/zlogout  | 10                |                       |        |
+
+[This SE answer](https://unix.stackexchange.com/a/324391) lays out when and why you want a login shell. In brief:
+
+- A user should have (at most) one login shell per host per terminal.
+- Every other shell will be a descendant of the login shell, and therefore will inherit many settings (environment variables, umask, etc) from the login shell. The login initialization files (.login, .profile, etc.) should set the settings that are inheritable, and .bashrc (or whatever else you use) should handle the ones that aren’t (set, shopt, non-exported shell variables, etc).
+- Only the login initialization files should do "heavy lifting", i.e. resource-intensive actions, such as heavy singleton background processes, or interactive programs ("Choose windowing system").
+- It may be good practice to launch a login shell per shell type, to avoid having e.g. a Bash non-login shell as child of a Zsh login shell.
+- macOS Terminal.app launches a login shell per window. This informs how macOS users do things a bit differently with dotfiles.
