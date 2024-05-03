@@ -404,16 +404,27 @@ endfunction
 " Copy the file name, Git repo name, and commit hash along with whatever's
 " selected.
 function! CopyWithRef()
-  let gitTopLevel=Find_repo_root()
+  let repoRemote=trim(system("git remote -v | head -n1 | awk '{print $2}' | sed 's/^\\w\\+\\(\\@\\|\\/\\/\\).\\+:\\/\\?//'"))
+  let commit=trim(system("git rev-parse --short=8 HEAD"))
+  let lineNumber=a:firstline
   let filePathFull=expand('%:p')
-  let filePathRelative=substitute(filePathFull, gitTopLevel.'/', '', '')
-  let @+=trim(system("git remote -v | head -n1 | awk '{print $2}' | sed 's/^\\w\\+\\(\\@\\|\\/\\/\\).\\+:\\/\\?//'"))
+  if filereadable(filePathFull)
+    let repoTopLevel=Find_repo_root()
+    let filePathRelative=substitute(filePathFull, repoTopLevel.'/', '', '')
+  else
+    let filePathRelative='<untitled>'
+  endif
+  let visualSelection=VisualSelection()
+
+  let @+=repoRemote
   let @+=@+.'@'
-  let @+=@+.trim(system("git rev-parse --short=8 HEAD"))
+  let @+=@+.commit
   let @+=@+.':'
   let @+=@+.filePathRelative
+  let @+=@+.':'
+  let @+=@+.lineNumber
   let @+=@+."\n\n"
-  let @+=@+.VisualSelection()
+  let @+=@+.visualSelection
 endfunction
 
 " Yank entire buffer into clipboard, then quit
