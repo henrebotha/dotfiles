@@ -476,6 +476,8 @@ autoload -U +X bashcompinit && bashcompinit
 
 [ -f "$ZDOTDIR"/.zsh-work ] && . "$ZDOTDIR"/.zsh-work
 
+ABBR_SET_EXPANSION_CURSOR=1
+
 typeset -A abbr_abbreviations
 export abbr_abbreviations=(
   ['bk a']='bk auth:login'
@@ -493,7 +495,6 @@ export abbr_abbreviations=(
   ['kubectl get p']='kubectl get pods'
   ['kubectl l']='kubectl logs -c app $pod'
   ['kubectl lf']='kubectl logs -c app --tail=20 -f $pod'
-  [s]=sudo
   ['a']='apt'
   ['apt i']='apt install'
   ['apt install y']='apt install -y'
@@ -501,9 +502,11 @@ export abbr_abbreviations=(
   [v]=vim
 )
 
-modifier_commands=(
-  sudo
-  watch
+typeset -A modifier_commands
+export modifier_commands=(
+  [s]=sudo
+  [wa]=watch
+  [wh]=which
 )
 
 abbrs=$(abbr list-abbreviations)
@@ -511,11 +514,14 @@ for abbreviation phrase in ${(@kv)abbr_abbreviations}; do
   if [[ ! "$abbrs" =~ "\"$abbreviation\"" ]]; then
     abbr "$abbreviation"="$phrase"
   fi
-  for modifier in $modifier_commands; do
-    if [[ ! "$abbrs" =~ "\"$modifier $abbreviation\"" ]]; then
-      abbr "$modifier $abbreviation"="$modifier $phrase"
-    fi
-  done
+  if [[ ! "$abbrs" =~ "\"@$abbreviation\"" ]]; then
+    abbr -g "@$abbreviation"="$phrase"
+  fi
+done
+for abbreviation modifier in ${(@kv)modifier_commands}; do
+  if [[ ! "$abbrs" =~ "\"$abbreviation\"" ]]; then
+    abbr "$abbreviation"="$modifier @%"
+  fi
 done
 unset modifier_commands
 unset abbrs
