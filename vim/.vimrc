@@ -29,7 +29,15 @@ if empty(glob(autoload_path))
   silent execute '!curl -fLo ' . plug_path . ' --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
   autocmd VimEnter * close
-endif " }}}
+endif
+
+" Load a plugin conditionally, but allow PlugClean to see it as registered
+" even when not loaded.
+" https://github.com/junegunn/vim-plug/wiki/tips#conditional-activation
+function! Cond(cond, ...)
+  let opts = get(a:000, 0, {})
+  return a:cond ? opts : extend(opts, { 'on': [], 'for': [] })
+endfunction " }}}
 
 " Disable polyglot's built-in Elm
 " Disable Git so we can get the newer version
@@ -64,6 +72,7 @@ Plug 'sheerun/vim-polyglot'               " Loads language packs on demand. Put
                                           " overriding language packs before this one
 Plug 'joker1007/vim-ruby-heredoc-syntax', { 'for': ['ruby'] }
                                           " Highlighting heredocs in Ruby
+" Not using Cond for this as I want to segregate it from plain Vim installs.
 if has('nvim')
   Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
@@ -88,11 +97,7 @@ Plug 'junegunn/goyo.vim', { 'on': ['Goyo'] }
                                           " Distraction-free mode
 Plug 'preservim/tagbar'                   " File outline viewer
 Plug 'andymass/matchup.vim'               " Movement between matching if/ends etc
-if has('mac')
-  Plug '/opt/homebrew/opt/fzf'
-else
-  Plug '~/.fzf'
-endif
+Plug isdirectory('/opt/homebrew/opt/fzf') ? '/opt/homebrew/opt/fzf' : '~/.fzf'
 Plug 'junegunn/fzf.vim', { 'do': './install --bin' }
                                           " Fast fuzzy finder
 Plug 'tpope/vim-apathy'                   " Some path values for various langs
@@ -102,23 +107,32 @@ Plug 'metakirby5/codi.vim', { 'on': ['Codi'] }
                                           " In-buffer REPL
 Plug 'chrisbra/recover.vim'               " Add 'compare' option to swap file recovery
 
-if v:progname !=? 'view'
-  Plug 'dense-analysis/ale'                 " Async linter
-  Plug 'junegunn/vim-easy-align'            " Align things, easily
-  Plug 'tpope/vim-commentary'               " Toggle comments
-  Plug 'tpope/vim-endwise'                  " Auto-insert Ruby end, etc
-  Plug 'tpope/vim-sleuth'                   " Auto-detect indentation
-  Plug 'mbbill/undotree'                    " Undo tree viewer
-  Plug 'AndrewRadev/splitjoin.vim'          " Transform between single- and multiline code
-  Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-                                            " Tree browser
-  Plug 'tpope/vim-repeat'                   " Allow plugins to specify custom repeat actions
-  Plug 'tpope/vim-ragtag'
-  " Plug 'jebaum/vim-tmuxify'
-  Plug 'groenewege/vim-less'                " Trim whitespace on lines I touch
-  Plug 'tpope/vim-obsession'                " Sane & continuous session saving
-  Plug 'tpope/vim-fugitive'                 " Git
-endif
+Plug 'dense-analysis/ale', Cond(v:progname !=? 'view')
+                                          " Async linter
+Plug 'junegunn/vim-easy-align', Cond(v:progname !=? 'view')
+                                          " Align things, easily
+Plug 'tpope/vim-commentary', Cond(v:progname !=? 'view')
+                                          " Toggle comments
+Plug 'tpope/vim-endwise', Cond(v:progname !=? 'view')
+                                          " Auto-insert Ruby end, etc
+Plug 'tpope/vim-sleuth', Cond(v:progname !=? 'view')
+                                           " Auto-detect indentation
+Plug 'mbbill/undotree', Cond(v:progname !=? 'view')
+                                           " Undo tree viewer
+Plug 'AndrewRadev/splitjoin.vim', Cond(v:progname !=? 'view')
+                                           " Transform between single- and multiline code
+Plug 'scrooloose/nerdtree', Cond(v:progname !=? 'view', { 'on': 'NERDTreeToggle' })
+                                          " Tree browser
+Plug 'tpope/vim-repeat', Cond(v:progname !=? 'view')
+                                           " Allow plugins to specify custom repeat actions
+Plug 'tpope/vim-ragtag', Cond(v:progname !=? 'view')
+                                           " Plug 'jebaum/vim-tmuxify'
+Plug 'groenewege/vim-less', Cond(v:progname !=? 'view')
+                                           " Trim whitespace on lines I touch
+Plug 'tpope/vim-obsession', Cond(v:progname !=? 'view')
+                                           " Sane & continuous session saving
+Plug 'tpope/vim-fugitive', Cond(v:progname !=? 'view')
+                                           " Git
 
 " Automatically executes filetype plugin indent on and syntax enable.
 call plug#end() " }}}
@@ -296,8 +310,10 @@ function! OpenFileFromModuleInPlusRegister() abort
   exec("find " . eval(l:includeexpr))
 endfunction
 
-" Use ripgrep as our grep program
-set grepprg=rg\ --vimgrep
+if executable('rg')
+  " Use ripgrep as our grep program
+  set grepprg=rg\ --vimgrep
+endif
 
 if has('popupwin')
   let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
