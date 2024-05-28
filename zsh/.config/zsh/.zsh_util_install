@@ -15,6 +15,13 @@ for binary pkg in ${(@kv)utils}; do
   fi
 done
 
+# Install nerd-fonts
+if [[ "$os" == 'Darwin' ]]; then
+  if [[ ! -f "$HOME/Library/Fonts/HackNerdFont-Regular.ttf" ]]; then
+    to_install+=font-hack-nerd-font
+  fi
+fi
+
 if [[ "${#to_install[@]}" -eq 0 ]]; then
   return
 fi
