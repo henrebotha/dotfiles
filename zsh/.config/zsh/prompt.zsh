@@ -102,6 +102,7 @@ git-highlight-root() {
   if is_gnu_sed; then
     sed \
       's:PATH_START\(.\+\b\)\?'"$git_root_basename"'\(\b\/\)\?\(.*\)\?PATH_END:\1%F{green}'"$(git-branch-info)"'%F{yellow}\2\3:' \
+      <<< $path_string_expanded
     return
   else
     sed -E \
