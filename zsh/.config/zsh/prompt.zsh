@@ -135,8 +135,8 @@ git-string() {
   fi
 
   local wip_stash
-  if $(git log -n 1 2>/dev/null | grep -q -c "\-\-wip\-\-"); then
-    wip_stash+="%{%F{red}%}W"
+  if [[ "$(git log -1 --pretty=%s 2>/dev/null)" =~  "--wip--" ]]; then
+    wip_stash="%{%F{red}%}W"
   fi
   local stashes="$(git stash list 2>/dev/null)"
   if [ -n "$stashes" ]; then
