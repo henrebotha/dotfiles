@@ -58,7 +58,7 @@ parse_git_tag() {
   local tag=$(head -1 <<< $tags)
   local tag_short="$(truncate_middle $tag)"
   echo -n "$tag_short"
-  if [[ $(wc -l <<< $tags) > 1 ]]; then
+  if [[ "${(w)#tags}" -gt 1 ]]; then
     echo -n " +"
   fi
 }
