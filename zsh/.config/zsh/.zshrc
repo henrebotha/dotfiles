@@ -485,7 +485,7 @@ export global_aliases=(
 
 if command -v abbr > /dev/null 2>&1; then
   ABBR_SET_EXPANSION_CURSOR=1
-  ABBR_REGULAR_ABBREVIATION_PREFIXES=('noglob ' 'sudo ' 'watch ' 'which ')
+  ABBR_REGULAR_ABBREVIATION_PREFIXES=('man' 'noglob ' 'sudo ' 'watch ' 'which ')
 
   typeset -A abbr_abbreviations
   export abbr_abbreviations=(
