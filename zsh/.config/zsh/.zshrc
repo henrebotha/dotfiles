@@ -15,23 +15,25 @@ bindkey -M emacs "^I" expand-or-complete-custom
 bindkey -M viins "^I" expand-or-complete-custom
 bindkey -M vicmd "^I" expand-or-complete-custom
 
-if [[ ! -d ~/.zplug ]]; then
-  export ZPLUG_HOME=~/.zplug
-  git clone https://github.com/zplug/zplug $ZPLUG_HOME
+# Clone zcomet if necessary
+if [[ ! -f ${ZDOTDIR:-${HOME}}/.zcomet/bin/zcomet.zsh ]]; then
+  command git clone https://github.com/agkozak/zcomet.git ${ZDOTDIR:-${HOME}}/.zcomet/bin
 fi
-source ~/.zplug/init.zsh
 
-zplug 'plugins/vi-mode', from:oh-my-zsh
-zplug 'plugins/ripgrep', from:oh-my-zsh
-zplug 'zsh-users/zsh-autosuggestions', defer:3
-zplug 'Aloxaf/fzf-tab', defer:2
-zplug 'larkery/zsh-histdb'
-zplug 'benvan/sandboxd'
-zplug 'olets/zsh-abbr'
-if ! zplug check; then
-  zplug install
-fi
-zplug load
+source ${ZDOTDIR:-${HOME}}/.zcomet/bin/zcomet.zsh
+
+zcomet load ohmyzsh 'plugins/vi-mode'
+zcomet load ohmyzsh 'plugins/ripgrep'
+zcomet load 'Aloxaf/fzf-tab'
+zcomet load 'larkery/zsh-histdb'
+zcomet load 'benvan/sandboxd'
+zcomet load 'olets/zsh-abbr'
+zcomet load 'olets/zsh-test-runner'
+zcomet load 'romkatv/zsh-bench'
+# Zcomet recommends loading this last
+zcomet load 'zsh-users/zsh-autosuggestions'
+
+zcomet compinit
 
 export PATH="$HOME/.local/bin:$PATH"
 
