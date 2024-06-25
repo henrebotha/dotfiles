@@ -27,7 +27,7 @@ zcomet load ohmyzsh 'plugins/ripgrep'
 zcomet load 'Aloxaf/fzf-tab'
 zcomet load 'larkery/zsh-histdb'
 zcomet load 'benvan/sandboxd'
-zcomet load 'olets/zsh-abbr'
+zcomet load 'henrebotha/zsh-abbr@hbotha/cursor-expansion'
 zcomet load 'olets/zsh-test-runner'
 zcomet load 'romkatv/zsh-bench'
 # Zcomet recommends loading this last
@@ -469,74 +469,69 @@ autoload -U +X bashcompinit && bashcompinit
 
 [ -f "$ZDOTDIR"/.zsh-work ] && . "$ZDOTDIR"/.zsh-work
 
-ABBR_SET_EXPANSION_CURSOR=1
-
-typeset -A abbr_abbreviations
-export abbr_abbreviations=(
-  ['bk a']='bk auth:login'
-  ['bk d']='bk deploy'
-  ['bk sb']='bk shipper:blocks'
-  ['bk sdi']='bk sd:installations'
-  ['bk sps']='bk shipper:pods:status'
-  [d]=docker
-  [g]=git
-  [hf]='histdb --forget --exact'
-  [k]=kubectl
-  ['kubectl e']='kubectl exec $pod -it --'
-  ['kubectl gp']='kubectl get pods'
-  ['kubectl g']='kubectl get'
-  ['kubectl get p']='kubectl get pods'
-  ['kubectl l']='kubectl logs -c app $pod'
-  ['kubectl lf']='kubectl logs -c app --tail=20 -f $pod'
-  ['a']='apt'
-  ['apt i']='apt install'
-  ['apt install y']='apt install -y'
-  ['aiy']='apt install -y'
-  [v]=vim
-)
-
-typeset -A modifier_commands
-export modifier_commands=(
-  [s]=sudo
-  [wa]=watch
-  [wh]=which
-)
-
-abbrs=$(abbr list-abbreviations)
-for abbreviation phrase in ${(@kv)abbr_abbreviations}; do
-  if [[ ! "$abbrs" =~ "\"$abbreviation\"" ]]; then
-    abbr "$abbreviation"="$phrase"
-  fi
-  if [[ ! "$abbrs" =~ "\"@$abbreviation\"" ]]; then
-    abbr -g "@$abbreviation"="$phrase"
-  fi
-done
-for abbreviation modifier in ${(@kv)modifier_commands}; do
-  if [[ ! "$abbrs" =~ "\"$abbreviation\"" ]]; then
-    abbr "$abbreviation"="$modifier @%"
-  fi
-done
-unset modifier_commands
-unset abbrs
-unset abbr_abbreviations
-
-typeset -A abbr_global_abbreviations
-export abbr_global_abbreviations=(
+typeset -A global_aliases
+export global_aliases=(
   ['@q']='2> /dev/null'
   ['@qq']='>/dev/null 2>&1'
   ['@errout']='2>&1'
 )
 
-global_abbrs=$(abbr list-abbreviations)
-for abbreviation phrase in ${(@kv)abbr_global_abbreviations}; do
-  if [[ ! "$global_abbrs" =~ "\"$abbreviation\"" ]]; then
-    abbr -g "$abbreviation"="$phrase"
-  fi
-done
-unset global_abbrs
-unset abbr_global_abbreviations
+if command -v abbr > /dev/null 2>&1; then
+  ABBR_SET_EXPANSION_CURSOR=1
+  ABBR_REGULAR_ABBREVIATION_PREFIXES=('noglob ' 'sudo ' 'watch ' 'which ')
 
-bindkey "^E" abbr-expand
+  typeset -A abbr_abbreviations
+  export abbr_abbreviations=(
+    ['a']='apt'
+    ['ai']='apt install'
+    ['apt i']='apt install'
+    ['aiy']='apt install -y'
+    ['apt iy']='apt install -y'
+    ['apt install y']='apt install -y'
+    [d]=docker
+    [g]=git
+    [hf]='histdb --forget --exact'
+    [k]=kubectl
+    ['kubectl e']='kubectl exec $pod -it --'
+    ['kubectl gp']='kubectl get pods'
+    ['kubectl g']='kubectl get'
+    ['kubectl get p']='kubectl get pods'
+    ['kubectl l']='kubectl logs -c app $pod'
+    ['kubectl lf']='kubectl logs -c app --tail=20 -f $pod'
+    [s]=sudo
+    [v]=vim
+    [wa]=watch
+    [wh]=which
+  )
+
+  abbrs=$(abbr list-abbreviations)
+  for abbreviation phrase in ${(@kv)abbr_abbreviations}; do
+    if [[ ! "$abbrs" =~ "\"$abbreviation\"" ]]; then
+      abbr "$abbreviation"="$phrase"
+    fi
+    if [[ ! "$abbrs" =~ "\"@$abbreviation\"" ]]; then
+      abbr -g "@$abbreviation"="$phrase"
+    fi
+  done
+  unset abbrs
+  unset abbr_abbreviations
+
+  global_abbrs=$(abbr list-abbreviations)
+  for abbreviation phrase in ${(@kv)global_aliases}; do
+    if [[ ! "$global_abbrs" =~ "\"$abbreviation\"" ]]; then
+      abbr -g "$abbreviation"="$phrase"
+    fi
+  done
+  unset global_abbrs
+  unset global_aliases
+
+  bindkey "^E" abbr-expand
+else
+  for abbreviation phrase in ${(@kv)global_aliases}; do
+    alias -g "$abbreviation"="$phrase"
+  done
+fi
+unset global_aliases
 
 repl() {
   case $1 in
