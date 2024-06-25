@@ -72,6 +72,13 @@ alias :q=exit # Welp
 setopt extended_glob
 # Allow **foo as shorthand for **/*foo.
 setopt glob_star_short
+# Resolve symlinks & dots (..) to their true absolute path.
+setopt chase_links
+
+setopt auto_pushd
+export DIRSTACKSIZE=10
+
+alias dv='dirs -v'
 
 # Don't expand history inline.
 setopt hist_verify
@@ -489,6 +496,7 @@ if command -v abbr > /dev/null 2>&1; then
     ['apt iy']='apt install -y'
     ['apt install y']='apt install -y'
     [d]=docker
+    [dv]='dirs -v'
     [g]=git
     [hf]='histdb --forget --exact'
     [k]=kubectl
@@ -498,7 +506,9 @@ if command -v abbr > /dev/null 2>&1; then
     ['kubectl get p']='kubectl get pods'
     ['kubectl l']='kubectl logs -c app $pod'
     ['kubectl lf']='kubectl logs -c app --tail=20 -f $pod'
+    [l]=ls
     [s]=sudo
+    [t]=tree
     [v]=vim
     [wa]=watch
     [wh]=which
