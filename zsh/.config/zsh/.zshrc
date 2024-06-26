@@ -164,6 +164,45 @@ alias -g @q="2> /dev/null"
 alias -g @qq=">/dev/null 2>&1"
 alias -g @errout="2>&1"
 
+# Topic config
+ZSH_TOPICFILE="$ZDOTDIR/zsh-topics"
+typeset -A topics
+
+init_topics() {
+  if [[ ! -s "$ZSH_TOPICFILE" ]]; then
+    # Define default config here
+    > "$ZSH_TOPICFILE" <<CONFIG
+# elm
+# java
+# js
+# ruby
+CONFIG
+  fi
+
+  # Read topics
+  for topic in "${(f)"$(<$ZSH_TOPICFILE)"}"; do
+    if [[ ! $topic =~ '^#' ]]; then
+      topics+=("$topic" 1)
+    fi
+  done
+
+  unset topic
+}
+
+init_topics
+
+purge_topics() {
+  rm "$ZSH_TOPICFILE"
+}
+
+for topic enabled in "${(@kv)topics}"; do
+  if [[ $enabled == 1 ]]; then
+    source "$ZDOTDIR"/topics/"$topic".zsh
+  fi
+done
+unset topic
+unset enabled
+
 # Docker
 alias d=docker
 alias dc=docker-compose
@@ -171,25 +210,6 @@ alias dc=docker-compose
 # Kubernetes
 [ -f "$HOME/.kubectl.zsh" ] && . "$HOME/.kubectl.zsh"
 alias k=kubectl
-
-# Java
-# TODO: Lazy-load with sandboxd.
-if command -v jenv &> /dev/null; then
-  eval "$(jenv init -)"
-  export PATH="$HOME/.jenv/shims:$PATH"
-fi
-
-# Ruby
-# Enable rbenv
-# TODO: Lazy-load with sandboxd.
-if command -v rbenv &> /dev/null; then
-  export PATH="$HOME/.rbenv/bin:$PATH"
-  eval "$(rbenv init -)"
-fi
-
-# Node
-export NVM_DIR="$HOME/.config/nvm"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # Git
 alias g='git'
@@ -292,15 +312,6 @@ fi
 alias vpage='ifne vim -X -R - -n'
 # Source ~/.vimrc in every running Vim server instance
 alias vu='for server in `vim --serverlist`; do; vim --servername $server --remote-send '\'':source ~/.vimrc<cr>'\''; done'
-
-# Elm
-alias elmc='elm-repl'
-alias elmr='elm-reactor'
-alias elmm='elm-make'
-alias elmp='elm-package'
-
-# Maven
-alias mvnq='mvn -q'
 
 # Ripgrep
 rgl() {
