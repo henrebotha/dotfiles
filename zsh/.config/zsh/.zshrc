@@ -2,19 +2,6 @@ os=`uname`
 
 . "$ZDOTDIR"/.zsh_util_install
 
-expand-or-complete-custom() {
-  # https://github.com/ohmyzsh/ohmyzsh/blob/02d07f3e3dba0d50b1d907a8062bbaca18f88478/lib/completion.zsh#L62
-  print -Pn "%F{red}…%f"
-  load_tmux_user_env
-  zle expand-or-complete
-  zle redisplay
-}
-
-zle -N expand-or-complete-custom
-bindkey -M emacs "^I" expand-or-complete-custom
-bindkey -M viins "^I" expand-or-complete-custom
-bindkey -M vicmd "^I" expand-or-complete-custom
-
 # Clone zcomet if necessary
 if [[ ! -f ${ZDOTDIR:-${HOME}}/.zcomet/bin/zcomet.zsh ]]; then
   command git clone https://github.com/agkozak/zcomet.git ${ZDOTDIR:-${HOME}}/.zcomet/bin
@@ -42,12 +29,27 @@ setopt promptsubst
 
 fpath=( "$ZDOTDIR"/completions "${fpath[@]}" )
 
-# https://github.com/nickmccurdy/sane-defaults/blob/master/home/.zshrc
+# Case-insensitive (all), partial word and then substring completion
+# https://github.com/nickmccurdy/sane-defaults/blob/1f6d632/home/.zshrc#L12
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 setopt no_list_ambiguous
 
 # Key bindings for fzf-tab
 zstyle ':fzf-tab:*' fzf-bindings 'right:accept'
+
+# Print ellipsis while completing, and load Tmux user variables before completing.
+expand-or-complete-custom() {
+  # https://github.com/ohmyzsh/ohmyzsh/blob/02d07f3e3dba0d50b1d907a8062bbaca18f88478/lib/completion.zsh#L62
+  print -Pn "%F{red}…%f"
+  load_tmux_user_env
+  zle expand-or-complete
+  zle redisplay
+}
+
+zle -N expand-or-complete-custom
+bindkey -M emacs "^I" expand-or-complete-custom
+bindkey -M viins "^I" expand-or-complete-custom
+bindkey -M vicmd "^I" expand-or-complete-custom
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -368,6 +370,8 @@ for m in visual viopp; do
   done
 done
 
+bindkey '^f' reset-prompt
+
 # Default 400ms delay after ESC is too slow. Increase this value if this breaks
 # other commands that depend on the delay.
 export KEYTIMEOUT=1 # 100 ms
@@ -460,8 +464,6 @@ fh() {
 # async_job vagrant_prompt_worker vagrant_status $(pwd)
 # # end zsh-async
 
-bindkey '^f' reset-prompt
-
 # OPAM configuration
 [ -f "$HOME"/.opam/opam-init/init.zsh ] && . "$HOME"/.opam/opam-init/init.zsh
 
@@ -483,6 +485,8 @@ for dump in $XDG_CACHE_HOME/zsh/.zcompdump(N.mh+24); do
   compinit
 done
 compinit -C
+
+# Load any available Bash completions.
 autoload -U +X bashcompinit && bashcompinit
 
 [ -f "$ZDOTDIR"/.zsh-work ] && . "$ZDOTDIR"/.zsh-work
