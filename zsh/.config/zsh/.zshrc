@@ -468,7 +468,9 @@ fh() {
 [ -f "$HOME"/.opam/opam-init/init.zsh ] && . "$HOME"/.opam/opam-init/init.zsh
 
 # Direnv
-eval "$(direnv hook zsh)"
+if command -v direnv > /dev/null 2>&1; then
+  eval "$(direnv hook zsh)"
+fi
 
 # https://gist.github.com/ctechols/ca1035271ad134841284
 # On slow systems, checking the cached .zcompdump file to see if it must be
