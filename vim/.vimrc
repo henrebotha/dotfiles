@@ -510,7 +510,7 @@ set statusline+=%<
 " without having been inserted, that's a sign that the performance here is not
 " good enough & we should rethink the FileInsidePwd() function.
 set statusline+=%#FileOutsidePwd#%{FileInsidePwd()?'':expand('%')}%*%#StatusLine#%{FileInsidePwd()?expand('%').'\ ':''}%*
-set statusline+=%#FileOutsidePwdIcon#%{FileInsidePwd()?'':'[🡕]'}%*%#StatusLine#%{FileInsidePwd()?'\ ':''}%*
+set statusline+=%#FileOutsidePwdIcon#%{FileInsidePwd()?'':'[↗]'}%*%#StatusLine#%{FileInsidePwd()?'\ ':''}%*
 set statusline+=\ %h%m%r%=%-.(%l,%c%V%)
 " Add filetype to statusline
 set statusline+=\ %y
