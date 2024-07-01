@@ -4,6 +4,7 @@ utils=(
   eza eza
   fzf fzf
   ifne moreutils
+  rg ripgrep
   shellcheck shellcheck
   tmux tmux
   watch watch
