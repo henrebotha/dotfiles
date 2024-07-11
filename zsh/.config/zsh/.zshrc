@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.config/zsh/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 os=`uname`
 
 . "$ZDOTDIR"/.zsh_util_install
@@ -11,6 +18,7 @@ source ${ZDOTDIR:-${HOME}}/.zcomet/bin/zcomet.zsh
 
 zcomet load ohmyzsh 'plugins/vi-mode'
 zcomet load ohmyzsh 'plugins/ripgrep'
+zcomet load 'romkatv/powerlevel10k'
 zcomet load 'Aloxaf/fzf-tab'
 zcomet load 'larkery/zsh-histdb'
 zcomet load 'benvan/sandboxd'
@@ -24,8 +32,8 @@ zcomet compinit
 
 export PATH="$HOME/.local/bin:$PATH"
 
-. "$ZDOTDIR/prompt.zsh"
-setopt promptsubst
+# . "$ZDOTDIR/prompt.zsh"
+# setopt promptsubst
 
 fpath=( "$ZDOTDIR"/completions "${fpath[@]}" )
 
@@ -592,6 +600,9 @@ repl() {
 unset os
 
 export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
+
+# To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
+[[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
 
 # zprof
 # zmodload -u zsh/zprof
