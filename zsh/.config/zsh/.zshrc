@@ -520,6 +520,7 @@ fi
 unset global_aliases
 
 repl() {
+  : ${1:?repl needs a language name (js, python2, ruby, etc).}
   case $1 in
     java)
       jshell;;
