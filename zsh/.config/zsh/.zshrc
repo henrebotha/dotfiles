@@ -32,9 +32,6 @@ zcomet compinit
 
 export PATH="$HOME/.local/bin:$PATH"
 
-# . "$ZDOTDIR/prompt.zsh"
-# setopt promptsubst
-
 fpath=( "$ZDOTDIR"/completions "${fpath[@]}" )
 
 # Case-insensitive (all), partial word and then substring completion
@@ -58,15 +55,6 @@ zle -N expand-or-complete-custom
 bindkey -M emacs "^I" expand-or-complete-custom
 bindkey -M viins "^I" expand-or-complete-custom
 bindkey -M vicmd "^I" expand-or-complete-custom
-
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# TODO: Try to make this work. The idea is that we set ZSH_COMPDUMP before we
-# (OMZ) call compinit, so that the dump doesn't end up in our home dir.
-# if [ ! -d ~/.cache/zsh ]; then
-#   mkdir -p ~/.cache/zsh
-# fi
-# export $ZSH_COMPDUMP="~/.cache/zsh/zcompdump-$ZSH_VERSION"
 
 if [ -d ~/zsh_help ]; then
   export HELPDIR=~/zsh_help
@@ -335,7 +323,6 @@ fzcp() {
 # macOS
 if [[ "$os" == 'Darwin' ]]; then
   # Fix the macOS pasteboard when it breaks
-  # alias fixpboard='ps aux | grep '\''[p]board'\'' | perl -p -e '\''s/ +/ /g'\'' | cut -d '\'' '\'' -f 2 | xargs kill -9'
   alias fixpboard='pkill -9 pboard'
 
   alias ip-eth="ipconfig getifaddr en0"
@@ -435,42 +422,6 @@ alias fzfp='fzf --preview '\''[[ $(file --mime {}) =~ binary ]] &&
 fh() {
   print -z $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed 's/ *[0-9]* *//')
 }
-
-# if [ ! -e ~/isomorphic-copy ]; then
-#   g clone git@github.com:ms-jpq/isomorphic-copy.git ~/isomorphic-copy
-# fi
-# export PATH="$HOME/isomorphic-copy/bin:$PATH"
-
-# # zsh-async
-# # Installation
-# if [[ ! -a ~/.zsh-async ]]; then
-#   git clone -b 'v1.5.2' https://github.com/mafredri/zsh-async ~/.zsh-async
-# fi
-# . ~/.zsh-async/async.zsh
-
-# vagrant_status() {
-#   VAGRANT_CWD=$1 vagrant status
-# }
-
-# # Configuration
-# async_init
-
-# async_start_worker vagrant_prompt_worker -n
-
-# vagrant_prompt_callback() {
-#   local output=$@
-#   if [[ $output =~ 'running' ]]; then
-#     H_PROMPT_VAGRANT_UP='v↑'
-#   else
-#     H_PROMPT_VAGRANT_UP=''
-#   fi
-#   async_job vagrant_prompt_worker vagrant_status $(pwd)
-# }
-
-# async_register_callback vagrant_prompt_worker vagrant_prompt_callback
-
-# async_job vagrant_prompt_worker vagrant_status $(pwd)
-# # end zsh-async
 
 # OPAM configuration
 [ -f "$HOME"/.opam/opam-init/init.zsh ] && . "$HOME"/.opam/opam-init/init.zsh

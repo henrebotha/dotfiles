@@ -162,10 +162,6 @@ git-string() {
 }
 # End git functionality
 
-vagrant_string() {
-  # echo "%{$fg_bold[white]%}$H_PROMPT_VAGRANT_UP "
-}
-
 VIRTUAL_ENV_DISABLE_PROMPT=true
 
 # http://web.cs.elte.hu/zsh-manual/zsh_15.html#SEC53 search for PS1
@@ -196,11 +192,8 @@ precmd() {
   date_string=$(date +'%Y-%m-%d %H:%M:%S')
 }
 
-# TMOUT=1
-# TRAPALRM() { zle reset-prompt }
-
 # We keep the prompt as a single var, so that reset-prompt redraws the whole thing
-PROMPT='${date_string} ${username} ${path_string} $(git-string)${jobs_string}$(vagrant_string)%f
+PROMPT='${date_string} ${username} ${path_string} $(git-string)${jobs_string}%f
 ${prompt_char_with_exit_status} %{%f%}'
 
 # Override oh-my-zsh vi-mode plugin prompt
