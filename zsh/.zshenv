@@ -30,10 +30,30 @@ alias vi=$EDITOR
 # means it doesn't have access to the contents of .zshrc. See
 # https://github.com/junegunn/fzf/issues/3743#issuecomment-2065239517
 altc() {
-  cdup=$(git rev-parse --show-cdup 2>/dev/null)
-  packages=$(altc_find_packages)
-  sibling_packages=$(altc_find_sibling_packages)
-  sed -r '/^\s*$/d' <<< $cdup <<< $packages <<< $sibling_packages
+  sed -r '/^\s*$/d' \
+    <(altc_cdup &) \
+    <(altc_find_linked_worktrees &) \
+    <(altc_find_packages &) \
+    <(altc_find_sibling_packages &)
+}
+
+altc_cdup() {
+  git rev-parse --show-cdup 2>/dev/null
+}
+
+altc_find_linked_worktrees() {
+  if command -v grealpath &> /dev/null; then
+    if ! git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
+      return
+    fi
+    current="$(git rev-parse --show-toplevel)"
+    for line in $(git worktree list | cut -d' ' -f1); do
+      if ! [[ "$line" == "$current" ]]; then
+        grealpath --relative-to=$(pwd) $line
+        return
+      fi
+    done
+  fi
 }
 
 if command -v fdfind &> /dev/null; then
