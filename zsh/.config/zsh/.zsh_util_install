@@ -17,7 +17,7 @@ for binary pkg in ${(@kv)utils}; do
 done
 
 # Install nerd-fonts
-if [[ "$os" == 'Darwin' ]]; then
+if [[ "$(uname)" == 'Darwin' ]]; then
   if [[ ! -f "$HOME/Library/Fonts/HackNerdFont-Regular.ttf" ]]; then
     to_install+=font-hack-nerd-font
   fi
@@ -27,18 +27,45 @@ if [[ "${#to_install[@]}" -eq 0 ]]; then
   return
 fi
 
+install-util() {
+  if [[ "$(uname)" == 'Darwin' ]]; then
+    brew install $*
+  else
+    sudo apt-get install $*
+  fi
+}
+
 echo "The following utilities are not yet installed: $to_install"
-read -t 2 -qs "response?Install them?"
+read -t 2 -qs "response?Install them? "
+echo
 case "$response" in
   y)
-    echo "\nInstalling."
-    if [[ "$os" == 'Darwin' ]]; then
-      brew install $to_install
-    else
-      sudo apt-get install $to_install
-    fi
+    echo "Installing."
+    install-util $to_install
     ;;
   *)
-    echo "\nSkipping install."
+    echo "Skipping install."
+    for binary pkg in ${(@kv)utils}; do
+      if ! command -v $binary &> /dev/null; then
+        eval "$binary() {
+  echo \"$pkg is not yet installed.\"
+  read -t 2 -qs \"response?Install now? \"
+  echo
+  case \"\$response\" in
+    y)
+      echo \"Installing.\"
+      unset -f $binary
+      install-util $pkg
+      ;;
+    *)
+      echo \"Skipping install.\"
+      ;;
+  esac
+}"
+      fi
+    done
     ;;
 esac
+
+unset utils
+unset to_install
