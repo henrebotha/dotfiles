@@ -22,7 +22,7 @@ zcomet load 'romkatv/powerlevel10k'
 zcomet load 'Aloxaf/fzf-tab'
 zcomet load 'larkery/zsh-histdb'
 zcomet load 'benvan/sandboxd'
-zcomet load 'henrebotha/zsh-abbr@hbotha/cursor-expansion'
+zcomet load 'olets/zsh-abbr@prefixes/prefixes'
 zcomet load 'olets/zsh-test-runner'
 zcomet load 'romkatv/zsh-bench'
 # Zcomet recommends loading this last
@@ -461,7 +461,7 @@ export global_aliases=(
 
 if command -v abbr > /dev/null 2>&1; then
   ABBR_SET_EXPANSION_CURSOR=1
-  ABBR_REGULAR_ABBREVIATION_PREFIXES=('man' 'noglob ' 'sudo ' 'watch ' 'which ')
+  ABBR_REGULAR_ABBREVIATION_SCALAR_PREFIXES=('man ' 'noglob ' 'sudo ' 'watch ' 'which ')
 
   typeset -A abbr_abbreviations
   export abbr_abbreviations=(
