@@ -98,6 +98,10 @@ Plug 'junegunn/goyo.vim', { 'on': ['Goyo'] }
 Plug 'preservim/tagbar'                   " File outline viewer
 Plug 'andymass/matchup.vim'               " Movement between matching if/ends etc
 Plug isdirectory('/opt/homebrew/opt/fzf') ? '/opt/homebrew/opt/fzf' : '~/.fzf'
+" TODO: fzf.vim from 556f45e (2024-10-29) onwards requires fzf 0.56, which is
+" quite bleeding-edge and might not be available everywhere. Figure out a way
+" to determine whether we are in an available context, and if not, pin the
+" plugin to ec75ffb.
 Plug 'junegunn/fzf.vim', { 'do': './install --bin' }
                                           " Fast fuzzy finder
 Plug 'tpope/vim-apathy'                   " Some path values for various langs
@@ -318,6 +322,8 @@ endif
 if has('popupwin')
   let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
 endif
+let g:fzf_vim = {}
+let g:fzf_vim.grep_multi_line = 2
 hi fzf1 ctermfg=red ctermbg=8
 hi fzf2 ctermfg=green ctermbg=8
 hi fzf3 ctermfg=white ctermbg=8
@@ -337,9 +343,8 @@ if executable('fzf')
   command! -bang -nargs=* Rg
     \ call fzf#vim#grep(
     \   'rg --hidden -g "!.git" --vimgrep --color=always -- '.shellescape(<q-args>),
-    \   1,
-    \   <bang>0 ? fzf#vim#with_preview('down:80%')
-    \           : fzf#vim#with_preview('down:80%:hidden', '?'),
+    \   <bang>0 ? fzf#vim#with_preview('down:70%')
+    \           : fzf#vim#with_preview('down:70%:hidden', '?'),
     \   <bang>0)
 else
   " Fallbacks just in case we're not set up yet
