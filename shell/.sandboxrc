@@ -32,3 +32,13 @@ sandbox_init_nvm(){
 sandbox_hook nvm node
 sandbox_hook nvm nodemon
 sandbox_hook nvm yarn
+
+# Use direnv to declare paths where e.g. nvm must be loaded in.
+# $ echo 'export sandbox_load_nvm="1"' >> /path/to/repo/.envrc
+load-sandboxes(){
+  if [ -n "$sandbox_load_nvm" ]; then
+    sandbox nvm
+  fi
+}
+
+add-zsh-hook chpwd load-sandboxes
