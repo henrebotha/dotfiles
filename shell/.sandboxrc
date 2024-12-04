@@ -27,7 +27,9 @@ sandbox_init_nvm(){
   # lazy-loading. Should this create problems with Yarn global binaries, try a
   # workaround such as computing the Yarn global binary path on dotfiles
   # install and caching it in a file to be read by .zshrc on startup.
-  export PATH="$(yarn global bin):$PATH"
+  if command -v yarn &> /dev/null; then
+    export PATH="$(yarn global bin):$PATH"
+  fi
 }
 sandbox_hook nvm node
 sandbox_hook nvm nodemon
