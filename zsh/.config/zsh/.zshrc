@@ -276,9 +276,6 @@ tmux_await() {
   : ${2:?tmux_await needs a pane number (prefix-i or prefix-q).}
   : ${3:?tmux_await needs a pattern to look for.}
   : ${4:?tmux_await needs a command to execute.}
-  # args=(${@:2})
-  # session_root=${tmux_sessions[$1]:-$HOME}
-  # tmux new-session -s $1 -c $session_root $args
   while ! tmux capture-pane -p -t @"$1".%"$2" | grep "$3"; do
     sleep 1
   done; ${@:4}
