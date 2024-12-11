@@ -519,10 +519,10 @@ unset global_aliases
 repl() {
   : ${1:?repl needs a language name (js, python2, ruby, etc).}
   case $1 in
+    node|javascript|js)
+      node;;
     java)
       jshell;;
-    javascript|js)
-      node;;
     python)
       python;;
     python2)
@@ -543,6 +543,9 @@ repl() {
           irb
         fi
       fi;;
+    *)
+      echo 'Unrecognised language. Pick one of: node|javascript|js, java, python[2|3], ruby'
+      return 1;;
   esac
 }
 
