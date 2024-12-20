@@ -256,6 +256,7 @@ let g:ale_sign_column_always = 1
 let g:ale_lint_delay = 500
 " Only enable one JS linter
 let g:ale_linters = {
+      \   'c': ['clangd'],
       \   'javascript': ['eslint'],
       \   'typescript': ['eslint'],
       \   'graphql': ['gqlint'],
@@ -323,6 +324,7 @@ if has('popupwin')
   let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
 endif
 let g:fzf_vim = {}
+" let g:fzf_vim.buffers_options = ['--keep-right']
 let g:fzf_vim.grep_multi_line = 2
 hi fzf1 ctermfg=red ctermbg=8
 hi fzf2 ctermfg=green ctermbg=8
@@ -481,6 +483,7 @@ set shiftround
 
 set autoindent
 
+" TODO check for existence?
 function! Find_repo_root()
   return system('git rev-parse --show-toplevel 2>/dev/null' . ' || ' . 'hg root 2>/dev/null')[:-2]->escape(' ')
 endfunction

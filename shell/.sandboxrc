@@ -36,11 +36,23 @@ sandbox_hook nvm nodemon
 sandbox_hook nvm yarn
 
 # Use direnv to declare paths where e.g. nvm must be loaded in.
-# $ echo 'export sandbox_load_nvm="1"' >> /path/to/repo/.envrc
+# Example .envrc:
+#   source_up
+#   export sandbox_load_nvm="1"
+
+# TODO: Don't do this if it's already loaded in!!
 load-sandboxes(){
   if [ -n "$sandbox_load_nvm" ]; then
     sandbox nvm
+  elif [ -n "$sandbox_load_pyenv" ]; then
+    sandbox pyenv
   fi
 }
+
+sandbox_init_pyenv(){
+  eval "$(pyenv init -)"
+}
+sandbox_hook pyenv python
+sandbox_hook pyenv pip
 
 add-zsh-hook chpwd load-sandboxes

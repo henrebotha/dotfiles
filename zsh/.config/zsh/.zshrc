@@ -1,3 +1,9 @@
+# Uncomment to enable startup profiling.
+# zmodload zsh/zprof
+
+# Uncomment to echo commands.
+# set -x
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.config/zsh/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -173,6 +179,7 @@ init_topics() {
 # elm
 # java
 # js
+# python
 # ruby
 CONFIG
   fi
@@ -253,7 +260,6 @@ tna() {
     dev
     dotfiles
     notes
-    personal-dev
   )
   for session in ${(@k)tmux_sessions:*auto_sessions}; do
     tn $session -d
@@ -283,6 +289,12 @@ tmux_await() {
 
 # Fix broken mouse reporting after ssh exits abruptly
 alias fix-mouse-reporting='printf '\''\e[?1000l'\'''
+
+# # Ensure that we have an ssh-agent session on macOS.
+# if ! pgrep -xu $(id -u) ssh-agent > /dev/null; then
+# 	ssh-agent | grep -v '^echo' > ~/.ssh-agent.sh
+# fi
+# . ~/.ssh-agent.sh
 
 # Vim
 # If we're in a Git repo, name the server after that repo. Otherwise, give it a
@@ -405,7 +417,7 @@ export FZF_DEFAULT_OPTS='--color=16 --bind "f1:execute(less -f {})"'
 # --hidden: Search hidden paths
 # --glob: Additional conditions (exclude .git)
 # --no-ignore: Do not respect .gitignore and the like
-export FZF_DEFAULT_COMMAND='rg --files --glob "!.git/*" --hidden --no-ignore'
+export FZF_DEFAULT_COMMAND='rg --files --glob '\''!.git/*'\'' --hidden --no-ignore'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND=altc
 
@@ -518,6 +530,8 @@ unset global_aliases
 
 repl() {
   : ${1:?repl needs a language name (js, python2, ruby, etc).}
+  # Nice way to do this would be a map of lang to binary, then we can print
+  # keys in the help.
   case $1 in
     node|javascript|js)
       node;;
@@ -556,5 +570,9 @@ export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
 # To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
 [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
 
+# Uncomment to echo commands.
+# set +x
+
+# Uncomment to enable startup profiling.
 # zprof
 # zmodload -u zsh/zprof
