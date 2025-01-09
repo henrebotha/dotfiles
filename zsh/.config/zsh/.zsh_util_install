@@ -1,5 +1,6 @@
 typeset -A utils
 utils=(
+  atuin atuin
   direnv direnv
   eza eza
   fzf fzf

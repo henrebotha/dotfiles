@@ -20,7 +20,6 @@ zcomet load ohmyzsh 'plugins/vi-mode'
 zcomet load ohmyzsh 'plugins/ripgrep'
 zcomet load 'romkatv/powerlevel10k'
 zcomet load 'Aloxaf/fzf-tab'
-zcomet load 'larkery/zsh-histdb'
 zcomet load 'benvan/sandboxd'
 zcomet load 'olets/zsh-abbr@prefixes/prefixes'
 zcomet load 'olets/zsh-test-runner'
@@ -129,32 +128,11 @@ _self_destruct_hook() {
 (( $+functions[add-zsh-hook] )) || autoload -Uz add-zsh-hook
 add-zsh-hook precmd _self_destruct_hook
 
-# Zsh-histdb
-alias hf=histdb\ --forget\ --exact
-# Forget last command
-alias hfl='hf "$(fc -n -l -1)"'
-
 # Zsh-autosuggestions
 export ZSH_AUTOSUGGEST_USE_ASYNC=1
 
-if command -v histdb &> /dev/null; then
-  ZSH_AUTOSUGGEST_STRATEGY=histdb # (histdb history completion)
-
-  _zsh_autosuggest_strategy_histdb() {
-    typeset -g suggestion
-    suggestion=$(_histdb_query "
-        SELECT commands.argv
-        FROM history
-          LEFT JOIN commands ON history.command_id = commands.rowid
-          LEFT JOIN places ON history.place_id = places.rowid
-        WHERE
-          commands.argv LIKE '$(sql_escape $1)%' AND
-          places.dir = '$(sql_escape $PWD)'
-        GROUP BY commands.argv
-        ORDER BY history.start_time desc
-        LIMIT 1
-    ")
-  }
+if command -v atuin &> /dev/null; then
+  eval "$(atuin init zsh)"
 fi
 
 # Zsh global aliases
@@ -471,7 +449,6 @@ if command -v abbr > /dev/null 2>&1; then
     [d]=docker
     [dv]='dirs -v'
     [g]=git
-    [hf]='histdb --forget --exact'
     [k]=kubectl
     ['kubectl e']='kubectl exec $pod -it --'
     ['kubectl gp']='kubectl get pods'
