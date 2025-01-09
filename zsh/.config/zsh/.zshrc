@@ -381,6 +381,11 @@ export RIPGREP_CONFIG_PATH="$HOME"'/.ripgreprc'
 # fzf keybinds/completion
 eval "$(fzf --zsh)"
 [ -f "$ZDOTDIR/.fzf.zsh" ] && . "$ZDOTDIR/.fzf.zsh"
+# Restore Atuin's Ctrl-R binding
+bindkey '^r' atuin-search
+bindkey -M emacs '^r' atuin-search
+bindkey -M viins '^r' atuin-search
+bindkey -M vicmd '^r' atuin-search
 
 export FZF_DEFAULT_OPTS='--color=16 --bind "f1:execute(less -f {})"'
 # --files: List files, do not search them
