@@ -19,7 +19,6 @@ export ZSH_CACHE_DIR="$ZDOTDIR"
 
 zcomet load ohmyzsh 'plugins/mise'
 zcomet load ohmyzsh 'plugins/vi-mode'
-zcomet load ohmyzsh 'plugins/ripgrep'
 zcomet load 'romkatv/powerlevel10k'
 zcomet load 'Aloxaf/fzf-tab'
 zcomet load 'olets/zsh-abbr@prefixes/prefixes'
