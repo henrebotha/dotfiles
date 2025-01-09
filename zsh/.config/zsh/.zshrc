@@ -40,6 +40,8 @@ setopt no_list_ambiguous
 
 # Key bindings for fzf-tab
 zstyle ':fzf-tab:*' fzf-bindings 'right:accept'
+# Use 16 colours, because fzf-tab ignores FZF_DEFAULT_OPTS
+zstyle ':fzf-tab:*' fzf-flags --color=16
 
 # Print ellipsis while completing, and load Tmux user variables before completing.
 expand-or-complete-custom() {
@@ -430,6 +432,10 @@ compinit -C
 
 # Load any available Bash completions.
 autoload -U +X bashcompinit && bashcompinit
+
+# Seems this needs to go after all calls to compinit.
+# Side note: I have no idea which compinit calls are correct to have.
+enable-fzf-tab
 
 [ -f "$ZDOTDIR"/.zsh-work ] && . "$ZDOTDIR"/.zsh-work
 
