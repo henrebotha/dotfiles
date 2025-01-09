@@ -15,12 +15,13 @@ if [[ ! -f ${ZDOTDIR:-${HOME}}/.zcomet/bin/zcomet.zsh ]]; then
 fi
 
 source ${ZDOTDIR:-${HOME}}/.zcomet/bin/zcomet.zsh
+export ZSH_CACHE_DIR="$ZDOTDIR"
 
+zcomet load ohmyzsh 'plugins/mise'
 zcomet load ohmyzsh 'plugins/vi-mode'
 zcomet load ohmyzsh 'plugins/ripgrep'
 zcomet load 'romkatv/powerlevel10k'
 zcomet load 'Aloxaf/fzf-tab'
-zcomet load 'benvan/sandboxd'
 zcomet load 'olets/zsh-abbr@prefixes/prefixes'
 zcomet load 'olets/zsh-test-runner'
 zcomet load 'romkatv/zsh-bench'
@@ -189,6 +190,9 @@ alias k=kubectl
 
 # Git
 alias g='git'
+
+# mise
+alias m=mise
 
 # A lovely script that watches files for changes and automatically commits them
 # to git. Nice to use for note-taking.
@@ -401,9 +405,12 @@ fh() {
 # OPAM configuration
 [ -f "$HOME"/.opam/opam-init/init.zsh ] && . "$HOME"/.opam/opam-init/init.zsh
 
-# Direnv
-if command -v direnv > /dev/null 2>&1; then
-  eval "$(direnv hook zsh)"
+# mise
+if command -v mise > /dev/null 2>&1; then
+  eval "$(mise activate zsh)"
+  if ! command -v usage > /dev/null 2>&1; then
+    mise use -g usage
+  fi
 fi
 
 # https://gist.github.com/ctechols/ca1035271ad134841284
@@ -457,6 +464,7 @@ if command -v abbr > /dev/null 2>&1; then
     ['kubectl l']='kubectl logs -c app $pod'
     ['kubectl lf']='kubectl logs -c app --tail=20 -f $pod'
     [l]=ls
+    [m]=mise
     [s]=sudo
     [t]=tree
     [v]=vim

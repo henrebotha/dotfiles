@@ -5,6 +5,7 @@ utils=(
   eza eza
   fzf fzf
   ifne moreutils
+  mise mise
   rg ripgrep
   shellcheck shellcheck
   tmux tmux
