@@ -1,5 +1,6 @@
 #! /usr/bin/env sh
 
+atuin/install.sh
 completions/install.sh
 fish/install.sh
 git/install.sh

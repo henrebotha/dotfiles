@@ -1,0 +1,7 @@
+dialect = "uk"
+filter_mode = "directory"
+style = "compact"
+inline_height = 14
+enter_accept = false
+[sync]
+records = true
