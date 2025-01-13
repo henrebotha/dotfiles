@@ -86,7 +86,13 @@ setopt hist_verify
 setopt share_history
 export HISTSIZE=1000000000
 export SAVEHIST=1000000000
-export HISTFILE="$XDG_DATA_HOME/zsh/.zsh_history"
+
+histdir="$XDG_DATA_HOME"/zsh
+if ! [ -d "$histdir" ]; then
+  mkdir -p "$histdir"
+fi
+export HISTFILE="$histdir"/.zsh_history
+unset histdir
 # Record timestamps.
 setopt extended_history
 # When looking up history, ignore duplicates.
