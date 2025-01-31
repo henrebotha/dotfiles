@@ -21,7 +21,7 @@ zcomet load ohmyzsh 'plugins/mise'
 zcomet load ohmyzsh 'plugins/vi-mode'
 zcomet load 'romkatv/powerlevel10k'
 zcomet load 'Aloxaf/fzf-tab'
-zcomet load 'olets/zsh-abbr@prefixes/prefixes'
+zcomet load 'olets/zsh-abbr'
 zcomet load 'olets/zsh-test-runner'
 zcomet load 'romkatv/zsh-bench'
 # Zcomet recommends loading this last
