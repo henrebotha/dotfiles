@@ -600,6 +600,12 @@ let &undodir=s:vim_cache
 set undolevels=1000
 set undoreload=10000
 
+set backup
+set writebackup
+set backupdir^=~/.vim/backup//
+set backupcopy=yes
+au BufWritePre * let &bex = '@' . strftime("%F.%H:%M")
+
 " Keybinds for vim-easy-align
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
