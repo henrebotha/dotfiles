@@ -136,13 +136,6 @@ _self_destruct_hook() {
 (( $+functions[add-zsh-hook] )) || autoload -Uz add-zsh-hook
 add-zsh-hook precmd _self_destruct_hook
 
-# Zsh-autosuggestions
-export ZSH_AUTOSUGGEST_USE_ASYNC=1
-
-if command -v atuin &> /dev/null; then
-  eval "$(atuin init zsh)"
-fi
-
 # Zsh global aliases
 alias -g @q="2> /dev/null"
 alias -g @qq=">/dev/null 2>&1"
@@ -387,11 +380,13 @@ export RIPGREP_CONFIG_PATH="$HOME"'/.ripgreprc'
 # fzf keybinds/completion
 eval "$(fzf --zsh)"
 [ -f "$ZDOTDIR/.fzf.zsh" ] && . "$ZDOTDIR/.fzf.zsh"
-# Restore Atuin's Ctrl-R binding
-bindkey '^r' atuin-search
-bindkey -M emacs '^r' atuin-search
-bindkey -M viins '^r' atuin-search
-bindkey -M vicmd '^r' atuin-search
+
+# Zsh-autosuggestions
+export ZSH_AUTOSUGGEST_USE_ASYNC=1
+
+if command -v atuin &> /dev/null; then
+  eval "$(atuin init zsh --disable-up-arrow)"
+fi
 
 export FZF_DEFAULT_OPTS='--color=16 --bind "f1:execute(less -f {})"'
 # --files: List files, do not search them
