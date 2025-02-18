@@ -207,6 +207,8 @@ if exists('g:plugs') && has_key(g:plugs, 'vim-noctu')
   colorscheme noctu
   set bg=dark
 endif
+hi SignColumn ctermbg=NONE
+hi FoldColumn ctermbg=NONE
 " Fix vimdiff colours to be not so eye-bleeding. Ugly, but better
 hi DiffAdd term=underline cterm=underline ctermfg=4 ctermbg=NONE
 hi DiffChange term=underline cterm=underline ctermfg=5 ctermbg=NONE
@@ -216,6 +218,40 @@ hi DiffText term=underline cterm=underline ctermfg=9 ctermbg=NONE
 hi Comment term=italic cterm=italic
 " Remove the black background from folds
 hi Folded ctermbg=NONE
+
+hi fzf1 ctermfg=red ctermbg=8
+hi fzf2 ctermfg=green ctermbg=8
+hi fzf3 ctermfg=white ctermbg=8
+
+hi FileOutsidePwd ctermfg=yellow
+hi FileOutsidePwdIcon ctermbg=yellow
+hi FileOutsidePwdIcon ctermfg=black
+
+hi SessionActive ctermfg=green
+hi SessionPaused ctermfg=yellow
+
+hi StatusLine ctermbg=NONE
+hi StatusLineNC ctermbg=NONE
+hi VertSplit ctermbg=NONE
+
+hi GitGutterAdd ctermbg=NONE
+hi GitGutterAddLine ctermbg=NONE
+hi GitGutterChangeDelete ctermbg=NONE
+hi GitGutterChangeDeleteLineNr ctermbg=NONE
+hi GitGutterChangeLineNr ctermbg=NONE
+hi GitGutterDeleteInvisible ctermbg=NONE
+hi GitGutterAddIntraLine ctermbg=NONE
+hi GitGutterAddLineNr ctermbg=NONE
+hi GitGutterChangeDeleteInvisible ctermbg=NONE
+hi GitGutterChangeInvisible ctermbg=NONE
+hi GitGutterDelete ctermbg=NONE
+hi GitGutterDeleteLine ctermbg=NONE
+hi GitGutterAddInvisible ctermbg=NONE
+hi GitGutterChange ctermbg=NONE
+hi GitGutterChangeDeleteLine ctermbg=NONE
+hi GitGutterChangeLine ctermbg=NONE
+hi GitGutterDeleteIntraLine ctermbg=NONE
+hi GitGutterDeleteLineNr ctermbg=NONE
 
 " Shortcut to rapidly toggle `set list`
 nnoremap <leader>l :set list!<cr>
@@ -324,9 +360,6 @@ if has('popupwin')
 endif
 let g:fzf_vim = {}
 let g:fzf_vim.grep_multi_line = 2
-hi fzf1 ctermfg=red ctermbg=8
-hi fzf2 ctermfg=green ctermbg=8
-hi fzf3 ctermfg=white ctermbg=8
 " Bindings for fzf
 if executable('fzf')
   nnoremap <leader>f :Files<cr>
@@ -506,6 +539,10 @@ function! FileInsidePwd() abort
   return strlen(expand('%:p')) == 0 || stridx(expand('%:p'), getcwd()) == 0
 endfunction
 
+function! RelativeSession()
+  return fnamemodify(v:this_session,':~:.')
+endfunction
+
 set statusline=%#Directory#%{v\:servername\ ==\ ''?'':v\:servername.'\ '}%*
 set statusline+=%<
 " Colour the file path conditional on its being outside the ocurrent pwd
@@ -516,17 +553,19 @@ set statusline+=%<
 " good enough & we should rethink the FileInsidePwd() function.
 set statusline+=%#FileOutsidePwd#%{FileInsidePwd()?'':expand('%')}%*%#StatusLine#%{FileInsidePwd()?expand('%').'\ ':''}%*
 set statusline+=%#FileOutsidePwdIcon#%{FileInsidePwd()?'':'[↗]'}%*%#StatusLine#%{FileInsidePwd()?'\ ':''}%*
-set statusline+=\ %h%m%r%=%-.(%l,%c%V%)
+set statusline+=\ %h%m%r
+set statusline+=%=
 " Add filetype to statusline
-set statusline+=\ %y
+set statusline+=%y
+set statusline+=\ %-.(%l,%c%V%)
 set statusline+=\ %P
+if exists('g:plugs') && has_key(g:plugs, 'vim-obsession')
+  set statusline+=\ %{v\:this_session\ ==\ ''?'[no\ session]':''}
+  set statusline+=%#SessionPaused#%{v\:this_session\ ==\ ''?'':ObsessionStatus('','[◼\ '.RelativeSession().']')}
+  set statusline+=%#SessionActive#%{v\:this_session\ ==\ ''?'':ObsessionStatus('[▶\ '.RelativeSession().']','')}
+  set statusline+=%#StatusLine#
+endif
 set laststatus=2
-hi FileOutsidePwd ctermfg=yellow
-hi FileOutsidePwdIcon ctermbg=yellow
-hi FileOutsidePwdIcon ctermfg=black
-hi StatusLine ctermbg=none
-hi StatusLineNC ctermbg=none
-hi VertSplit ctermbg=none
 
 " Reduce prevalence of 'press enter to continue' on file write
 set shortmess=filnxtToOS
