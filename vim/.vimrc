@@ -463,7 +463,7 @@ function! CopyWithRef()
   let lineNumber=a:firstline
   let filePathFull=expand('%:p')
   if filereadable(filePathFull)
-    let repoTopLevel=Find_repo_root()
+    let repoTopLevel=FindRepoRoot()
     let filePathRelative=substitute(filePathFull, repoTopLevel.'/', '', '')
   else
     let filePathRelative='<untitled>'
@@ -514,21 +514,21 @@ set shiftround
 
 set autoindent
 
-function! Find_repo_root()
+function! FindRepoRoot()
   return system('git rev-parse --show-toplevel 2>/dev/null' . ' || ' . 'hg root 2>/dev/null')[:-2]->escape(' ')
 endfunction
 
 " Allow gf (and similar) to find things relative to the repo root.
-function! s:add_repo_root_to_path()
-  if isdirectory(Find_repo_root())
-    execute "set path+=" . Find_repo_root()
+function! s:AddRepoRootToPath()
+  if isdirectory(FindRepoRoot())
+    execute "set path+=" . FindRepoRoot()
   endif
 endfunction
 
-call s:add_repo_root_to_path()
+call s:AddRepoRootToPath()
 augroup change_pwd
   autocmd!
-  autocmd DirChanged * call s:add_repo_root_to_path()
+  autocmd DirChanged * call s:AddRepoRootToPath()
 augroup end
 
 function! FileInsidePwd() abort
@@ -539,8 +539,12 @@ function! FileInsidePwd() abort
   return strlen(expand('%:p')) == 0 || stridx(expand('%:p'), getcwd()) == 0
 endfunction
 
-function! RelativeSession()
-  return fnamemodify(v:this_session,':~:.')
+function! RelativePath(path)
+  return fnamemodify(a:path,':~:.')
+endfunction
+
+function! RelativePathSession()
+  return RelativePath(v:this_session)
 endfunction
 
 set statusline=%#Directory#%{v\:servername\ ==\ ''?'':v\:servername.'\ '}%*
@@ -561,8 +565,8 @@ set statusline+=\ %-.(%l,%c%V%)
 set statusline+=\ %P
 if exists('g:plugs') && has_key(g:plugs, 'vim-obsession')
   set statusline+=\ %{v\:this_session\ ==\ ''?'[no\ session]':''}
-  set statusline+=%#SessionPaused#%{v\:this_session\ ==\ ''?'':ObsessionStatus('','[◼\ '.RelativeSession().']')}
-  set statusline+=%#SessionActive#%{v\:this_session\ ==\ ''?'':ObsessionStatus('[▶\ '.RelativeSession().']','')}
+  set statusline+=%#SessionPaused#%{v\:this_session\ ==\ ''?'':ObsessionStatus('','[◼\ '.RelativePathSession().']')}
+  set statusline+=%#SessionActive#%{v\:this_session\ ==\ ''?'':ObsessionStatus('[▶\ '.RelativePathSession().']','')}
   set statusline+=%#StatusLine#
 endif
 set laststatus=2
