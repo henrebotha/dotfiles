@@ -43,20 +43,6 @@ zstyle ':fzf-tab:*' fzf-bindings 'right:accept'
 # Use 16 colours, because fzf-tab ignores FZF_DEFAULT_OPTS
 zstyle ':fzf-tab:*' fzf-flags --color=16
 
-# Print ellipsis while completing, and load Tmux user variables before completing.
-expand-or-complete-custom() {
-  # https://github.com/ohmyzsh/ohmyzsh/blob/02d07f3e3dba0d50b1d907a8062bbaca18f88478/lib/completion.zsh#L62
-  print -Pn "%F{red}…%f"
-  load_tmux_user_env
-  zle expand-or-complete
-  zle redisplay
-}
-
-zle -N expand-or-complete-custom
-bindkey -M emacs "^I" expand-or-complete-custom
-bindkey -M viins "^I" expand-or-complete-custom
-bindkey -M vicmd "^I" expand-or-complete-custom
-
 if [ -d ~/zsh_help ]; then
   export HELPDIR=~/zsh_help
   unalias run-help
@@ -244,15 +230,6 @@ tna() {
     tn $session -d
   done
 }
-
-load_tmux_user_env() {
-  if [ -n "$TMUX" ]; then
-    for var in $(tmux show-environment | grep '^TMUX_USER_ENV_' | sed 's/^TMUX_USER_ENV_//'); do
-      export $var
-    done
-  fi
-}
-load_tmux_user_env
 
 # Wait for a string to appear in another pane before executing a command
 tmux_await() {
@@ -445,6 +422,30 @@ autoload -U +X bashcompinit && bashcompinit
 # Seems this needs to go after all calls to compinit.
 # Side note: I have no idea which compinit calls are correct to have.
 enable-fzf-tab
+
+load_tmux_user_env() {
+  if [ -n "$TMUX" ]; then
+    for var in $(tmux show-environment | grep '^TMUX_USER_ENV_' | sed 's/^TMUX_USER_ENV_//'); do
+      export $var
+    done
+  fi
+}
+load_tmux_user_env
+add-zsh-hook preexec load_tmux_user_env
+
+# Print ellipsis while completing, and load Tmux user variables before completing.
+expand-or-complete-custom() {
+  # https://github.com/ohmyzsh/ohmyzsh/blob/02d07f3e3dba0d50b1d907a8062bbaca18f88478/lib/completion.zsh#L62
+  print -Pn "%F{red}…%f"
+  load_tmux_user_env
+  zle fzf-tab-complete
+  zle redisplay
+}
+
+zle -N expand-or-complete-custom
+bindkey -M emacs "^I" expand-or-complete-custom
+bindkey -M viins "^I" expand-or-complete-custom
+bindkey -M vicmd "^I" expand-or-complete-custom
 
 [ -f "$ZDOTDIR"/.zsh-work ] && . "$ZDOTDIR"/.zsh-work
 
