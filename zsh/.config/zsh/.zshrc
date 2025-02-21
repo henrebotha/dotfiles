@@ -425,7 +425,7 @@ enable-fzf-tab
 
 load_tmux_user_env() {
   if [ -n "$TMUX" ]; then
-    for var in $(tmux show-environment | grep '^TMUX_USER_ENV_' | sed 's/^TMUX_USER_ENV_//'); do
+    for var in $(tmux show-environment | sed -n '/^TMUX_USER_ENV_/ s/^TMUX_USER_ENV_//p'); do
       export $var
     done
   fi
