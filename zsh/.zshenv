@@ -58,11 +58,14 @@ altc_find_linked_worktrees() {
 
 if command -v fdfind &> /dev/null; then
   alias fd='fdfind'
+fi
+
+if command -v fd &> /dev/null; then
   altc_find_packages() {
-    fdfind -t d --maxdepth=1 . 'packages/' 2>/dev/null
+    fd -t f --min-depth=2 -F 'package.json' 2>/dev/null | xargs dirname | sort
   }
   altc_find_sibling_packages() {
-    test -z "$(git rev-parse --show-cdup)" || fdfind -t d --maxdepth=1 . "$(git rev-parse --show-cdup)packages/" 2>/dev/null
+    test -z "$(git rev-parse --show-cdup)" || fd -t f --min-depth=2 -F 'package.json' "$(git rev-parse --show-cdup)" 2>/dev/null | xargs dirname | sort
   }
 else
   altc_find_packages() {
