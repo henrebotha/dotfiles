@@ -201,57 +201,65 @@ set updatetime=250
 " Colours go from 0 to 7: black, red, green, yellow, blue, magenta, cyan, white
 " Then from 8 to 15, bright versions of the above
 set t_Co=16
-hi LineNr ctermfg=14
-hi CursorLineNr ctermfg=14
-if exists('g:plugs') && has_key(g:plugs, 'vim-noctu')
-  colorscheme noctu
+function! s:tweak_colours()
+  " hi LineNr ctermfg=14
+  " hi CursorLineNr ctermfg=14
+
+  hi SignColumn ctermbg=NONE
+  hi FoldColumn ctermbg=NONE
+  " Fix vimdiff colours to be not so eye-bleeding. Ugly, but better
+  hi DiffAdd term=underline cterm=underline ctermfg=4 ctermbg=NONE
+  hi DiffChange term=underline cterm=underline ctermfg=5 ctermbg=NONE
+  hi DiffDelete term=underline cterm=underline ctermfg=6 ctermbg=NONE
+  hi DiffText term=underline cterm=underline ctermfg=9 ctermbg=NONE
+  " Make comments italic, because it's nice
+  hi Comment term=italic cterm=italic
+  " Remove the black background from folds
+  hi Folded ctermbg=NONE
+
+  hi fzf1 ctermfg=red ctermbg=8
+  hi fzf2 ctermfg=green ctermbg=8
+  hi fzf3 ctermfg=white ctermbg=8
+
+  hi FileOutsidePwd ctermfg=yellow
+  hi FileOutsidePwdIcon ctermbg=yellow
+  hi FileOutsidePwdIcon ctermfg=black
+
+  hi SessionActive ctermfg=green
+  hi SessionPaused ctermfg=yellow
+
+  hi StatusLine ctermbg=NONE
+  hi StatusLineNC ctermbg=NONE
+  hi VertSplit ctermbg=NONE
+
+  hi GitGutterAdd ctermbg=NONE
+  hi GitGutterAddLine ctermbg=NONE
+  hi GitGutterChangeDelete ctermbg=NONE
+  hi GitGutterChangeDeleteLineNr ctermbg=NONE
+  hi GitGutterChangeLineNr ctermbg=NONE
+  hi GitGutterDeleteInvisible ctermbg=NONE
+  hi GitGutterAddIntraLine ctermbg=NONE
+  hi GitGutterAddLineNr ctermbg=NONE
+  hi GitGutterChangeDeleteInvisible ctermbg=NONE
+  hi GitGutterChangeInvisible ctermbg=NONE
+  hi GitGutterDelete ctermbg=NONE
+  hi GitGutterDeleteLine ctermbg=NONE
+  hi GitGutterAddInvisible ctermbg=NONE
+  hi GitGutterChange ctermbg=NONE
+  hi GitGutterChangeDeleteLine ctermbg=NONE
+  hi GitGutterChangeLine ctermbg=NONE
+  hi GitGutterDeleteIntraLine ctermbg=NONE
+  hi GitGutterDeleteLineNr ctermbg=NONE
+endfunction
+
+" Restore the colour tweaks whenever we change colour scheme, which matters
+" for Goyo in particular.
+autocmd! ColorScheme dim call s:tweak_colours()
+
+if exists('g:plugs') && has_key(g:plugs, 'vim-dim')
+  colorscheme dim
   set bg=dark
 endif
-hi SignColumn ctermbg=NONE
-hi FoldColumn ctermbg=NONE
-" Fix vimdiff colours to be not so eye-bleeding. Ugly, but better
-hi DiffAdd term=underline cterm=underline ctermfg=4 ctermbg=NONE
-hi DiffChange term=underline cterm=underline ctermfg=5 ctermbg=NONE
-hi DiffDelete term=underline cterm=underline ctermfg=6 ctermbg=NONE
-hi DiffText term=underline cterm=underline ctermfg=9 ctermbg=NONE
-" Make comments italic, because it's nice
-hi Comment term=italic cterm=italic
-" Remove the black background from folds
-hi Folded ctermbg=NONE
-
-hi fzf1 ctermfg=red ctermbg=8
-hi fzf2 ctermfg=green ctermbg=8
-hi fzf3 ctermfg=white ctermbg=8
-
-hi FileOutsidePwd ctermfg=yellow
-hi FileOutsidePwdIcon ctermbg=yellow
-hi FileOutsidePwdIcon ctermfg=black
-
-hi SessionActive ctermfg=green
-hi SessionPaused ctermfg=yellow
-
-hi StatusLine ctermbg=NONE
-hi StatusLineNC ctermbg=NONE
-hi VertSplit ctermbg=NONE
-
-hi GitGutterAdd ctermbg=NONE
-hi GitGutterAddLine ctermbg=NONE
-hi GitGutterChangeDelete ctermbg=NONE
-hi GitGutterChangeDeleteLineNr ctermbg=NONE
-hi GitGutterChangeLineNr ctermbg=NONE
-hi GitGutterDeleteInvisible ctermbg=NONE
-hi GitGutterAddIntraLine ctermbg=NONE
-hi GitGutterAddLineNr ctermbg=NONE
-hi GitGutterChangeDeleteInvisible ctermbg=NONE
-hi GitGutterChangeInvisible ctermbg=NONE
-hi GitGutterDelete ctermbg=NONE
-hi GitGutterDeleteLine ctermbg=NONE
-hi GitGutterAddInvisible ctermbg=NONE
-hi GitGutterChange ctermbg=NONE
-hi GitGutterChangeDeleteLine ctermbg=NONE
-hi GitGutterChangeLine ctermbg=NONE
-hi GitGutterDeleteIntraLine ctermbg=NONE
-hi GitGutterDeleteLineNr ctermbg=NONE
 
 " Shortcut to rapidly toggle `set list`
 nnoremap <leader>l :set list!<cr>
