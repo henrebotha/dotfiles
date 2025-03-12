@@ -555,6 +555,7 @@ export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
 
 # To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
 [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
+[[ ! -f ~/.config/zsh/.p10k-tmux.zsh ]] || source ~/.config/zsh/.p10k-tmux.zsh
 
 # zprof
 # zmodload -u zsh/zprof

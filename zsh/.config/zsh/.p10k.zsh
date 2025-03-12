@@ -33,6 +33,7 @@
     # =========================[ Line #1 ]=========================
     time
     context
+    tmux
     # os_icon               # os identifier
     dir                     # current directory
     vcs                     # git status
