@@ -54,6 +54,7 @@ alias help=run-help
 alias s=". $ZDOTDIR/.zshrc"
 alias :q=exit # Welp
 
+alias cp='cp -i'
 alias mv='mv -i'
 alias rm='rm -I'
 
