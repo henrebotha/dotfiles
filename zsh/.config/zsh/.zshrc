@@ -69,6 +69,8 @@ export DIRSTACKSIZE=10
 
 alias dv='dirs -v'
 
+setopt interactive_comments
+
 # Don't expand history inline.
 setopt hist_verify
 
