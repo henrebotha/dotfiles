@@ -2,6 +2,7 @@
 
 atuin/install.sh
 completions/install.sh
+emacs/install.sh
 fish/install.sh
 git/install.sh
 hg/install.sh
