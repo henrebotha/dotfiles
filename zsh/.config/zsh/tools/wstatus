@@ -1,0 +1,36 @@
+#! /usr/bin/env zsh
+# vim: filetype=zsh:
+
+# Look up service status for tools such as Slack, Workplace, or Zoom.
+
+typeset -A services
+local services=(
+  [slack]=https://slack-status.com/
+  [workplace]=https://metastatus.com/
+  [zoom]=https://status.zoom.us/
+)
+
+if [[ $1 == '--list' ]]; then
+  echo ${(@k)services}
+  exit 0
+fi
+
+: ${1:?status needs a service name (e.g. 'workplace').}
+service=${services[$1]}
+
+open-link() {
+  if [[ $(uname) == 'Darwin' ]]; then
+    open $@
+  else
+    xdg-open $@
+  fi
+}
+
+if [[ -n $service ]]; then
+  printf "Opening \e]8;;${services[$1]}\e\\$1\e]8;;\e\\"
+  open-link ${services[$1]}
+  echo
+else
+  echo 'Unknown service'
+  exit 1
+fi

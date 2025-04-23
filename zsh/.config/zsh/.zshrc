@@ -30,6 +30,7 @@ zcomet load 'zsh-users/zsh-autosuggestions'
 zcomet compinit
 
 export PATH="$HOME/.local/bin:$PATH"
+export PATH="$ZDOTDIR/tools:$PATH"
 
 fpath=( "$ZDOTDIR"/completions "${fpath[@]}" )
 
