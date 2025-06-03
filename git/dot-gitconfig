@@ -107,6 +107,8 @@
 	unhide = update-index --no-skip-worktree
 	unhide-all = ! cd $(git rev-parse --show-toplevel || echo ".") && git hidden | xargs git unhide
 
+	excluded = ls-files --others --ignored --exclude-from=.git/info/exclude
+
 	# Show diff while trying to ignore changes matching a pattern. Won't ignore
 	# non-matching changes that are tight against matching changes, e.g. git
 	# diffig TODO will not ignore a change that has a TODO line followed by a
@@ -176,3 +178,7 @@
 
 	# Graph the divergence between two histories from their shared parent onwards.
 	diverge = ! "git lg $(git merge-base $1 $2)^..$1 $(git merge-base $1 $2)^..$2"
+
+	# List authors by number of contributions
+	# https://stackoverflow.com/a/49275435/1966418
+	authors = shortlog -n -s -- .
