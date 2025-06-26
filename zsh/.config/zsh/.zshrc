@@ -32,6 +32,10 @@ zcomet compinit
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$ZDOTDIR/tools:$PATH"
 
+histdir="$XDG_DATA_HOME"/zsh
+if ! [ -d "$histdir" ]; then
+  mkdir -p "$histdir"
+fi
 fpath=( "$ZDOTDIR"/completions "${fpath[@]}" )
 
 # Case-insensitive (all), partial word and then substring completion
@@ -80,10 +84,6 @@ setopt share_history
 export HISTSIZE=1000000000
 export SAVEHIST=1000000000
 
-histdir="$XDG_DATA_HOME"/zsh
-if ! [ -d "$histdir" ]; then
-  mkdir -p "$histdir"
-fi
 export HISTFILE="$histdir"/.zsh_history
 unset histdir
 # Record timestamps.
@@ -415,7 +415,7 @@ fi
 # - '.' matches "regular files"
 # - 'mh+24' matches files (or directories or whatever) that are older than 24 hours.
 autoload -Uz compinit
-for dump in $XDG_CACHE_HOME/zsh/.zcompdump(N.mh+24); do
+for dump in "$ZSH_CACHE_DIR"/.zcompdump(N.mh+24); do
   compinit
 done
 compinit -C
