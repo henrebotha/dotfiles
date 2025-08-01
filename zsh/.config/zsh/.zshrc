@@ -458,6 +458,7 @@ export global_aliases=(
   ['@q']='2> /dev/null'
   ['@qq']='>/dev/null 2>&1'
   ['@errout']='2>&1'
+  ['@kshell']='sh -c "echo '\''$(base64 -i ~/.kshellrc)'\'' | base64 -d > /tmp/.bashrc && exec bash --rcfile /tmp/.bashrc"'
 )
 
 if command -v abbr > /dev/null 2>&1; then
