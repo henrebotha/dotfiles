@@ -463,7 +463,9 @@ export global_aliases=(
 
 if command -v abbr > /dev/null 2>&1; then
   ABBR_SET_EXPANSION_CURSOR=1
+  ABBR_EXPANSION_CURSOR_MARKER='#'
   ABBR_REGULAR_ABBREVIATION_SCALAR_PREFIXES=('man ' 'noglob ' 'sudo ' 'watch ' 'which ')
+  ABBR_REGULAR_ABBREVIATION_GLOB_PREFIXES=('-* ')
 
   typeset -A abbr_abbreviations
   export abbr_abbreviations=(
@@ -475,6 +477,9 @@ if command -v abbr > /dev/null 2>&1; then
     ['apt install y']='apt install -y'
     [d]=docker
     [dv]='dirs -v'
+    [e]=emacs
+    [fzfcp]='fzf #| '"$(echo $clip)"
+    [fzfd]='f -t d | fzf'
     [g]=git
     [k]=kubectl
     ['kubectl e']='kubectl exec $pod -it --'
@@ -483,12 +488,14 @@ if command -v abbr > /dev/null 2>&1; then
     ['kubectl get p']='kubectl get pods'
     ['kubectl l']='kubectl logs -c app $pod'
     ['kubectl lf']='kubectl logs -c app --tail=20 -f $pod'
+    ['kubectl pf']='kubectl port-forward services/$service 8080:$port'
     [l]=ls
     [m]=mise
     [s]=sudo
     [t]=tree
+    [dts]='date +"%Y-%m-%dT%H:%M:%S"'
     [v]=vim
-    [wa]=watch
+    [wa]='watch -c'
     [wh]=which
   )
 
