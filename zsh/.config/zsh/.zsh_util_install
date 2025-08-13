@@ -30,11 +30,21 @@ if [[ "${#to_install[@]}" -eq 0 ]]; then
 fi
 
 install-util() {
-  if [[ "$(uname)" == 'Darwin' ]]; then
-    brew install $*
-  else
-    sudo apt-get install $*
-  fi
+  case "$(uname -o)" in
+    Darwin)
+      brew install $*;;
+    Android)
+      pkg install $*;;
+    *)
+      if command -v pacman &> /dev/null; then
+        sudo pacman -S $*
+      elif command -v apt-get &> /dev/null; then
+        sudo apt-get install $*
+      else
+        echo >&2 "Could not identify package manager."
+        return
+      fi;;
+  esac
 }
 
 echo "The following utilities are not yet installed: $to_install"
