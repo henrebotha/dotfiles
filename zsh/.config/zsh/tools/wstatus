@@ -5,6 +5,7 @@
 
 typeset -A services
 local services=(
+  [blink]=https://status.joinblink.com/
   [slack]=https://slack-status.com/
   [workplace]=https://metastatus.com/
   [zoom]=https://status.zoom.us/
