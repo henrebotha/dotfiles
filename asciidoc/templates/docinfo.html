@@ -1,0 +1,254 @@
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<style>
+  :root{
+    --galliano: #e0ac00;
+    --supernova: #f5c000;
+    --lightning-yellow: #f6be17;
+    --lightning-yellow-3: #f5b800;
+    --teal: #008888;
+    --surfie-green: #007a7a;
+    --tia-maria: #b82e00;
+    --grenadier: #cc3300;
+    --cape-cod: #474d4d;
+    --outer-space: #303838;
+
+    --maincolor: var(--outer-space);
+    --primarycolor: var(--supernova);
+    --secondarycolor: var(--teal);
+    --tertiarycolor: var(--grenadier);
+    --sidebarbackground: var(--cape-cod);
+    --linkcolor: var(--teal);
+    --linkcoloralternate: var(--grenadier);
+    --white: #ffffff;
+  }
+
+  body {
+    background-repeat: repeat;
+    background-attachment: fixed;
+    background-size: 10%;
+    background-image: linear-gradient(to top, var(--maincolor), var(--cape-cod)), url({user-home}/.local/share/asciidoc/assets/svg/noise.svg);
+    color: var(--white);
+    font-family: "Inter Variable";
+    font-feature-settings: 'calt' on, 'dlig' on, 'tnum' off, 'frac' on, 'ss01' on, 'ss02' on, 'ss07' on, 'ss08' on, 'ss03' on;
+  }
+
+  .paragraph.lead > p, #preamble > .sectionbody > [class=paragraph]:first-of-type p {
+    color: var(--white);
+  }
+
+  :not(pre):not([class^=L]) > code {
+    background: color-mix(in srgb, var(--maincolor), white 15%);
+    color: var(--white);
+  }
+
+  .exampleblock :not(pre):not([class^=L]) > code, .sidebarblock :not(pre):not([class^=L]) > code {
+    background: color-mix(in srgb, var(--maincolor), white 20%);
+  }
+
+  #toc.toc2 {
+    background-color: var(--sidebarbackground);
+  }
+
+  .sidebarblock > .content > .title {
+    color: var(--white);
+  }
+
+  h1, h2, h3, #toctitle, .sidebarblock > .content > .title, h4, h5, h6 {
+    font-family: "Inter Variable";
+    font-weight: 400;
+    font-feature-settings: 'calt' on, 'dlig' on, 'tnum' on, 'frac' on, 'ss01' on, 'ss02' on, 'ss07' on, 'ss08' on, 'ss03' on;
+  }
+
+  .admonitionblock td.content > .title,
+  .audioblock > .title,
+  .exampleblock > .title,
+  .imageblock > .title,
+  .listingblock > .title,
+  .literalblock > .title,
+  .stemblock > .title,
+  .openblock > .title,
+  .paragraph > .title,
+  .quoteblock > .title,
+  table.tableblock > .title,
+  .verseblock > .title,
+  .videoblock > .title,
+  .dlist > .title,
+  .olist > .title,
+  .ulist > .title,
+  .qlist > .title,
+  .hdlist > .title {
+    font-family: "Inter Variable";
+    font-feature-settings: 'calt' on, 'dlig' on, 'tnum' on, 'frac' on, 'ss01' on, 'ss02' on, 'ss07' on, 'ss08' on, 'ss03' on;
+  }
+
+  .quoteblock blockquote,
+  .quoteblock p,
+  .quoteblock .attribution cite,
+  .verseblock .attribution cite
+  {
+    color: var(--white);
+  }
+
+  .quoteblock blockquote::before {
+    color: var(--primarycolor);
+    font-size: 1.5em;
+  }
+
+  .keyseq {
+    color: inherit;
+  }
+
+  code, kbd, pre, samp {
+    font-family: "JetBrains Mono";
+    font-feature-settings: 'calt' on,
+      'frac' off,
+      'ss01' off,
+      'ss02' on,
+      'ss19' on,
+      'cv01' off,
+      'cv11' on,
+      'cv08' on,
+      'cv05' on,
+      'cv14' on,
+      'zero' on;
+  }
+  #header > h1:first-child,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  #content h1 > a.link,
+  h2 > a.link,
+  h3 > a.link,
+  #toctitle > a.link,
+  .sidebarblock > .content > .title > a.link,
+  h4 > a.link,
+  h5 > a.link,
+  h6 > a.link,
+  #content h1 > a.link:hover,
+  h2 > a.link:hover,
+  h3 > a.link:hover,
+  #toctitle > a.link:hover,
+  .sidebarblock > .content > .title > a.link:hover,
+  h4 > a.link:hover,
+  h5 > a.link:hover,
+  h6 > a.link:hover,
+  #toctitle,
+  .subheader,
+  .admonitionblock td.content > .title,
+  .audioblock > .title,
+  .exampleblock > .title,
+  .imageblock > .title,
+  .listingblock > .title,
+  .literalblock > .title,
+  .stemblock > .title,
+  .openblock > .title,
+  .paragraph > .title,
+  .quoteblock > .title,
+  table.tableblock > .title,
+  .verseblock > .title,
+  .videoblock > .title,
+  .dlist > .title,
+  .olist > .title,
+  .ulist > .title,
+  .qlist > .title,
+  .hdlist > .title
+  {
+    color: var(--primarycolor);
+    font-feature-settings: 'calt' on, 'dlig' on, 'tnum' on, 'frac' on, 'ss01' on, 'ss02' on, 'ss07' on, 'ss08' on, 'ss03' on;
+  }
+
+  table thead tr th,
+  table thead tr td,
+  table tfoot tr th,
+  table tfoot tr td {
+    color: var(--white);
+  }
+
+  table tr th, table tr td:not(.code) {
+    background-color: var(--sidebarbackground);
+    color: var(--white);
+  }
+
+  .admonitionblock > table td.icon {
+    background-color: rgba(0,0,0,25%);
+    text-shadow: none;
+  }
+
+  .admonitionblock > table td.icon .title {
+    color: var(--tertiarycolor);
+  }
+
+  .admonitionblock > table td.icon .icon-warning::before {
+    color: var(--grenadier);
+    text-shadow: none;
+  }
+  .admonitionblock > table td.icon .icon-note::before {
+    color: var(--surfie-green);
+    text-shadow: none;
+  }
+  .admonitionblock > table td.icon .icon-caution::before {
+    color: var(--galliano);
+    text-shadow: none;
+  }
+  .admonitionblock > table td.icon .icon-tip::before {
+    color: var(--white);
+    text-shadow: none;
+  }
+  .admonitionblock > table td.icon .icon-important::before {
+    color: var(--galliano);
+    text-shadow: none;
+  }
+
+  .admonitionblock > table td.content {
+    color: var(--white);
+  }
+
+  .exampleblock > .content {
+    background-color: var(--sidebarbackground);
+  }
+
+  .sidebarblock {
+    background-color: var(--sidebarbackground);
+  }
+
+  a {
+    color: var(--linkcolor);
+    text-decoration: underline;
+  }
+  a:hover {
+    color: var(--linkcoloralternate);
+  }
+  a:not(h1 > a, h2 > a, h3 > a, h4 > a, h5 > a, h6 > a) {
+    color: white;
+    text-shadow: 0px 0px 6px var(--linkcolor);
+  }
+  a:hover:not(h1 > a, h2 > a, h3 > a, h4 > a, h5 > a, h6 > a) {
+    color: var(--linkcolor);
+  }
+  .toc-left a {
+    color: var(--white);
+    text-shadow: none;
+  }
+  .toc-left a:hover {
+    color: var(--white);
+    text-shadow: 0px 0px 6px var(--linkcolor);
+  }
+
+  details > summary::before {
+    color: var(--white);
+    filter: drop-shadow(0px 0px 3px var(--linkcolor));
+  }
+  details > summary:hover::before {
+    color: var(--linkcolor);
+  }
+
+  footer {
+    position: fixed;
+    bottom: 0;
+  }
+</style>

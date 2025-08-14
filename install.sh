@@ -1,5 +1,6 @@
 #! /usr/bin/env sh
 
+asciidoc/install.sh
 atuin/install.sh
 completions/install.sh
 emacs/install.sh

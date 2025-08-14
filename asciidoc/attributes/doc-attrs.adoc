@@ -1,0 +1,10 @@
+:webfonts: Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900%7CJetBrains+Mono:ital,wght@0,100..800;1,100..800
+:icons: font
+// Use custom theme etc from centralised docinfo
+:docinfo: shared
+:docinfodir: {user-home}/.local/share/asciidoc/templates
+// Enable syntax highlighting with sensible defaults
+:experimental:
+:source-highlighter: pygments
+:source-linenums-option:
+:sectlinks:

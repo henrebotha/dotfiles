@@ -1,0 +1,3 @@
+:source-highlighter: highlight.js
+:highlightjsdir: https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1
+:highlightjs-theme: a11y-dark
