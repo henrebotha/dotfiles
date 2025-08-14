@@ -19,7 +19,7 @@ for binary pkg in ${(@kv)utils}; do
 done
 
 # Install nerd-fonts
-if [[ "$(uname)" == 'Darwin' ]]; then
+if [[ "$os" == 'Darwin' ]]; then
   if [[ ! -f "$HOME/Library/Fonts/HackNerdFont-Regular.ttf" ]]; then
     to_install+=font-hack-nerd-font
   fi
@@ -30,7 +30,7 @@ if [[ "${#to_install[@]}" -eq 0 ]]; then
 fi
 
 install-util() {
-  case "$(uname -o)" in
+  case "$os" in
     Darwin)
       brew install $*;;
     Android)
