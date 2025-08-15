@@ -57,25 +57,6 @@ case "$response" in
     ;;
   *)
     echo "Skipping install."
-    for binary pkg in ${(@kv)utils}; do
-      if ! command -v $binary &> /dev/null; then
-        eval "$binary() {
-  echo \"$pkg is not yet installed.\"
-  read -t 2 -qs \"response?Install now? \"
-  echo
-  case \"\$response\" in
-    y)
-      echo \"Installing.\"
-      unset -f $binary
-      install-util $pkg
-      ;;
-    *)
-      echo \"Skipping install.\"
-      ;;
-  esac
-}"
-      fi
-    done
     ;;
 esac
 

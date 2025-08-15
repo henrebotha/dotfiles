@@ -1,5 +1,12 @@
 #! /usr/bin/env sh
 
+if [ -n "$CODESPACES" ]; then
+    echo "Running Codespaces-specific install"
+    zsh/install.sh
+    # shell/install.sh
+    exit 0
+fi
+
 asciidoc/install.sh
 atuin/install.sh
 completions/install.sh
