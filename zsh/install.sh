@@ -1,13 +1,9 @@
 #! /usr/bin/env sh
 
-# Ensure this is run from the directory the script is in
-cd "${0%/*}" || exit
-
 set -x
 
-echo $HOME
-echo $PWD
-echo $ZDOTDIR
+# Ensure this is run from the directory the script is in
+cd "${0%/*}" || exit
 
 if command -v stow >/dev/null 2>&1; then
     stow . -t "$HOME" --no-folding
