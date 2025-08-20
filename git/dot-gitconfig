@@ -39,7 +39,9 @@
 	extendedRegexp = true
 	fallbackToNoIndex = true
 [blame]
-	ignoreRevsFile = .git-blame-ignore-revs
+	; Uncomment the line below to force *all* repos system-wide to have a .git-blame-ignore-revs file.
+	; A more sane option is probably to configure this setting per repo where it applies.
+	; ignoreRevsFile = .git-blame-ignore-revs
 	markIgnoredLines = true
 	markUnblamableLines = true
 [fetch]
@@ -173,7 +175,7 @@
 	# This will probably break if there is no remote (easy to fix), or if the
 	# remote URL doesn't match the typical $host/$org/$repo.git pattern.
 	repo-name = ! "[ -n \"$(git remote)\" ] && git remote -v | head -1 | cut -d ' ' -f 1 | grep -E --only-matching '([^:/ ]+/[^/ ]+)(\\.git)?$' | sed 's/\\.git$//' || basename $(pwd)"
-	branch-name = ! "git rev-parse HEAD >/dev/null 2>&1 && git rev-parse --abbrev-ref HEAD || echo '???no-branch???'"
+	branch-name = ! "git rev-parse HEAD &> /dev/null && git rev-parse --abbrev-ref HEAD || echo '???no-branch???'"
 	repo-and-branch-name = ! "echo $(git repo-name)':'$(git branch-name)"
 
 	# Graph the divergence between two histories from their shared parent onwards.
