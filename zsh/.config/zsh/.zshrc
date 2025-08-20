@@ -264,28 +264,30 @@ tmux_await() {
 alias fix-mouse-reporting='printf '\''\e[?1000l'\'''
 
 # Vim
-# If we're in a Git repo, name the server after that repo. Otherwise, give it a
-# misc name, based either on Tmux session or otherwise just "VIM".
-vim_servername() {
-  if git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
-    echo "$(git repo-and-branch-name)"
-  elif [ -n "$TMUX" ]; then
-    echo "$(tmux display-message -p '#{session_name}')"
+if command -v vim &> /dev/null; then
+  # If we're in a Git repo, name the server after that repo. Otherwise, give it a
+  # misc name, based either on Tmux session or otherwise just "VIM".
+  vim_servername() {
+    if git rev-parse --is-inside-work-tree &> /dev/null; then
+      echo "$(git repo-and-branch-name)"
+    elif [ -n "$TMUX" ]; then
+      echo "$(tmux display-message -p '#{session_name}')"
+    else
+      echo 'VIM'
+    fi
+  }
+  # Launch with -X to prevent communication with X11 on startup, improving startup
+  # speed in Tmux
+  if vim --version | grep '\+clientserver' > /dev/null; then
+    alias vim='vim -X --servername $(vim_servername)'
   else
-    echo 'VIM'
+    alias vim='vim -X'
   fi
-}
-# Launch with -X to prevent communication with X11 on startup, improving startup
-# speed in Tmux
-if vim --version | grep '\+clientserver' > /dev/null; then
-  alias vim='vim -X --servername $(vim_servername)'
-else
-  alias vim='vim -X'
+  # Use as pager
+  alias vpage='ifne vim -X -R - -n'
+  # Source ~/.vimrc in every running Vim server instance
+  alias vu='for server in `vim --serverlist`; do; vim --servername $server --remote-send '\'':source ~/.vimrc<cr>'\''; done'
 fi
-# Use as pager
-alias vpage='ifne vim -X -R - -n'
-# Source ~/.vimrc in every running Vim server instance
-alias vu='for server in `vim --serverlist`; do; vim --servername $server --remote-send '\'':source ~/.vimrc<cr>'\''; done'
 
 # Ripgrep
 rgl() {
@@ -344,8 +346,10 @@ fi
 export RIPGREP_CONFIG_PATH="$HOME"'/.ripgreprc'
 
 # fzf keybinds/completion
-eval "$(fzf --zsh)"
-[ -f "$ZDOTDIR/.fzf.zsh" ] && . "$ZDOTDIR/.fzf.zsh"
+if command -v fzf &> /dev/null; then
+  eval "$(fzf --zsh)"
+  [ -f "$ZDOTDIR/.fzf.zsh" ] && . "$ZDOTDIR/.fzf.zsh"
+fi
 
 # Zsh-autosuggestions
 export ZSH_AUTOSUGGEST_USE_ASYNC=1
