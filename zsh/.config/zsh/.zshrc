@@ -1,5 +1,14 @@
 os=`uname -o`
 
+# Use shallow clone on transient machines
+smart_clone() {
+  if [[ -n "$CODESPACES" || -n "$GITHUB_CODESPACES" || -n "$GITPOD_WORKSPACE_ID" ]]; then
+    echo clone --depth=1
+  else
+    echo clone
+  fi
+}
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.config/zsh/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -11,21 +20,43 @@ fi
 
 # Clone zcomet if necessary
 if [[ ! -f ${ZDOTDIR:-${HOME}}/.zcomet/bin/zcomet.zsh ]]; then
-  command git clone https://github.com/agkozak/zcomet.git ${ZDOTDIR:-${HOME}}/.zcomet/bin
+  git $(smart_clone) https://github.com/agkozak/zcomet.git ${ZDOTDIR:-${HOME}}/.zcomet/bin
 fi
 
 source ${ZDOTDIR:-${HOME}}/.zcomet/bin/zcomet.zsh
 export ZSH_CACHE_DIR="$ZDOTDIR"
 
-zcomet load ohmyzsh 'plugins/mise'
-zcomet load ohmyzsh 'plugins/vi-mode'
-zcomet load 'romkatv/powerlevel10k'
-zcomet load 'Aloxaf/fzf-tab'
-zcomet load 'olets/zsh-abbr'
-zcomet load 'olets/zsh-test-runner'
-zcomet load 'romkatv/zsh-bench'
-# Zcomet recommends loading this last
-zcomet load 'zsh-users/zsh-autosuggestions'
+typeset -a omz_plugins
+omz_plugins=(
+  # 'plugins/mise'
+  'plugins/vi-mode'
+)
+
+typeset -a plugins
+plugins=(
+  'romkatv/powerlevel10k'
+  'Aloxaf/fzf-tab'
+  'olets/zsh-abbr'
+  'olets/zsh-test-runner'
+  'romkatv/zsh-bench'
+  # Zcomet recommends loading this last
+  'zsh-users/zsh-autosuggestions'
+)
+
+if [[ ! -d "$ZDOTDIR"/.zcomet/repos/ohmyzsh/ohmyzsh ]]; then
+  git $(smart_clone) https://github.com/ohmyzsh/ohmyzsh.git "$ZDOTDIR"/.zcomet/repos/ohmyzsh/ohmyzsh
+fi
+
+for plugin in "${omz_plugins[@]}"; do
+  zcomet load ohmyzsh "$plugin"
+done
+
+for plugin in "${plugins[@]}"; do
+  if [[ ! -d "$ZDOTDIR"/.zcomet/repos/"$plugin" ]]; then
+    git $(smart_clone) --recurse-submodules https://github.com/"$plugin".git "$ZDOTDIR"/.zcomet/repos/"$plugin"
+  fi
+  zcomet load "$plugin"
+done
 
 zcomet compinit
 
@@ -181,7 +212,7 @@ autocommit() {
 # Tmux
 # Let's install tpm, if we have Tmux but not tpm
 if [ -d "$HOME/.tmux" -a ! -d "$HOME/.tmux/plugins/tpm" ]; then
-    git clone git@github.com:/tmux-plugins/tpm ~/.tmux/plugins/tpm
+  git $(smart_clone) git@github.com:tmux-plugins/tpm.git ~/.tmux/plugins/tpm
 fi
 
 alias tx='tmuxinator s'
