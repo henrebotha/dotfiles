@@ -9,14 +9,19 @@ smart_clone() {
   fi
 }
 
+. "$ZDOTDIR"/.zsh_util_install
+
+# mise
+if command -v mise &> /dev/null; then
+  eval "$(mise env -s zsh)"
+fi
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.config/zsh/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
-
-. "$ZDOTDIR"/.zsh_util_install
 
 # Clone zcomet if necessary
 if [[ ! -f ${ZDOTDIR:-${HOME}}/.zcomet/bin/zcomet.zsh ]]; then
@@ -386,9 +391,9 @@ fh() {
 [ -f "$HOME"/.opam/opam-init/init.zsh ] && . "$HOME"/.opam/opam-init/init.zsh
 
 # mise
-if command -v mise > /dev/null 2>&1; then
+if command -v mise &> /dev/null; then
   eval "$(mise activate zsh)"
-  if ! command -v usage > /dev/null 2>&1; then
+  if ! command -v usage &> /dev/null; then
     mise use -g usage
   fi
 fi
