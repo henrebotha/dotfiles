@@ -104,7 +104,7 @@
     color: inherit;
   }
 
-  code, kbd, pre, samp {
+  code, pre, samp {
     font-family: "JetBrains Mono";
     font-feature-settings: 'calt' on,
       'frac' off,
@@ -117,6 +117,41 @@
       'cv05' on,
       'cv14' on,
       'zero' on;
+  }
+
+  kbd {
+    font-family: "JetBrains Mono";
+    font-feature-settings: 'calt' on,
+      'frac' off,
+      'ss01' off,
+      'ss02' on,
+      'ss19' on,
+      'cv01' off,
+      'cv11' on,
+      'cv08' on,
+      'cv05' on,
+      'cv14' on,
+      'zero' on;
+    font-size: 0.85em;
+    font-weight: 500;
+    color: var(--white);
+    background: color-mix(in srgb, var(--sidebarbackground), white 15%);
+    border: none;
+    border-radius: 3px;
+    box-shadow: none;
+    padding: 0.2em 0.5em;
+    margin: 0 0.1em;
+    display: inline-block;
+    vertical-align: baseline;
+  }
+
+  kbd:not(:has(samp)) {
+    border-bottom: 2px solid var(--white);
+  }
+
+  kbd:active {
+    background: color-mix(in srgb, var(--sidebarbackground), white 10%);
+    border-color: color-mix(in srgb, var(--sidebarbackground), white 20%);
   }
   #header > h1:first-child,
   h1,
