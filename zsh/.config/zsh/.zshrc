@@ -39,7 +39,8 @@ fi
 
 source ${ZDOTDIR:-${HOME}}/.zcomet/bin/zcomet.zsh
 
-fpath=( "$ZDOTDIR"/completions "${fpath[@]}" )
+# Add manual completions and functions to fpath
+fpath=( "$ZDOTDIR"/completions "$ZDOTDIR"/functions "${fpath[@]}" )
 fpath=(/Users/hbotha/.docker/completions $fpath)
 
 typeset -a omz_plugins
@@ -78,6 +79,9 @@ zcomet compinit
 
 # Load any available Bash completions.
 autoload -U +X bashcompinit && bashcompinit
+
+# Load dynamic completion functions
+autoload -Uz _dynamic_completions _completion_fallback
 
 # This needs to go after all calls to compinit.
 enable-fzf-tab

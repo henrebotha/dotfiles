@@ -1,0 +1,90 @@
+local cmd="${1:-${words[1]}}"
+local completion_dir="$ZSH_CACHE_DIR/completions"
+local completion_file="$completion_dir/_$cmd"
+local version_file="$completion_dir/_${cmd}.version"
+
+[[ -d "$completion_dir" ]] || mkdir -p "$completion_dir"
+
+# Tool configurations: [cmd]="check_cmd:version_cmd:generate_cmd"
+# cmd:          command name                          (cargo)
+# check_cmd:    command to check if tool is installed (rustup)
+# version_cmd:  command to get tool version           (rustup --version)
+# generate_cmd: command to generate completions       (rustup completions zsh cargo)
+declare -A TOOL_CONFIGS=(
+  [bat]="bat:bat --version:bat --completion zsh"
+  [cargo]="rustup:rustup --version:rustup completions zsh cargo"
+  [fd]="fd:fd --version:fd --gen-completions zsh"
+  [mise]="mise:mise --version:mise completion zsh"
+  [rg]="rg:rg --version:rg --generate complete-zsh"
+  [rustup]="rustup:rustup --version:rustup completions zsh"
+)
+
+_get_tool_config() {
+  local tool="$1"
+  local field="$2"
+  local config="${TOOL_CONFIGS[$tool]}"
+  [[ -z "$config" ]] && return 1
+
+  local -a parts
+  IFS=':' read -rA parts <<< "$config"
+  case "$field" in
+    check_cmd) echo "${parts[1]}" ;;
+    version_cmd) echo "${parts[2]}" ;;
+    generate_cmd) echo "${parts[3]}" ;;
+    *) return 1 ;;
+  esac
+}
+
+_get_tool_version() {
+  local tool="$1"
+  local version_cmd="$(_get_tool_config "$tool" "version_cmd")"
+  [[ -n "$version_cmd" ]] && eval "$version_cmd" 2>/dev/null | head -1 || echo "unknown"
+}
+
+_needs_regeneration() {
+  local tool="$1"
+  local current_version="$(_get_tool_version "$tool")"
+
+  # Regenerate if completion file doesn't exist…
+  [[ ! -f "$completion_file" ]] && return 0
+
+  # …or if version file doesn't exist…
+  [[ ! -f "$version_file" ]] && return 0
+
+  # …or if version is "unknown"…
+  [[ "$current_version" == "unknown" ]] && return 0
+
+  # …or if versions differ.
+  local cached_version="$(cat "$version_file" 2>/dev/null)"
+  [[ "$current_version" != "$cached_version" ]] && return 0
+
+  # No regeneration needed
+  return 1
+}
+
+_generate_and_load_completion() {
+  local cmd="$1"
+  local check_cmd="$(_get_tool_config "$cmd" "check_cmd")"
+  local generate_cmd="$(_get_tool_config "$cmd" "generate_cmd")"
+
+  [[ -z "$check_cmd" || -z "$generate_cmd" ]] && return 1
+
+  if command -v "$check_cmd" &>/dev/null; then
+    if _needs_regeneration "$cmd"; then
+      eval "$generate_cmd" > "$completion_file" 2>/dev/null && {
+        _get_tool_version "$cmd" > "$version_file"
+      }
+    fi
+    if [[ -f "$completion_file" ]]; then
+      fpath=("$completion_dir" $fpath)
+      autoload -Uz "_$cmd"
+      "_$cmd" "$@"
+      return 0
+    fi
+  fi
+  return 1
+}
+
+[[ -n "${TOOL_CONFIGS[$cmd]}" ]] && _generate_and_load_completion "$cmd" "$@"
+
+return 1
