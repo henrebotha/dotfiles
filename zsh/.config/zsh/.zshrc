@@ -13,7 +13,11 @@ smart_clone() {
 
 # mise
 if command -v mise &> /dev/null; then
-  eval "$(mise env -s zsh)"
+  eval "$(mise activate zsh)"
+  # eval "$(mise activate zsh --shims)"
+  if ! command -v usage &> /dev/null; then
+    mise use -g usage
+  fi
 fi
 
 if [ ! -d "$XDG_CACHE_HOME"/zsh ]; then
@@ -400,13 +404,6 @@ fh() {
 # OPAM configuration
 [ -f "$HOME"/.opam/opam-init/init.zsh ] && . "$HOME"/.opam/opam-init/init.zsh
 
-# mise
-if command -v mise &> /dev/null; then
-  eval "$(mise activate zsh)"
-  if ! command -v usage &> /dev/null; then
-    mise use -g usage
-  fi
-fi
 
 
 
