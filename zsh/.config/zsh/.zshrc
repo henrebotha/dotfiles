@@ -16,6 +16,11 @@ if command -v mise &> /dev/null; then
   eval "$(mise env -s zsh)"
 fi
 
+if [ ! -d "$XDG_CACHE_HOME"/zsh ]; then
+  mkdir -p "$XDG_CACHE_HOME"/zsh
+fi
+export ZSH_CACHE_DIR="$XDG_CACHE_HOME/zsh"
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.config/zsh/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -29,7 +34,9 @@ if [[ ! -f ${ZDOTDIR:-${HOME}}/.zcomet/bin/zcomet.zsh ]]; then
 fi
 
 source ${ZDOTDIR:-${HOME}}/.zcomet/bin/zcomet.zsh
-export ZSH_CACHE_DIR="$ZDOTDIR"
+
+fpath=( "$ZDOTDIR"/completions "${fpath[@]}" )
+fpath=(/Users/hbotha/.docker/completions $fpath)
 
 typeset -a omz_plugins
 omz_plugins=(
@@ -65,13 +72,17 @@ done
 
 zcomet compinit
 
+# Load any available Bash completions.
+autoload -U +X bashcompinit && bashcompinit
+
+# This needs to go after all calls to compinit.
+enable-fzf-tab
+
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$ZDOTDIR/tools:$PATH"
 
 . "$ZDOTDIR"/config/history.zsh
 . "$ZDOTDIR"/config/keybinds.zsh
-
-fpath=( "$ZDOTDIR"/completions "${fpath[@]}" )
 
 # Case-insensitive (all), partial word and then substring completion
 # https://github.com/nickmccurdy/sane-defaults/blob/1f6d632/home/.zshrc#L12
@@ -318,7 +329,6 @@ is_gnu_sed() {
 
 alias s='sudo'
 
-
 # Default 400ms delay after ESC is too slow. Increase this value if this breaks
 # other commands that depend on the delay.
 export KEYTIMEOUT=1 # 100 ms
@@ -398,28 +408,8 @@ if command -v mise &> /dev/null; then
   fi
 fi
 
-# https://gist.github.com/ctechols/ca1035271ad134841284
-# On slow systems, checking the cached .zcompdump file to see if it must be
-# regenerated adds a noticable delay to zsh startup.  This little hack restricts
-# it to once a day.  It should be pasted into your own completion file.
-#
-# The globbing is a little complicated here:
-# - '#q' is an explicit glob qualifier that makes globbing work within zsh's [[ ]] construct.
-# - 'N' makes the glob pattern evaluate to nothing when it doesn't match (rather than throw a globbing error)
-# - '.' matches "regular files"
-# - 'mh+24' matches files (or directories or whatever) that are older than 24 hours.
-autoload -Uz compinit
-for dump in "$ZSH_CACHE_DIR"/.zcompdump(N.mh+24); do
-  compinit
-done
-compinit -C
 
-# Load any available Bash completions.
-autoload -U +X bashcompinit && bashcompinit
 
-# Seems this needs to go after all calls to compinit.
-# Side note: I have no idea which compinit calls are correct to have.
-enable-fzf-tab
 
 load_tmux_user_env() {
   if [ -n "$TMUX" ]; then
