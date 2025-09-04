@@ -137,6 +137,7 @@
 	intend = add -N
 	unintend = rm --cached
 	intended = ! "git --no-pager diff --name-only --diff-filter=A"
+	unintended = ls-files --others --exclude-standard
 
 	# Mnemonic: "diverge"
 	di = ! "f() { \
