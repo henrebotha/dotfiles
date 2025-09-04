@@ -86,8 +86,20 @@ autoload -Uz _dynamic_completions _completion_fallback
 # This needs to go after all calls to compinit.
 enable-fzf-tab
 
-export PATH="$HOME/.local/bin:$PATH"
-export PATH="$ZDOTDIR/tools:$PATH"
+# Append "$1" to $PATH when not already in.
+append_path() {
+  case ":$PATH:" in
+    *:"$1":*)
+      ;;
+    *)
+      PATH="${PATH:+$PATH:}$1"
+  esac
+}
+
+export PATH
+
+append_path "$HOME/.local/bin"
+append_path "$ZDOTDIR/tools"
 
 . "$ZDOTDIR"/config/history.zsh
 . "$ZDOTDIR"/config/keybinds.zsh

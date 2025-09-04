@@ -1,8 +1,6 @@
 # Setup fzf
 # ---------
-if [[ ! "$PATH" == */home/hbotha/.fzf/bin* ]]; then
-  export PATH="${PATH:+${PATH}:}/home/hbotha/.fzf/bin"
-fi
+append_path "/home/hbotha/.fzf/bin"
 
 if [[ $(uname) == 'Darwin' ]]; then
   fzf_keybinds_path=/opt/homebrew/opt/fzf
