@@ -302,7 +302,7 @@ if command -v vim &> /dev/null; then
   }
   # Launch with -X to prevent communication with X11 on startup, improving startup
   # speed in Tmux
-  if vim --version | grep '\+clientserver' > /dev/null; then
+  if vim --version | grep '+clientserver' > /dev/null; then
     alias vim='vim -X --servername $(vim_servername)'
   else
     alias vim='vim -X'
