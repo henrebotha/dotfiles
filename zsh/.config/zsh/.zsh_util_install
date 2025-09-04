@@ -18,7 +18,6 @@ for binary pkg in ${(@kv)utils}; do
   fi
 done
 
-# Install nerd-fonts
 if [[ "$os" == 'Darwin' ]]; then
   if [[ ! -f "$HOME/Library/Fonts/HackNerdFont-Regular.ttf" ]]; then
     to_install+=font-hack-nerd-font
@@ -36,10 +35,18 @@ install-util() {
     Android)
       pkg install $*;;
     *)
-      if command -v pacman &> /dev/null; then
+      if [[ -f /etc/arch-release ]]; then
         sudo pacman -S $*
-      elif command -v apt-get &> /dev/null; then
+      elif [[ -f /etc/debian_version ]]; then
         sudo apt-get install $*
+      elif [[ -f /etc/redhat-release ]]; then
+        yum install $*
+      elif [[ -f /etc/gentoo-release ]]; then
+        emerge install $*
+      elif [[ -f /etc/SuSE-release ]]; then
+        zypp install $*
+      elif [[ -f /etc/alpine-release ]]; then
+        apk install $*
       else
         echo >&2 "Could not identify package manager."
         return
