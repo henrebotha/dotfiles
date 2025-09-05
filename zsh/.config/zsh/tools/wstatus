@@ -3,6 +3,8 @@
 
 # Look up service status for tools such as Slack, Workplace, or Zoom.
 
+: ${1:?status needs a service name (e.g. 'workplace').}
+
 # Uses .detect_env if available
 if [[ -z "${DOTFILES_ENV[OPEN_CMD]}" ]]; then
   if [[ -f "${ZDOTDIR:-$HOME/.config/zsh}/.detect_env" ]]; then
@@ -31,7 +33,6 @@ if [[ $1 == '--list' ]]; then
   exit 0
 fi
 
-: ${1:?status needs a service name (e.g. 'workplace').}
 service=${services[$1]}
 
 if [[ -n $service ]]; then
