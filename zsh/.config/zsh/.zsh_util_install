@@ -1,6 +1,7 @@
 typeset -A utils
 utils=(
   atuin atuin
+  bat bat
   direnv direnv
   eza eza
   fzf fzf
@@ -12,6 +13,7 @@ utils=(
   watch watch
 )
 to_install=()
+
 for binary pkg in ${(@kv)utils}; do
   if ! command -v $binary &> /dev/null; then
     to_install+=$pkg
