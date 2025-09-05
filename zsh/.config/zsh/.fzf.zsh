@@ -2,7 +2,7 @@
 # ---------
 append_path "/home/hbotha/.fzf/bin"
 
-if [[ "$DOTFILES_OS" == 'Darwin' ]]; then
+if [[ "${DOTFILES_ENV[OS]}" == 'Darwin' ]]; then
   fzf_keybinds_path=/opt/homebrew/opt/fzf
 else
   fzf_keybinds_path="$HOME"/.fzf

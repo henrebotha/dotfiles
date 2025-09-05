@@ -363,13 +363,12 @@ rgl() {
   rg --color=always $@ | less -R
 }
 
-clip="$DOTFILES_CLIPBOARD_CMD"
 eval "fzfcp() {
-  fzf -m --tac \$@ | $clip
+  fzf -m --tac \$@ | ${DOTFILES_ENV[CLIPBOARD_CMD]}
 }"
 
 # macOS
-if [[ "$DOTFILES_OS" == 'Darwin' ]]; then
+if [[ "${DOTFILES_ENV[OS]}" == 'Darwin' ]]; then
   # Fix the macOS pasteboard when it breaks
   alias fixpboard='pkill -9 pboard'
 
@@ -463,6 +462,52 @@ load_tmux_user_env() {
 }
 load_tmux_user_env
 add-zsh-hook preexec load_tmux_user_env
+
+# Registry-based environment serialisation
+DOTFILES_ENV_REGISTRY="$HOME/.cache/zsh/dotfiles_env_registry"
+_dotfiles_env_needs_export=0
+
+# Ensure registry directory exists
+[[ ! -d "${DOTFILES_ENV_REGISTRY%/*}" ]] && mkdir -p "${DOTFILES_ENV_REGISTRY%/*}"
+
+# Read registry into associative array for fast lookup
+typeset -A _dotfiles_env_allowlist
+_load_env_registry() {
+  _dotfiles_env_allowlist=()
+  [[ -f "$DOTFILES_ENV_REGISTRY" ]] && {
+    local tool
+    while read -r tool; do
+      [[ -n "$tool" ]] && _dotfiles_env_allowlist[$tool]=1
+    done < "$DOTFILES_ENV_REGISTRY"
+  }
+}
+
+# Load registry on startup
+_load_env_registry
+
+# Mark that export is needed (very fast)
+_mark_env_dirty() {
+  _dotfiles_env_needs_export=1
+}
+
+# Actually serialise only when needed
+_ensure_env_exported() {
+  if (( _dotfiles_env_needs_export )); then
+    local -a kv=("${(@kv)DOTFILES_ENV}")
+    export DOTFILES_ENV_SERIALISED="${(j: :)kv[@]/(#m)*/${MATCH%% *}=${MATCH##* }}"
+    _dotfiles_env_needs_export=0
+  fi
+}
+
+# Ultra-lightweight preexec with allowlist
+preexec_dotfiles_env() {
+  local cmd="${1%% *}"
+
+  # Only serialise for registered tools
+  [[ -n "${_dotfiles_env_allowlist[$cmd]}" ]] && _mark_env_dirty
+}
+
+add-zsh-hook preexec preexec_dotfiles_env
 
 # Print ellipsis while completing, and load Tmux user variables before completing.
 expand-or-complete-custom() {

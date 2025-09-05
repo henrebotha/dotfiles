@@ -1,52 +1,93 @@
-export DOTFILES_OS=`uname -o`
+# Environment detection library
+# Safe to source multiple times
 
-case "$DOTFILES_OS" in
+# Usage:
+# source /path/to/.detect_env
+# Provides DOTFILES_ENV, an associative array containing many handy strings.
+
+# Auto-register for environment serialisation (only if sourced by standalone tool)
+if [[ -n "$ZSH_ARGZERO" && "$ZSH_ARGZERO" != *"zsh" ]]; then
+  local registry="$HOME/.cache/zsh/dotfiles_env_registry"
+  local tool_name="${ZSH_ARGZERO:t}"
+
+  # Register if not already registered
+  if [[ ! -f "$registry" ]] || ! grep -Fxq "$tool_name" "$registry" 2>/dev/null; then
+    mkdir -p "${registry%/*}"
+    if ! grep -Fxq "$tool_name" "$registry" 2>/dev/null; then
+      echo "$tool_name" >> "$registry"
+    fi
+  fi
+fi
+
+# Try to deserialise from exported environment first
+if [[ -n "$DOTFILES_ENV_SERIALISED" ]]; then
+  typeset -A DOTFILES_ENV
+  for pair in ${(s: :)DOTFILES_ENV_SERIALISED}; do
+    key=${pair%%=*}
+    value=${pair#*=}
+    DOTFILES_ENV[$key]=$value
+  done
+  return 0
+fi
+
+[[ -n "$DOTFILES_ENV" ]] && return 0
+
+typeset -A DOTFILES_ENV
+
+DOTFILES_ENV[OS]=`uname -o`
+
+case "${DOTFILES_ENV[OS]}" in
   Android)
-    export DOTFILES_PATH_GUI_HOME=~/storage
-    export DOTFILES_PKG_MANAGER=pkg
-    export DOTFILES_CLIPBOARD_CMD="termux-clipboard-set"
-    export DOTFILES_OPEN_CMD="termux-open"
+    DOTFILES_ENV[PATH_GUI_HOME]=~/storage
+    DOTFILES_ENV[PKG_MANAGER]=pkg
+    DOTFILES_ENV[CLIPBOARD_CMD]="termux-clipboard-set"
+    DOTFILES_ENV[OPEN_CMD]="termux-open"
     ;;
   Darwin)
-    export DOTFILES_PATH_GUI_HOME=~
-    export DOTFILES_PKG_MANAGER=brew
-    export DOTFILES_CLIPBOARD_CMD=pbcopy
-    export DOTFILES_OPEN_CMD=open
+    DOTFILES_ENV[PATH_GUI_HOME]=~
+    DOTFILES_ENV[PKG_MANAGER]=brew
+    DOTFILES_ENV[CLIPBOARD_CMD]=pbcopy
+    DOTFILES_ENV[OPEN_CMD]=open
     ;;
   *)
-    export DOTFILES_PATH_GUI_HOME=~
-    export DOTFILES_CLIPBOARD_CMD="xclip -sel clip"
-    export DOTFILES_OPEN_CMD=xdg-open
+    DOTFILES_ENV[PATH_GUI_HOME]=~
+    DOTFILES_ENV[CLIPBOARD_CMD]="xclip -sel clip"
+    DOTFILES_ENV[OPEN_CMD]=xdg-open
     if [[ -f /etc/arch-release ]]; then
-      export DOTFILES_PKG_MANAGER='sudo pacman -S'
+      DOTFILES_ENV[PKG_MANAGER]='sudo pacman -S'
     elif [[ -f /etc/debian_version ]]; then
-      export DOTFILES_PKG_MANAGER='sudo apt-get install'
+      DOTFILES_ENV[PKG_MANAGER]='sudo apt-get install'
     elif [[ -f /etc/redhat-release ]]; then
-      export DOTFILES_PKG_MANAGER='yum install'
+      DOTFILES_ENV[PKG_MANAGER]='yum install'
     elif [[ -f /etc/gentoo-release ]]; then
-      export DOTFILES_PKG_MANAGER='emerge install'
+      DOTFILES_ENV[PKG_MANAGER]='emerge install'
     elif [[ -f /etc/SuSE-release ]]; then
-      export DOTFILES_PKG_MANAGER='zypp install'
+      DOTFILES_ENV[PKG_MANAGER]='zypp install'
     elif [[ -f /etc/alpine-release ]]; then
-      export DOTFILES_PKG_MANAGER='apk install'
+      DOTFILES_ENV[PKG_MANAGER]='apk install'
     else
       echo >&2 "Could not identify package manager."
-      return
+      return 1
     fi
     ;;
 esac
 
-export DOTFILES_PATH_DEV=~/dev
-export DOTFILES_PATH_DOTFILES="$DOTFILES_PATH_DEV"/dotfiles
-if [ -f ~/.is-work-machine ]; then
-  export DOTFILES_PATH_WORK_DEV=~/git_tree
-  export DOTFILES_PATH_WORK_NOTES="$DOTFILES_PATH_WORK_DEV"/notes
+DOTFILES_ENV[PATH_DEV]=~/dev
+DOTFILES_ENV[PATH_DOTFILES]="${DOTFILES_ENV[PATH_DEV]}/dotfiles"
+if [[ -f ~/.is-work-machine ]]; then
+  DOTFILES_ENV[PATH_WORK_DEV]=~/git_tree
+  DOTFILES_ENV[PATH_WORK_NOTES]="${DOTFILES_ENV[PATH_WORK_DEV]}/notes"
 fi
-export DOTFILES_PATH_DIY="$DOTFILES_PATH_GUI_HOME"/Documents/DIY
-export DOTFILES_PATH_GAMES="$DOTFILES_PATH_GUI_HOME"/Games
-export DOTFILES_PATH_NOTES="$DOTFILES_PATH_DEV"/notes
+DOTFILES_ENV[PATH_DIY]="${DOTFILES_ENV[PATH_GUI_HOME]}/Documents/DIY"
+DOTFILES_ENV[PATH_GAMES]="${DOTFILES_ENV[PATH_GUI_HOME]}/Games"
+DOTFILES_ENV[PATH_NOTES]="${DOTFILES_ENV[PATH_DEV]}/notes"
 
 # Create aliases such as ~dev for ~/dev. This will be reflected both in the
 # prompt, and in completion for commands such as cd or ls.
-hash -d -- dev="$DOTFILES_PATH_DEV"
-hash -d -- dotfiles="$DOTFILES_PATH_DOTFILES"
+hash -d -- dev="${DOTFILES_ENV[PATH_DEV]}"
+hash -d -- dotfiles="${DOTFILES_ENV[PATH_DOTFILES]}"
+
+# Call serialisation function if it exists (from .zshrc)
+if typeset -f _ensure_env_exported > /dev/null; then
+  _ensure_env_exported
+fi
