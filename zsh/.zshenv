@@ -32,7 +32,7 @@ alias vi=$EDITOR
 # means it doesn't have access to the contents of .zshrc. See
 # https://github.com/junegunn/fzf/issues/3743#issuecomment-2065239517
 altc() {
-  sed -r '/^\s*$/d' \
+  sed -E '/^\s*$/d' \
     <(altc_cdup &) \
     <(altc_find_linked_worktrees &) \
     <(altc_find_packages &) \

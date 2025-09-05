@@ -99,17 +99,9 @@ git-highlight-root() {
   local git_root_basename="${git_root:t}"
 
   local path_string_expanded=$(print -P "$path_string_raw")
-  if is_gnu_sed; then
-    sed \
-      's:PATH_START\(.\+\b\)\?'"$git_root_basename"'\(\b\/\)\?\(.*\)\?PATH_END:\1%F{green}'"$(git-branch-info)"'%F{yellow}\2\3:' \
-      <<< $path_string_expanded
-    return
-  else
-    sed -E \
-      's:PATH_START(.+)?'"$git_root_basename"'(/)?(.*)?PATH_END:\1%F{green}'"$(git-branch-info)"'%F{yellow}\2\3:' \
-      <<< $path_string_expanded
-    return
-  fi
+  sed -r \
+    's:PATH_START\(.\+\b\)\?'"$git_root_basename"'\(\b\/\)\?\(.*\)\?PATH_END:\1%F{green}'"$(git-branch-info)"'%F{yellow}\2\3:' \
+    <<< $path_string_expanded
 }
 
 git-string() {

@@ -36,3 +36,7 @@ https://unix.stackexchange.com/a/324391[This SE answer] lays out when and why yo
 * Only the login initialization files should do "heavy lifting", i.e. resource-intensive actions, such as heavy singleton background processes, or interactive programs ("Choose windowing system").
 * It may be good practice to launch a login shell per shell type, to avoid having e.g. a Bash non-login shell as child of a Zsh login shell.
 * macOS Terminal.app launches a login shell per window. This informs how macOS users do things a bit differently with dotfiles.
+
+== On sed
+
+To handle incompatibilities between GNU and BSD sed, we define in some cases a wrapper function that takes GNU sed commands as input and translates them to BSD sed commands. For that reason, *always write sed commands assuming GNU sed is available*.

@@ -24,6 +24,9 @@ if [[ "$os" == 'Darwin' ]]; then
   if [[ ! -f "$HOME/Library/Fonts/HackNerdFont-Regular.ttf" ]]; then
     to_install+=font-hack-nerd-font
   fi
+  if ! command -v gsed &> /dev/null; then
+    to_install+=gnu-sed
+  fi
 fi
 
 if [[ "${#to_install[@]}" -eq 0 ]]; then

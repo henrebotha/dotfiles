@@ -11,6 +11,43 @@ smart_clone() {
 
 . "$ZDOTDIR"/.zsh_util_install
 
+is_gnu_sed() {
+  sed --version &> /dev/null
+}
+
+if ! is_gnu_sed; then
+  if command -v gsed &> /dev/null; then
+    alias sed=gsed
+  else
+    unalias sed 2>/dev/null  # Remove any existing alias
+    sed() {
+      # Modify GNU-style arguments to make sense to BSD sed
+      local args=()
+
+      for arg in "$@"; do
+        case "$arg" in
+          -r|--regexp-extended)
+            args+=(-E)
+            ;;
+          -i)
+            # BSD sed requires empty string after -i for in-place editing
+            args+=(-i '')
+            ;;
+          -i*)
+            # Handle -i with suffix (e.g., -i.bak)
+            args+=("$arg")
+            ;;
+          *)
+            args+=("$arg")
+            ;;
+        esac
+      done
+
+      command sed "${args[@]}"
+    }
+  fi
+fi
+
 # mise
 if command -v mise &> /dev/null; then
   eval "$(mise activate zsh)"
@@ -342,10 +379,6 @@ if [[ "$os" == 'Darwin' ]]; then
   alias ip-eth="ipconfig getifaddr en0"
   alias ip-wifi="ipconfig getifaddr en1"
 fi
-
-is_gnu_sed() {
-  sed --version >/dev/null 2>&1
-}
 
 alias s='sudo'
 
