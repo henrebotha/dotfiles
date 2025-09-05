@@ -19,17 +19,9 @@ fi
 : ${1:?status needs a service name (e.g. 'workplace').}
 service=${services[$1]}
 
-open-link() {
-  if [[ $(uname) == 'Darwin' ]]; then
-    open $@
-  else
-    xdg-open $@
-  fi
-}
-
 if [[ -n $service ]]; then
   printf "Opening \e]8;;${services[$1]}\e\\$1\e]8;;\e\\"
-  open-link ${services[$1]}
+  $DOTFILES_OPEN_CMD ${services[$1]}
   echo
 else
   echo 'Unknown service'

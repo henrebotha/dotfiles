@@ -20,7 +20,7 @@ for binary pkg in ${(@kv)utils}; do
   fi
 done
 
-if [[ "$os" == 'Darwin' ]]; then
+if [[ "$DOTFILES_OS" == 'Darwin' ]]; then
   if [[ ! -f "$HOME/Library/Fonts/HackNerdFont-Regular.ttf" ]]; then
     to_install+=font-hack-nerd-font
   fi
@@ -33,39 +33,13 @@ if [[ "${#to_install[@]}" -eq 0 ]]; then
   return
 fi
 
-install-util() {
-  case "$os" in
-    Darwin)
-      brew install $*;;
-    Android)
-      pkg install $*;;
-    *)
-      if [[ -f /etc/arch-release ]]; then
-        sudo pacman -S $*
-      elif [[ -f /etc/debian_version ]]; then
-        sudo apt-get install $*
-      elif [[ -f /etc/redhat-release ]]; then
-        yum install $*
-      elif [[ -f /etc/gentoo-release ]]; then
-        emerge install $*
-      elif [[ -f /etc/SuSE-release ]]; then
-        zypp install $*
-      elif [[ -f /etc/alpine-release ]]; then
-        apk install $*
-      else
-        echo >&2 "Could not identify package manager."
-        return
-      fi;;
-  esac
-}
-
 echo "The following utilities are not yet installed: $to_install"
 read -t 2 -qs "response?Install them? "
 echo
 case "$response" in
   y)
     echo "Installing."
-    install-util $to_install
+    $DOTFILES_PKG_MANAGER install $to_install
     ;;
   *)
     echo "Skipping install."

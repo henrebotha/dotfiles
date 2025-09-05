@@ -1,0 +1,52 @@
+export DOTFILES_OS=`uname -o`
+
+case "$DOTFILES_OS" in
+  Android)
+    export DOTFILES_PATH_GUI_HOME=~/storage
+    export DOTFILES_PKG_MANAGER=pkg
+    export DOTFILES_CLIPBOARD_CMD="termux-clipboard-set"
+    export DOTFILES_OPEN_CMD="termux-open"
+    ;;
+  Darwin)
+    export DOTFILES_PATH_GUI_HOME=~
+    export DOTFILES_PKG_MANAGER=brew
+    export DOTFILES_CLIPBOARD_CMD=pbcopy
+    export DOTFILES_OPEN_CMD=open
+    ;;
+  *)
+    export DOTFILES_PATH_GUI_HOME=~
+    export DOTFILES_CLIPBOARD_CMD="xclip -sel clip"
+    export DOTFILES_OPEN_CMD=xdg-open
+    if [[ -f /etc/arch-release ]]; then
+      export DOTFILES_PKG_MANAGER='sudo pacman -S'
+    elif [[ -f /etc/debian_version ]]; then
+      export DOTFILES_PKG_MANAGER='sudo apt-get install'
+    elif [[ -f /etc/redhat-release ]]; then
+      export DOTFILES_PKG_MANAGER='yum install'
+    elif [[ -f /etc/gentoo-release ]]; then
+      export DOTFILES_PKG_MANAGER='emerge install'
+    elif [[ -f /etc/SuSE-release ]]; then
+      export DOTFILES_PKG_MANAGER='zypp install'
+    elif [[ -f /etc/alpine-release ]]; then
+      export DOTFILES_PKG_MANAGER='apk install'
+    else
+      echo >&2 "Could not identify package manager."
+      return
+    fi
+    ;;
+esac
+
+export DOTFILES_PATH_DEV=~/dev
+export DOTFILES_PATH_DOTFILES="$DOTFILES_PATH_DEV"/dotfiles
+if [ -f ~/.is-work-machine ]; then
+  export DOTFILES_PATH_WORK_DEV=~/git_tree
+  export DOTFILES_PATH_WORK_NOTES="$DOTFILES_PATH_WORK_DEV"/notes
+fi
+export DOTFILES_PATH_DIY="$DOTFILES_PATH_GUI_HOME"/Documents/DIY
+export DOTFILES_PATH_GAMES="$DOTFILES_PATH_GUI_HOME"/Games
+export DOTFILES_PATH_NOTES="$DOTFILES_PATH_DEV"/notes
+
+# Create aliases such as ~dev for ~/dev. This will be reflected both in the
+# prompt, and in completion for commands such as cd or ls.
+hash -d -- dev="$DOTFILES_PATH_DEV"
+hash -d -- dotfiles="$DOTFILES_PATH_DOTFILES"

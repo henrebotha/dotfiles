@@ -1,4 +1,5 @@
-os=`uname -o`
+# Environment detection
+. "$ZDOTDIR"/.detect_env
 
 # Use shallow clone on transient machines
 smart_clone() {
@@ -176,11 +177,6 @@ setopt auto_pushd
 export DIRSTACKSIZE=10
 
 alias dv='dirs -v'
-
-# Create aliases such as ~dev for ~/dev. This will be reflected in both the
-# prompt, and in completion for commands such as cd or ls.
-hash -d -- dev="$HOME"/dev
-hash -d -- dotfiles="$HOME"/dev/dotfiles
 
 # On dir change, run a function that, if we're in
 # ~/git_tree/agency-api-client/$branch_name, will add the subdirs of ./packages
@@ -367,12 +363,13 @@ rgl() {
   rg --color=always $@ | less -R
 }
 
-fzcp() {
-  fzf -m --tac $@ | xclip -sel clip
-}
+clip="$DOTFILES_CLIPBOARD_CMD"
+eval "fzfcp() {
+  fzf -m --tac \$@ | $clip
+}"
 
 # macOS
-if [[ "$os" == 'Darwin' ]]; then
+if [[ "$DOTFILES_OS" == 'Darwin' ]]; then
   # Fix the macOS pasteboard when it breaks
   alias fixpboard='pkill -9 pboard'
 
@@ -590,8 +587,6 @@ repl() {
       return 1;;
   esac
 }
-
-unset os
 
 export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
 
