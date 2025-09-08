@@ -1,0 +1,33 @@
+= Readme
+include::{user-home}/.local/share/asciidoc/attributes/doc-attrs.adoc[]
+include::{user-home}/.local/share/asciidoc/attributes/highlightjs.adoc[]
+:highlightjs-languages: asciidoc
+:entrypoint: doc-attrs.adoc
+:entrypoint-path: {user-home}/.local/share/asciidoc/attributes
+
+This directory contains my AsciiDoc stuff.
+
+NOTE: Some includes and similar used inside this repo itself will not function properly when viewed on GitHub. They rely on actually running Asciidoctor locally.
+
+== Usage
+
+The "entry point", such as it is, is file://{entrypoint-path}/{entrypoint}. Include it into a document head (at the attributes level) like so.
+
+[source,adoc,subs=attributes]
+----
+\include::{entrypoint-path}/{entrypoint}[]
+----
+
+[sidebar]
+****
+.`{entrypoint}` content
+[%collapsible]
+====
+[source,adoc,subs=attributes]
+----
+include::{entrypoint-path}/{entrypoint}[]
+----
+====
+****
+
+file://{entrypoint-path}/highlightjs.adoc is used to override the default highlighter with highlight.js, especially useful for highlighting AsciiDoc code. It manually overrides the highlight.js version to a much, much newer one. The old built-in one (9.18.3) retains AsciiDoc's ability to add callouts to source blocks, whereas the new one doesn't.

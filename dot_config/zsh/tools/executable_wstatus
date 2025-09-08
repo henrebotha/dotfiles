@@ -1,0 +1,45 @@
+#! /usr/bin/env zsh
+# vim: filetype=zsh:
+
+# Look up service status for tools such as Slack, Workplace, or Zoom.
+
+: ${1:?status needs a service name (e.g. 'workplace').}
+
+# Uses .detect_env if available
+if [[ -z "${DOTFILES_ENV[OPEN_CMD]}" ]]; then
+  if [[ -f "${ZDOTDIR:-$HOME/.config/zsh}/.detect_env" ]]; then
+    source "${ZDOTDIR:-$HOME/.config/zsh}/.detect_env"
+  else
+    >&2 echo ".detect_env not found; falling back to simpler detection"
+    typeset -A DOTFILES_ENV
+    if [[ $(uname) == 'Darwin' ]]; then
+      DOTFILES_ENV[OPEN_CMD]=open
+    else
+      DOTFILES_ENV[OPEN_CMD]=xdg-open
+    fi
+  fi
+fi
+
+typeset -A services
+local services=(
+  [blink]=https://status.joinblink.com/
+  [slack]=https://slack-status.com/
+  [workplace]=https://metastatus.com/
+  [zoom]=https://status.zoom.us/
+)
+
+if [[ $1 == '--list' ]]; then
+  echo ${(@k)services}
+  exit 0
+fi
+
+service=${services[$1]}
+
+if [[ -n $service ]]; then
+  printf "Opening \e]8;;${services[$1]}\e\\$1\e]8;;\e\\"
+  ${DOTFILES_ENV[OPEN_CMD]} ${services[$1]}
+  echo
+else
+  echo 'Unknown service'
+  exit 1
+fi

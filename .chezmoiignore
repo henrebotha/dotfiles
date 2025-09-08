@@ -1,0 +1,40 @@
+emacs/
+tmux/
+asciidoc/
+vim/
+kakoune/
+xfce/
+fish/
+kitty/
+
+LICENSE
+*.adoc
+_docs/
+install.sh
+*/install.sh
+playground/
+tools/
+dc-log*.txt
+git-fetch-ssh-error.txt
+test.txt
+switcher.js
+*.patch
+.git-blame-ignore-revs
+
+# Ignore stow-specific files
+.stow-local-ignore
+
+# Ignore backup files
+*~
+*.zwc
+
+# Ignore cache and generated files
+.zcompdump*
+.rgcomp
+.zcomet/
+.zcompcache/
+.zsh_sessions/
+_rustup
+
+# Ignore work-specific files
+.zsh-work

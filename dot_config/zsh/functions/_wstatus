@@ -1,0 +1,3 @@
+#compdef status
+
+_sub_commands "$(wstatus --list)"

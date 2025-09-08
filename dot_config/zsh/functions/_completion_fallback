@@ -1,0 +1,13 @@
+#compdef -default-
+
+# Get the actual command name from the words array
+local cmd="${words[1]}"
+
+# Only handle commands that don't already have completions
+[[ -n ${_comps[$cmd]} ]] && return 1
+
+# Try dynamic generation
+_dynamic_completions "$cmd" && return 0
+
+# Fall back to basic file completion
+_files

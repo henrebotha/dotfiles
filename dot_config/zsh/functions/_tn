@@ -1,0 +1,3 @@
+#compdef tn
+
+_sub_commands "${(@k)tmux_sessions}"

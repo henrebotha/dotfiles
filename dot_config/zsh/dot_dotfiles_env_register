@@ -1,0 +1,24 @@
+# Dotfiles environment self-registration library
+# Usage: source this file with DOTFILES_TOOL_NAME set, or pass tool name as parameter
+
+dotfiles_env_register() {
+  local registry="$HOME/.cache/zsh/dotfiles_env_registry"
+  # Use provided parameter, or fall back to DOTFILES_TOOL_NAME, or basename of $0
+  local tool_name="${1:-${DOTFILES_TOOL_NAME:-${0:t}}}"
+
+  if [[ -f "$registry" ]] && grep -Fxq "$tool_name" "$registry" 2>/dev/null; then
+    return 0
+  fi
+
+  # Register ourselves atomically
+  mkdir -p "${registry%/*}"
+
+  if ! grep -Fxq "$tool_name" "$registry" 2>/dev/null; then
+    echo "$tool_name" >> "$registry"
+  fi
+}
+
+# Auto-register when sourced (only if DOTFILES_TOOL_NAME is set)
+if [[ -n "$DOTFILES_TOOL_NAME" ]]; then
+  dotfiles_env_register
+fi

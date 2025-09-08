@@ -1,0 +1,10 @@
+dialect = "uk"
+filter_mode = "directory"
+style = "compact"
+inline_height = 14
+enter_accept = false
+keymap_mode = "vim-normal"
+[sync]
+records = true
+[keys]
+scroll_exits = false
