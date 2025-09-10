@@ -201,21 +201,26 @@ set updatetime=250
 " Colours go from 0 to 7: black, red, green, yellow, blue, magenta, cyan, white
 " Then from 8 to 15, bright versions of the above
 set t_Co=16
+
 function! s:tweak_colours()
   " hi LineNr ctermfg=14
   " hi CursorLineNr ctermfg=14
 
-  hi SignColumn ctermbg=NONE
-  hi FoldColumn ctermbg=NONE
+  " hi SignColumn ctermbg=2 ctermfg=4
+  " hi FoldColumn ctermbg=3 ctermfg=5
   " Fix vimdiff colours to be not so eye-bleeding. Ugly, but better
   hi DiffAdd term=underline cterm=underline ctermfg=4 ctermbg=NONE
   hi DiffChange term=underline cterm=underline ctermfg=5 ctermbg=NONE
   hi DiffDelete term=underline cterm=underline ctermfg=6 ctermbg=NONE
   hi DiffText term=underline cterm=underline ctermfg=9 ctermbg=NONE
   " Make comments italic, because it's nice
-  hi Comment term=italic cterm=italic
+  " hi Comment term=italic cterm=italic ctermbg=NONE
   " Remove the black background from folds
   hi Folded ctermbg=NONE
+
+  " For highlighting matching parentheses etc, don't set a background colour;
+  " invert the colours instead, and set bold.
+  hi MatchParen term=reverse cterm=reverse ctermbg=NONE guibg=NONE
 
   hi fzf1 ctermfg=red ctermbg=8
   hi fzf2 ctermfg=green ctermbg=8
@@ -254,10 +259,10 @@ endfunction
 
 " Restore the colour tweaks whenever we change colour scheme, which matters
 " for Goyo in particular.
-autocmd! ColorScheme dim call s:tweak_colours()
+autocmd! ColorScheme * call s:tweak_colours()
 
-if exists('g:plugs') && has_key(g:plugs, 'vim-dim')
-  colorscheme dim
+if exists('g:plugs') && has_key(g:plugs, 'vim-noctu')
+  colorscheme noctu
   set bg=dark
 endif
 

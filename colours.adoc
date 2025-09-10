@@ -1,0 +1,25 @@
+= Colours
+
+This is the colour scheme I use for everything. I call it https://en.wikipedia.org/wiki/Yellowhammer[Yellowhammer].
+
+|===
+| Role               | Name           | ANSI           | Hex Code | Terminal Color
+
+| Background         | bg             | none           | #22242C  | none (terminal emulator background)
+| Comment / Subtle   | comment        | bright black   | #57566a  | color8
+| Foreground         | fg             | white          | #D9E0EE  | color7
+| Darker Background  | bg_alt         | black          | #1A1B26  | color0
+| Lighter Foreground | fg_alt         | bright white   | #C9D1D9  | color15
+| Your Primary       | yellow         | yellow         | #F5C000  | color3
+| Bright Yellow      | yellow_bright  | bright yellow  | #FFDE57  | color11
+| Bad / Error        | red            | red            | #E88388  | color1
+| Good / Success     | green          | green          | #A6DA95  | color2
+| System / Info      | blue           | blue           | #8AADF4  | color4
+| Special / Keyword  | magenta        | magenta        | #F5BDE6  | color5
+| Type / Constant    | cyan           | cyan           | #89DCEB  | color6
+| Bright Red         | red_bright     | bright red     | #F28FA2  | color9
+| Bright Green       | green_bright   | bright green   | #ABE9B3  | color10
+| Bright Blue        | blue_bright    | bright blue    | #96CDFB  | color12
+| Bright Magenta     | magenta_bright | bright magenta | #F8C0E7  | color13
+| Bright Cyan        | cyan_bright    | bright cyan    | #94E2D5  | color14
+|===

@@ -1,0 +1,5 @@
+= iTerm
+
+== Colours
+
+* Be sure to set Profiles → Colors → Context-aware cursor color to prevent Vim from becoming unreadable.
