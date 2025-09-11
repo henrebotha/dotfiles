@@ -184,7 +184,7 @@ alias dv='dirs -v'
 # TODO: Generalise this to read from a map of directory patterns to "package" dirs.
 chpwd_functions=($chpwd_functions chpwd_add_packages)
 chpwd_add_packages() {
-  if [[ $(pwd) =~ "$HOME"'/git_tree/attractions/content/([A-Za-z0-9\-_]+)/?\b' ]]; then
+  if [[ $(pwd) =~ "$HOME"'/git_tree/attractions/content/([A-Za-z0-9_-]+)/?\b' ]]; then
     package_dir="$HOME"'/git_tree/attractions/content/'$match[1]'/packages'
     if [[ ! ${cdpath[(ie)$package_dir]} -le ${#cdpath} ]]; then
       cdpath=($cdpath $package_dir)
