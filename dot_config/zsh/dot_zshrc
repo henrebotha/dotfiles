@@ -547,6 +547,13 @@ if command -v abbr > /dev/null 2>&1; then
     ['aiy']='apt install -y'
     ['apt iy']='apt install -y'
     ['apt install y']='apt install -y'
+    [c]=chezmoi
+    ['chezmoi a']='chezmoi add'
+    ['chezmoi d']='chezmoi diff'
+    ['chezmoi i']='chezmoi ignored'
+    ['chezmoi m']='chezmoi managed'
+    ['chezmoi s']='chezmoi status'
+    ['chezmoi u']='chezmoi unmanaged'
     [d]=docker
     [dv]='dirs -v'
     [e]=emacs
