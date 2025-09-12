@@ -1,7 +1,15 @@
 *.adoc
 **/*.adoc
+*.txt
+*.md
+*.csv
+*.tsv
+*.sh
+*.html
+**/*.html
 !.local/share/asciidoc/*.adoc
 !.local/share/asciidoc/attributes/*.adoc
+!.local/share/asciidoc/templates/*.html
 install.sh
 **/install.sh
 LICENSE
