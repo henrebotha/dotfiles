@@ -2,9 +2,15 @@
 PIP_NO_COLOR = 1
 
 [tools]
-node = "22.13.0"
-python = "3.13.1"
+# -- Languages
+node = "22"
+python = "latest"
 ruby = "3.4.1"
-rust = "1.85.0"
+rust = "latest"
 # -- Other CLI tools
 "cargo:xan" = "0.46.2"
+usage = "latest"
+
+[settings]
+experimental = true
+idiomatic_version_file_enable_tools = ["java", "node", "ruby"]
