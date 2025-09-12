@@ -21,3 +21,5 @@ xorg.conf.d/
 xorg.conf.d/**
 fish/
 fish/**
+firefox/
+firefox/**
