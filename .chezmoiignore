@@ -15,10 +15,12 @@ ruby/
 ruby/**
 termux/
 termux/**
+{{- if ne .chezmoi.os "linux" -}}
 xfce/
 xfce/**
 xorg.conf.d/
 xorg.conf.d/**
+{{- end -}}
 fish/
 fish/**
 firefox/
