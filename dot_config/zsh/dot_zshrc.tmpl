@@ -252,7 +252,7 @@ add-zsh-hook precmd _self_destruct_hook
 
 # Zsh global aliases
 alias -g @q="2> /dev/null"
-alias -g @qq=">/dev/null 2>&1"
+alias -g @qq="&> /dev/null"
 alias -g @errout="2>&1"
 
 # Docker
@@ -528,7 +528,7 @@ bindkey -M vicmd "^I" expand-or-complete-custom
 typeset -A global_aliases
 export global_aliases=(
   ['@q']='2> /dev/null'
-  ['@qq']='>/dev/null 2>&1'
+  ['@qq']='&> /dev/null'
   ['@errout']='2>&1'
   ['@kshell']='sh -c "echo '\''$(base64 -i ~/.kshellrc)'\'' | base64 -d > /tmp/.bashrc && exec bash --rcfile /tmp/.bashrc"'
 )
