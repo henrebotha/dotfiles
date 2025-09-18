@@ -63,6 +63,45 @@ if [ ! -d "$XDG_CACHE_HOME"/zsh ]; then
 fi
 export ZSH_CACHE_DIR="$XDG_CACHE_HOME/zsh"
 
+# Topic config
+ZSH_TOPICFILE="$ZDOTDIR/zsh-topics"
+typeset -A topics
+
+init_topics() {
+  if [[ ! -s "$ZSH_TOPICFILE" ]]; then
+    # Define default config here
+    > "$ZSH_TOPICFILE" <<CONFIG
+# elm
+# java
+# js
+# ruby
+CONFIG
+  fi
+
+  # Read topics
+  for topic in "${(f)"$(<$ZSH_TOPICFILE)"}"; do
+    if [[ ! $topic =~ '^#' ]]; then
+      topics+=("$topic" 1)
+    fi
+  done
+
+  unset topic
+}
+
+init_topics
+
+purge_topics() {
+  rm "$ZSH_TOPICFILE"
+}
+
+for topic enabled in "${(@kv)topics}"; do
+  if [[ $enabled == 1 ]]; then
+    source "$ZDOTDIR"/topics/"$topic".zsh
+  fi
+done
+unset topic
+unset enabled
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.config/zsh/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -215,45 +254,6 @@ add-zsh-hook precmd _self_destruct_hook
 alias -g @q="2> /dev/null"
 alias -g @qq=">/dev/null 2>&1"
 alias -g @errout="2>&1"
-
-# Topic config
-ZSH_TOPICFILE="$ZDOTDIR/zsh-topics"
-typeset -A topics
-
-init_topics() {
-  if [[ ! -s "$ZSH_TOPICFILE" ]]; then
-    # Define default config here
-    > "$ZSH_TOPICFILE" <<CONFIG
-# elm
-# java
-# js
-# ruby
-CONFIG
-  fi
-
-  # Read topics
-  for topic in "${(f)"$(<$ZSH_TOPICFILE)"}"; do
-    if [[ ! $topic =~ '^#' ]]; then
-      topics+=("$topic" 1)
-    fi
-  done
-
-  unset topic
-}
-
-init_topics
-
-purge_topics() {
-  rm "$ZSH_TOPICFILE"
-}
-
-for topic enabled in "${(@kv)topics}"; do
-  if [[ $enabled == 1 ]]; then
-    source "$ZDOTDIR"/topics/"$topic".zsh
-  fi
-done
-unset topic
-unset enabled
 
 # Docker
 alias d=docker
