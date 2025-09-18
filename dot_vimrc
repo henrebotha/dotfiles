@@ -646,6 +646,9 @@ nmap ga <Plug>(EasyAlign)
 " Markdown.
 let g:markdown_fenced_languages = ['html', 'ruby', 'javascript', 'erb=eruby', 'xml', 'json', 'sql']
 
+" Don't let vim-less mess up <style> elements in HTML.
+let g:less_html_style_tags = 0
+
 " Enable mouse scrolling inside tmux
 set mouse=a
 set mousemodel=popup
