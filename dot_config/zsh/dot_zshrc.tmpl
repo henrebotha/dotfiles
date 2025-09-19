@@ -163,6 +163,10 @@ autoload -Uz _dynamic_completions _completion_fallback
 # This needs to go after all calls to compinit.
 enable-fzf-tab
 
+which-alias() {
+  which $(alias $1 | sed -E 's/^.+=//')
+}
+
 # Append "$1" to $PATH when not already in.
 append_path() {
   case ":$PATH:" in
@@ -190,6 +194,19 @@ setopt no_list_ambiguous
 zstyle ':fzf-tab:*' fzf-bindings 'right:accept'
 # Use 16 colours, because fzf-tab ignores FZF_DEFAULT_OPTS
 zstyle ':fzf-tab:*' fzf-flags --color=16
+
+zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm -w -w"
+zstyle ':fzf-tab:complete:(kill|ps):argument-rest' fzf-preview \
+  '[[ $group == "[process ID]" ]] && ps --pid=$word -o cmd --no-headers -w -w'
+zstyle ':fzf-tab:complete:(kill|ps):argument-rest' fzf-flags --preview-window=down:3:wrap
+
+zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview 'SYSTEMD_COLORS=1 systemctl status $word'
+# zstyle ':fzf-tab:complete:brew-services-*:*' fzf-preview 'SYSTEMD_COLORS=1 brew services status $word'
+
+zstyle ':fzf-tab:complete:brew-(install|uninstall|search|info):*-argument-rest' fzf-preview 'HOMEBREW_COLOR=1 brew info $word'
+
+zstyle ':fzf-tab:complete:(-command-|-parameter-|-brace-parameter-|export|unset|expand):*' \
+  fzf-preview 'echo ${(P)word}'
 
 if [ -d ~/zsh_help ]; then
   export HELPDIR=~/zsh_help
@@ -303,7 +320,15 @@ tn() {
   : ${1:?tn needs a session name.}
   args=(${@:2})
   session_root=${tmux_sessions[$1]:-$HOME}
-  tmux new-session -s $1 -c $session_root $args
+  tmux has-session -t $1 2> /dev/null
+  if [ $? != 0 ]; then
+    tmux new-session -d -s $1 -c $session_root $args
+  fi
+  if [[ -n "$TMUX_PANE" ]]; then
+    tmux switch-client -t $1
+  else
+    tmux attach -t $1
+  fi
 }
 tna() {
   auto_sessions=(
@@ -328,6 +353,20 @@ tmux_await() {
     sleep 1
   done; ${@:4}
 }
+
+# Function to view command output in a tmux popup pager
+tpage() {
+  if command -v tmux &> /dev/null; then
+    tmux display-popup -w 80% -h 80% -xC -yC "$@"
+  else
+    # Fallback if not in tmux or tmux not available
+    "$@" | less
+  fi
+}
+
+# Example usage:
+# tpage ls -l /usr/local/bin
+# tpage dmesg | grep -i "error"
 
 # Fix broken mouse reporting after ssh exits abruptly
 alias fix-mouse-reporting='printf '\''\e[?1000l'\'''
@@ -366,6 +405,19 @@ rgl() {
 eval "fzfcp() {
   fzf -m --tac \$@ | ${DOTFILES_ENV[CLIPBOARD_CMD]}
 }"
+
+alias fzfd='fd -t d | fzf'
+
+# ---
+
+# Kill whatever process is holding the given port(s).
+portkill() {
+  # kill -9 $(lsof -t -i :3001 -i :3002) etc is a better syntax
+  : ${1:?portkill needs at least one port (e.g. '3000').}
+  for i in $@; do; kill -9 $(lsof -t -i :"$i"); done
+}
+
+# ---
 
 # macOS
 if [[ "${DOTFILES_ENV[OS]}" == 'Darwin' ]]; then
@@ -431,7 +483,7 @@ export FZF_DEFAULT_OPTS='--color=16 --bind "f1:execute(less -f {})"'
 # --hidden: Search hidden paths
 # --glob: Additional conditions (exclude .git)
 # --no-ignore: Do not respect .gitignore and the like
-export FZF_DEFAULT_COMMAND='rg --files --glob "!.git/*" --hidden --no-ignore'
+export FZF_DEFAULT_COMMAND='rg --files --glob '\''!.git/*'\'' --hidden --no-ignore'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND=altc
 
@@ -449,13 +501,30 @@ fh() {
 # OPAM configuration
 [ -f "$HOME"/.opam/opam-init/init.zsh ] && . "$HOME"/.opam/opam-init/init.zsh
 
-
-
-
-
 load_tmux_user_env() {
   if [ -n "$TMUX" ]; then
-    for var in $(tmux show-environment | sed -n '/^TMUX_USER_ENV_/ s/^TMUX_USER_ENV_//p'); do
+    local start_time=$EPOCHREALTIME
+
+    # Capture the output of the tmux command
+    local tmux_env_output
+    tmux_env_output=$(tmux show-environment | sed -n '/^TMUX_USER_ENV_/ s/^TMUX_USER_ENV_//p')
+
+    local end_time=$EPOCHREALTIME
+    local duration
+    duration=$(($end_time - $start_time))
+
+    # Define the threshold in seconds (0.75s = 750ms)
+    local threshold=0.75
+
+    # Check if the execution time exceeded the threshold
+    if (( duration > threshold )); then
+      # Print a warning to stderr so it doesn't interfere with other commands.
+      # The colors make it easy to spot.
+      print -Pr -- "%F{yellow}WARNING:%f tmux environment load took %F{red}${duration}s%f (threshold: ${threshold}s)" >&2
+    fi
+
+    # Process the captured output
+    for var in ${(f)tmux_env_output}; do
       export $var
     done
   fi
@@ -533,7 +602,19 @@ export global_aliases=(
   ['@kshell']='sh -c "echo '\''$(base64 -i ~/.kshellrc)'\'' | base64 -d > /tmp/.bashrc && exec bash --rcfile /tmp/.bashrc"'
 )
 
-if command -v abbr > /dev/null 2>&1; then
+if command -v abbr &> /dev/null; then
+  abbr-add() {
+    : ${1:?abbr-add needs an abbreviation (e.g. 'apt iy').}
+    : ${2:?abbr-add needs an expansion (e.g. 'apt install -y').}
+    abbr "$1"="$2"
+    abbr -g "@$1"="$2"
+  }
+
+  abbr-bulk-erase() {
+    : ${1:?abbr-bulk-erase needs at least one abbreviation (e.g. 'apt iy' 'apt i').}
+    for i in $@; do; abbr erase "$i"; abbr erase -g "@$i"; done
+  }
+
   ABBR_SET_EXPANSION_CURSOR=1
   ABBR_EXPANSION_CURSOR_MARKER='#'
   ABBR_REGULAR_ABBREVIATION_SCALAR_PREFIXES=('man ' 'noglob ' 'sudo ' 'watch ' 'which ')
@@ -558,8 +639,9 @@ if command -v abbr > /dev/null 2>&1; then
     [dv]='dirs -v'
     [e]=emacs
     [fzfcp]='fzf #| '"$(echo $clip)"
-    [fzfd]='f -t d | fzf'
+    [fzfd]='fd -t d | fzf'
     [g]=git
+    [gclr]='gron -c | less -R'
     [k]=kubectl
     ['kubectl e']='kubectl exec $pod -it --'
     ['kubectl gp']='kubectl get pods'
@@ -581,10 +663,10 @@ if command -v abbr > /dev/null 2>&1; then
   abbrs=$(abbr list-abbreviations)
   for abbreviation phrase in ${(@kv)abbr_abbreviations}; do
     if [[ ! "$abbrs" =~ "\"$abbreviation\"" ]]; then
-      abbr "$abbreviation"="$phrase"
+      abbr "$abbreviation"="$phrase" > /dev/null
     fi
     if [[ ! "$abbrs" =~ "\"@$abbreviation\"" ]]; then
-      abbr -g "@$abbreviation"="$phrase"
+      abbr -g "@$abbreviation"="$phrase" > /dev/null
     fi
   done
   unset abbrs
@@ -593,7 +675,7 @@ if command -v abbr > /dev/null 2>&1; then
   global_abbrs=$(abbr list-abbreviations)
   for abbreviation phrase in ${(@kv)global_aliases}; do
     if [[ ! "$global_abbrs" =~ "\"$abbreviation\"" ]]; then
-      abbr -g "$abbreviation"="$phrase"
+      abbr -g "$abbreviation"="$phrase" > /dev/null
     fi
   done
   unset global_abbrs
@@ -622,13 +704,13 @@ repl() {
       python3;;
     ruby)
       if command -v rbenv &> /dev/null; then
-        if rbenv which pry > /dev/null 2>&1; then
+        if rbenv which pry &> /dev/null; then
           pry
         else
           irb
         fi
       else
-        if command -v pry > /dev/null 2>&1; then
+        if command -v pry &> /dev/null; then
           pry
         else
           irb
