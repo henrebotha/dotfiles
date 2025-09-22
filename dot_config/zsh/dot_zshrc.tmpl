@@ -722,6 +722,15 @@ repl() {
   esac
 }
 
+# --- Misc useful strings
+# Usage:
+# rg --pcre2 "($regex_camel)Foo($regex_camel)"       → match myFoo and FooName,         but not fooName or foo or Foo
+# rg --pcre2 "(\b|$regex_camel)Foo(\b|$regex_camel)" → match myFoo and FooName and Foo, but not fooName or foo
+# rg --pcre2 "(($regex_camel)Foo|foo($regex_camel))" → match myFoo and fooName,         but not FooName or foo or Foo
+# Note: Don't use -i; case is important.
+export regex_camel='(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])'
+# --- end
+
 export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
 
 # To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
