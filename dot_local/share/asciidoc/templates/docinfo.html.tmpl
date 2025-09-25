@@ -3,15 +3,15 @@
 <meta http-equiv="Expires" content="0">
 <style>
   :root {
-    --black: #22242C;
-    --yellow: #F5C000;
-    --blue: #8AADF4;
-    --red: #E88388;
-    --dark-black: #1A1B26;
-    --teal: #89DCEB;
-    --white: #D9E0EE;
-    --green: #A6DA95;
-    --light-black: #57566a;
+    --black: #{{- .colours.bg }};
+    --yellow: #{{- .colours.yellow }};
+    --blue: #{{- .colours.blue }};
+    --red: #{{- .colours.red }};
+    --dark-black: #{{- .colours.bg_black }};
+    --cyan: #{{- .colours.cyan }};
+    --white: #{{- .colours.fg_white }};
+    --green: #{{- .colours.green }};
+    --light-black: #{{- .colours.black_bright_comment }};
   }
 
   .primary {
@@ -273,7 +273,7 @@
   }
 
   a {
-    color: var(--teal);
+    color: var(--cyan);
     text-decoration: underline;
   }
   a:hover {
@@ -281,10 +281,10 @@
   }
   a:not(h1 > a, h2 > a, h3 > a, h4 > a, h5 > a, h6 > a) {
     color: white;
-    text-shadow: 0px 0px 6px var(--teal);
+    text-shadow: 0px 0px 6px var(--cyan);
   }
   a:hover:not(h1 > a, h2 > a, h3 > a, h4 > a, h5 > a, h6 > a) {
-    color: var(--teal);
+    color: var(--cyan);
   }
   .toc-left a {
     color: var(--white);
@@ -292,15 +292,15 @@
   }
   .toc-left a:hover {
     color: var(--white);
-    text-shadow: 0px 0px 6px var(--teal);
+    text-shadow: 0px 0px 6px var(--cyan);
   }
 
   details > summary::before {
     color: var(--white);
-    filter: drop-shadow(0px 0px 3px var(--teal));
+    filter: drop-shadow(0px 0px 3px var(--cyan));
   }
   details > summary:hover::before {
-    color: var(--teal);
+    color: var(--cyan);
   }
   details > summary {
     margin: 0;
