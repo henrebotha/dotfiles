@@ -21,8 +21,10 @@ karabiner-elements/
 karabiner-elements/**
 ruby/
 ruby/**
+{{- if ne .chezmoi.os "android" -}}
 termux/
 termux/**
+{{- end -}}
 {{- if ne .chezmoi.os "linux" -}}
 xfce/
 xfce/**
