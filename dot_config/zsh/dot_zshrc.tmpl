@@ -49,6 +49,7 @@ if ! is_gnu_sed; then
   fi
 fi
 
+{{ if ne .chezmoi.os "android" -}}
 # mise
 if command -v mise &> /dev/null; then
   eval "$(mise activate zsh)"
@@ -57,6 +58,7 @@ if command -v mise &> /dev/null; then
     mise use -g usage
   fi
 fi
+{{- end }}
 
 if [ ! -d "$XDG_CACHE_HOME"/zsh ]; then
   mkdir -p "$XDG_CACHE_HOME"/zsh
