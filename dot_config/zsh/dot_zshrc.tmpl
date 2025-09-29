@@ -388,11 +388,15 @@ if command -v vim &> /dev/null; then
   }
   # Launch with -X to prevent communication with X11 on startup, improving startup
   # speed in Tmux
+  {{ if ne .chezmoi.os "android" -}}
   if vim --version | grep '+clientserver' > /dev/null; then
     alias vim='vim -X --servername $(vim_servername)'
   else
     alias vim='vim -X'
   fi
+  {{ else -}}
+  alias vim='vim -X'
+  {{- end }}
   # Use as pager
   alias vpage='ifne vim -X -R - -n'
   # Source ~/.vimrc in every running Vim server instance
