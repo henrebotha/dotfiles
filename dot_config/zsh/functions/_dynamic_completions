@@ -13,6 +13,7 @@ local version_file="$completion_dir/_${cmd}.version"
 # generate_cmd: command to generate completions       (rustup completions zsh cargo)
 declare -A TOOL_CONFIGS=(
   [bat]="bat:bat --version:bat --completion zsh"
+  [bw]="bw:bw --version:bw completion --shell zsh"
   [cargo]="rustup:rustup --version:rustup completions zsh cargo"
   [chezmoi]="chezmoi:chezmoi --version:chezmoi completion zsh"
   [fd]="fd:fd --version:fd --gen-completions zsh"

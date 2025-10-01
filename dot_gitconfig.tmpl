@@ -14,7 +14,9 @@
 	sparseCheckoutCone = 1
 [user]
 	name = Henré Botha
-	useConfigOnly = true ; force me to set email in repo local config
+	{{ if lookPath "bw" -}}
+	email = {{ (bitwarden "item" "GitHub email protection").login.username }}
+	{{- end }}
 [advice]
 	detachedHead = false
 [pager]
