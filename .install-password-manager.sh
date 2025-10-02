@@ -1,5 +1,9 @@
 #!/bin/sh
 
+if [ -n "$CHEZMOI_VERBOSE" ]; then
+  echo 'Checking for Bitwarden.'
+fi
+
 if ! type bw >/dev/null 2>&1; then
   echo 'Installing Bitwarden.'
   case "$(uname -s)" in
@@ -34,3 +38,6 @@ if ! type bw >/dev/null 2>&1; then
   printf "%s\n" "$(tput setaf 8)You will need to manually supply data that would be pulled from Bitwarden, but everything should work fine.$(tput sgr0)"
 fi
 
+if [ -n "$CHEZMOI_VERBOSE" ]; then
+  echo 'Done.'
+fi
