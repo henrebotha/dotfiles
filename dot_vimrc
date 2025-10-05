@@ -105,11 +105,11 @@ Plug 'junegunn/goyo.vim', { 'on': ['Goyo'] }
                                           " Distraction-free mode
 Plug 'preservim/tagbar'                   " File outline viewer
 Plug 'andymass/matchup.vim'               " Movement between matching if/ends etc
-Plug isdirectory('/opt/homebrew/opt/fzf') ? '/opt/homebrew/opt/fzf' : '~/.fzf'
 " TODO: fzf.vim from 556f45e (2024-10-29) onwards requires fzf 0.56, which is
 " quite bleeding-edge and might not be available everywhere. Figure out a way
 " to determine whether we are in an available context, and if not, pin the
 " plugin to ec75ffb.
+Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim', { 'do': './install --bin' }
                                           " Fast fuzzy finder
 Plug 'tpope/vim-apathy'                   " Some path values for various langs
