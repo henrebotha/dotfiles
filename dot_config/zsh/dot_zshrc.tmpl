@@ -740,6 +740,17 @@ repl() {
 export regex_camel='(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])'
 # --- end
 
+# widget: do C-x g to insert $(git rev-parse --show-cdup)
+zle-git-cdup() {
+  p="$(git rev-parse --show-cdup)"
+  LBUFFER="$LBUFFER${p}"
+  # BUFFER=""
+  zle redisplay
+}
+
+zle -N zle-git-cdup
+bindkey '^xg' zle-git-cdup
+
 export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
 
 # To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
