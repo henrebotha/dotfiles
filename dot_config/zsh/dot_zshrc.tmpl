@@ -598,6 +598,18 @@ bindkey -M emacs "^I" expand-or-complete-custom
 bindkey -M viins "^I" expand-or-complete-custom
 bindkey -M vicmd "^I" expand-or-complete-custom
 
+# ZLE widget to copy the command buffer to tmux and then clear it
+zle-copy-cut-to-tmux() {
+  if [[ -n "$TMUX" ]]; then
+    tmux set-buffer -- "$BUFFER"
+    BUFFER=""
+    zle redisplay
+  fi
+}
+
+zle -N zle-copy-cut-to-tmux
+bindkey '^xt' zle-copy-cut-to-tmux
+
 [ -f "$ZDOTDIR"/.zsh-work ] && . "$ZDOTDIR"/.zsh-work
 
 typeset -A global_aliases
