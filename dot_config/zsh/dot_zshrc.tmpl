@@ -751,6 +751,79 @@ zle-git-cdup() {
 zle -N zle-git-cdup
 bindkey '^xg' zle-git-cdup
 
+# A function to run a command after prompting for placeholder values.
+prompt_run() {
+  # Ensure a command template was provided.
+  if [[ $# -eq 0 ]]; then
+    echo "Usage: prompt_run <command_with_{placeholders}>" >&2
+    return 1
+  fi
+
+  local template_command="$*"
+  local final_command="$template_command"
+  local placeholder var_name value
+  typeset -A values
+
+  # 1. Find all unique unescaped placeholders using grep, preserving order of first appearance.
+  local placeholders
+  placeholders=($(echo "$template_command" | grep -oE '(^|[^\\])\{[a-zA-Z0-9_]+\}' | sed 's/^[^{]*//' | awk '!seen[$0]++'))
+
+  # If no placeholders, just run the command.
+  if [[ ${#placeholders[@]} -eq 0 ]]; then
+    echo "> $template_command"
+    print -s -- "$template_command"
+    ${(z)template_command}
+    return
+  fi
+
+  # 2. Loop through each placeholder and prompt for a value.
+  for placeholder in "${placeholders[@]}"; do
+    # Remove braces to get the variable name.
+    var_name=${placeholder#\{}
+    var_name=${var_name%\}}
+    # Use 'vared' to get input using the Zsh Line Editor (ZLE).
+    value=""
+    vared -p "Enter value for '${var_name}': " value
+    values[$var_name]="$value"
+  done
+
+  # 3. Substitute the placeholders with the entered values.
+  for placeholder in "${placeholders[@]}"; do
+    var_name=${placeholder#\{}
+    var_name=${var_name%\}}
+    final_command=${final_command//"$placeholder"/"${values[$var_name]}"}
+  done
+
+  # 4. Remove escape characters from escaped placeholders.
+  final_command="${final_command//\\{/{}"
+  final_command="${final_command//\\\}/}"
+
+  # 5. Add the final command to history and execute it.
+  echo "> $final_command"
+  print -s -- "$final_command"
+  ${(z)final_command}
+}
+
+# Custom accept-line widget that processes placeholders
+accept-line-with-placeholders() {
+  # Check if the current buffer contains unescaped placeholders
+  if [[ "$BUFFER" =~ '(^|[^\\])\{[a-zA-Z0-9_]+\}' ]]; then
+    # Store the command, clear buffer, and put prompt_run in the buffer instead
+    local template_command="$BUFFER"
+    BUFFER="prompt_run $(printf %q "$template_command")"
+  elif [[ "$BUFFER" =~ '\\{[a-zA-Z0-9_]+\\}' ]]; then
+    # Remove escape characters from escaped placeholders
+    BUFFER="${BUFFER//\\{/{}"
+    BUFFER="${BUFFER//\\}/}"
+  fi
+
+  # Call the original accept-line
+  zle .accept-line
+}
+
+# Register the custom widget and bind it to Enter
+zle -N accept-line accept-line-with-placeholders
+
 export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
 
 # To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
