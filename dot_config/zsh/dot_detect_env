@@ -56,7 +56,7 @@ case "${DOTFILES_ENV[OS]}" in
     if [[ -f /etc/arch-release ]]; then
       DOTFILES_ENV[PKG_MANAGER]='sudo pacman -S'
     elif [[ -f /etc/debian_version ]]; then
-      DOTFILES_ENV[PKG_MANAGER]='sudo apt-get install'
+      DOTFILES_ENV[PKG_MANAGER]='sudo apt install'
     elif [[ -f /etc/redhat-release ]]; then
       DOTFILES_ENV[PKG_MANAGER]='yum install'
     elif [[ -f /etc/gentoo-release ]]; then

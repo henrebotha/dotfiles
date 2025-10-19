@@ -41,7 +41,7 @@ echo
 case "$response" in
   y)
     echo "Installing."
-    ${DOTFILES_ENV[PKG_MANAGER]} install $to_install
+    ${=DOTFILES_ENV[PKG_MANAGER]} $to_install
     ;;
   *)
     echo "Skipping install."
