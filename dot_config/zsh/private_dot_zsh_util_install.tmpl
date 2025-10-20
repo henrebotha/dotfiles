@@ -1,3 +1,7 @@
+if ! command -v git &> /dev/null; then
+  ${=DOTFILES_ENV[PKG_MANAGER]} git
+fi
+
 typeset -A utils
 utils=(
   atuin atuin
@@ -6,12 +10,14 @@ utils=(
   eza eza
   fzf fzf
   ifne moreutils
+  jq jq
   {{- if ne .chezmoi.os "android" }}
   mise mise
   {{- end }}
   rg ripgrep
   shellcheck shellcheck
   tmux tmux
+  vim vim
   watch watch
 )
 to_install=()
