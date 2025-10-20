@@ -1,17 +1,28 @@
+# Handle Git
 if ! command -v git &> /dev/null; then
   ${=DOTFILES_ENV[PKG_MANAGER]} git
 fi
 
+{{- if eq (dig "osRelease" "id" "" .chezmoi) "debian" }}
+if ! command -v mise &> /dev/null; then
+  curl https://mise.run | sh
+fi
+{{- end}}
+
 typeset -A utils
 utils=(
   atuin atuin
+  {{- if eq (dig "osRelease" "id" "" .chezmoi) "debian" }}
+  batcat bat
+  {{- else }}
   bat bat
+  {{- end }}
   direnv direnv
   eza eza
   fzf fzf
   ifne moreutils
   jq jq
-  {{- if ne .chezmoi.os "android" }}
+  {{- if (and (ne .chezmoi.os "android") (ne (dig "osRelease" "id" "" .chezmoi) "debian")) }}
   mise mise
   {{- end }}
   rg ripgrep
