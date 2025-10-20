@@ -630,6 +630,10 @@ set undolevels=1000
 set undoreload=10000
 
 if !has('nvim')
+  let s:vim_backup = expand("$HOME/.vim/backup")
+  if filewritable(s:vim_backup) == 0 && exists("*mkdir")
+    call mkdir(s:vim_backup, "p", 0700)
+  endif
   set backup
   set writebackup
   set backupdir^=~/.vim/backup//
