@@ -1,2 +1,17 @@
+// usage: {i}icon-name{_i}
+//   e.g. {i}music{_i}
+:i: icon:
+:_i: [fw,role=primary]
+
+// legacy hard-coded icons
 :tick: icon:check-square[fw,role=primary]
 :untick: icon:square-o[fw,role=primary]
+:android: icon:android[fw,role=primary]
+:apple: icon:apple[fw,role=primary]
+:firefox: icon:firefox[fw,role=primary]
+:home: icon:home[fw,role=primary]
+:files: icon:folder-open[fw,role=primary]
+:music: icon:music[fw,role=primary]
+:server: icon:server[fw,role=primary]
+:cert: icon:certificate[fw,role=primary]
+:play: icon:play[fw,role=primary]
