@@ -311,12 +311,10 @@ alias tk='tmux kill-session -t'
 alias tl='tmux ls 2> /dev/null || echo '\''Tmux is not running.'\'
 typeset -A tmux_sessions
 export tmux_sessions=(
-  [dev]=~/git_tree
+  [dev]=~/dev
   [diy]=~/Documents/DIY
   [dotfiles]=~/.local/share/chezmoi
-  [games]=~/Games
-  [notes]=~/git_tree/notes
-  [personal-dev]=~/dev
+  [selfhost]=~/selfhost
 )
 tn() {
   : ${1:?tn needs a session name.}
