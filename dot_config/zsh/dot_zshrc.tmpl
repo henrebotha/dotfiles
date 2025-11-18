@@ -645,6 +645,13 @@ if command -v abbr &> /dev/null; then
     ['chezmoi s']='chezmoi status'
     ['chezmoi u']='chezmoi unmanaged'
     [d]=docker
+    ['docker b']='docker build'
+    ['docker cm']='docker compose'
+    ['docker compose r']='docker compose restart'
+    ['docker cn']='docker container'
+    ['docker l']='docker logs'
+    ['docker lf']='docker logs -f'
+    ['docker v']='docker volume'
     [dv]='dirs -v'
     [e]=emacs
     [fzfcp]='fzf #| '"$(echo $clip)"
@@ -663,6 +670,11 @@ if command -v abbr &> /dev/null; then
     [m]=mise
     [s]=sudo
     [t]=tree
+    [tx]='tmuxinator s'
+    [txe]='tmuxinator new'
+    [ta]='tmux a -t'
+    [tai]='tmux new-session -t' # mnemonic: "tmux attach independent"
+    [tk]='tmux kill-session -t'
     [dts]='date +"%Y-%m-%dT%H:%M:%S"'
     [v]=vim
     [wa]='watch -c'
