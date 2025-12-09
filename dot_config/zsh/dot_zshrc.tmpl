@@ -661,9 +661,11 @@ if command -v abbr &> /dev/null; then
     ['kubectl gp']='kubectl get pods'
     ['kubectl g']='kubectl get'
     ['kubectl get p']='kubectl get pods'
-    ['kubectl l']='kubectl logs -c app $pod'
-    ['kubectl lf']='kubectl logs -c app --tail=20 -f $pod'
-    ['kubectl pf']='kubectl port-forward services/$service 8080:$port'
+    ['kubectl get pw']='kubectl get pods -w'
+    ['kubectl gpw']='kubectl get pods -w'
+    ['kubectl l']='kubectl logs --timestamps -c app $pod'
+    ['kubectl lf']='kubectl logs --timestamps -c app --tail=20 -f $pod'
+    ['kubectl pf']='kubectl port-forward services/$service 8080:80'
     [l]=ls
     [m]=mise
     [s]=sudo
