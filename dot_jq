@@ -1,0 +1,14 @@
+def full_paths:
+    reduce paths(
+        (type != "object" and type != "array") or (length == 0)
+    ) as $p (
+        {};
+        (getpath($p) | type) as $valType | (
+            $p
+            | map(if type == "number" then "[]" else . end)
+            | join(".")
+            | if $valType == "array" then . + ".[]" else . end
+        ) as $formatted
+        | .[$formatted] = 1
+    )
+    | keys_unsorted[];
