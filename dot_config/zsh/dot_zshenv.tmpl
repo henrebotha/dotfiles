@@ -13,6 +13,9 @@ export LC_NUMERIC=C
 export LC_COLLATE=C
 
 export EDITOR='vim -X'
+{{- if eq .chezmoi.os "linux" }}
+export SYSTEMD_EDITOR="$EDITOR"
+{{- end }}
 export MANPAGER='vim -n -X -R +MANPAGER -'
 export MANWIDTH=80
 export MANOPT='--nh --nj'
