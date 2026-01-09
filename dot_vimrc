@@ -749,6 +749,11 @@ xnoremap <silent> ae :normal `[v`]<cr>
 " TODO: this seems busted??
 inoremap <// </<c-x><c-o>
 
+" Insert date by typing literally /date/
+iab <expr> /date/ strftime("%F")
+" Insert time by typing literally /time/
+iab <expr> /time/ strftime("%T")
+
 " ------------------------
 " Brave experimental stuff
 " ------------------------
