@@ -8,7 +8,11 @@ set -g @plugin 'MunifTanjim/tmux-suspend'
 set -g @plugin 'MunifTanjim/tmux-mode-indicator'
 
 # Shell
+{{- if eq .chezmoi.os "android" }}
+set-option -g default-shell /data/data/com.termux/files/usr/bin/zsh
+{{- else }}
 set-option -g default-shell /bin/zsh
+{{- end }}
 
 # On 2024-03-29, I noticed that creating new panes/windows/sessions was
 # extremely slow — as in 24 seconds, during which time input in other panes
