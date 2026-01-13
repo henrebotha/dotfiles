@@ -39,13 +39,13 @@ DOTFILES_ENV[OS]=`uname -o`
 case "${DOTFILES_ENV[OS]}" in
   Android)
     DOTFILES_ENV[PATH_GUI_HOME]=~/storage
-    DOTFILES_ENV[PKG_MANAGER]=pkg
+    DOTFILES_ENV[PKG_MANAGER]='pkg install'
     DOTFILES_ENV[CLIPBOARD_CMD]="termux-clipboard-set"
     DOTFILES_ENV[OPEN_CMD]="termux-open"
     ;;
   Darwin)
     DOTFILES_ENV[PATH_GUI_HOME]=~
-    DOTFILES_ENV[PKG_MANAGER]=brew
+    DOTFILES_ENV[PKG_MANAGER]='brew install'
     DOTFILES_ENV[CLIPBOARD_CMD]=pbcopy
     DOTFILES_ENV[OPEN_CMD]=open
     ;;
