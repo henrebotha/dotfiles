@@ -4,13 +4,22 @@ PIP_NO_COLOR = 1
 [tools]
 # -- Languages
 node = "22"
-python = "latest"
+python = ["3.14", "3.13"]
+pipx = "latest"
+"pipx:beets" = { version = "latest", pipx_args = "--python 3.13", uvx_args = "--python 3.13" }
 ruby = "3.4.1"
 rust = "latest"
 # -- Other CLI tools
 "cargo:xan" = "0.46.2"
 usage = "latest"
+uv = "latest"
 
 [settings]
 experimental = true
 idiomatic_version_file_enable_tools = ["java", "node", "ruby"]
+# Use uv's venv
+# mise sync python --uv could also be useful
+python.uv_venv_auto = true
+
+[settings.pipx]
+uvx = true
