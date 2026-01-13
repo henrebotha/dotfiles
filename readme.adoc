@@ -10,4 +10,4 @@ https://www.chezmoi.io/install/[See the instructions] for how to install chezmoi
 Alternatively, most files in this repo can be used by simply copying or symlinking them to the correct destinations.
 Files are named and organised into directories in this repo according to the real name and path they should occupy, with minor differences (like replacing `.` with `dot_`).
 
-NOTE: Note that some files have a `.tmpl` extension; these must be renamed to remove the extension, and template placeholders (text that begins and ends with double curly braces, `like {{ this }}`) must be replaced with the appropriate content.
+NOTE: Note that some files have a `.tmpl` extension; to use them without chezmoi, these must be renamed to remove the extension, and template placeholders (text that begins and ends with double curly braces, `like {{ this }}`) must be replaced with the appropriate content.
