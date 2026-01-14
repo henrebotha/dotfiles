@@ -25,7 +25,11 @@
     background-image: linear-gradient(to top, var(--black), var(--light-black)), url({user-home}/.local/share/asciidoc/assets/svg/noise.svg);
     color: var(--white);
     font-family: "Inter Variable";
-    font-feature-settings: 'calt' on, 'dlig' on, 'tnum' off, 'frac' on, 'ss01' on, 'ss02' on, 'ss07' on, 'ss08' on, 'ss03' on;
+    font-feature-settings: 'calt' on, 'dlig' on, 'tnum' off, 'frac' off, 'ss01' on, 'ss02' on, 'ss07' on, 'ss08' on, 'ss03' on;
+  }
+
+  p, p strong, td.content strong, div.footnote strong {
+    letter-spacing: revert;
   }
 
   .paragraph.lead > p, #preamble > .sectionbody > [class=paragraph]:first-of-type p {
@@ -35,15 +39,12 @@
   :not(pre):not([class^=L]) > code {
     background: var(--white);
     color: var(--black);
+    word-spacing: revert;
   }
 
   .exampleblock :not(pre):not([class^=L]) > code, .sidebarblock :not(pre):not([class^=L]) > code {
     background: var(--white);
     color: var(--black);
-  }
-
-  .listingblock code {
-    background-color: var(--light-black);
   }
 
   #toc.toc2 {
@@ -58,7 +59,7 @@
   h1, h2, h3, #toctitle, .sidebarblock > .content > .title, h4, h5, h6 {
     font-family: "Inter Variable";
     font-weight: 400;
-    font-feature-settings: 'calt' on, 'dlig' on, 'tnum' on, 'frac' on, 'ss01' on, 'ss02' on, 'ss07' on, 'ss08' on, 'ss03' on;
+    font-feature-settings: 'calt' on, 'dlig' on, 'tnum' on, 'frac' off, 'ss01' on, 'ss02' on, 'ss07' on, 'ss08' on, 'ss03' on;
   }
 
   .admonitionblock td.content > .title,
@@ -80,7 +81,8 @@
   .qlist > .title,
   .hdlist > .title {
     font-family: "Inter Variable";
-    font-feature-settings: 'calt' on, 'dlig' on, 'tnum' on, 'frac' on, 'ss01' on, 'ss02' on, 'ss07' on, 'ss08' on, 'ss03' on;
+    font-feature-settings: 'calt' on, 'dlig' on, 'tnum' on, 'frac' off, 'ss01' on, 'ss02' on, 'ss07' on, 'ss08' on, 'ss03' on;
+    font-weight: 500;
   }
 
   .quoteblock blockquote,
@@ -89,11 +91,27 @@
   .verseblock .attribution cite
   {
     color: var(--white);
+    font-size: revert;
+    text-align: revert;
+  }
+
+  .quoteblock {
+    margin-left: 0;
+  }
+
+  .quoteblock blockquote {
+    border-left: 0.2em solid var(--yellow);
+    padding-left: 1em;
   }
 
   .quoteblock blockquote::before {
-    color: var(--yellow);
-    font-size: 1.5em;
+    all: initial;
+  }
+
+  .quoteblock blockquote,
+  .quoteblock p {
+    word-spacing: revert;
+    letter-spacing: revert;
   }
 
   .keyseq {
@@ -194,7 +212,11 @@
   .hdlist > .title
   {
     color: var(--yellow);
-    font-feature-settings: 'calt' on, 'dlig' on, 'tnum' on, 'frac' on, 'ss01' on, 'ss02' on, 'ss07' on, 'ss08' on, 'ss03' on;
+    font-feature-settings: 'calt' on, 'dlig' on, 'tnum' on, 'frac' off, 'ss01' on, 'ss02' on, 'ss07' on, 'ss08' on, 'ss03' on;
+  }
+
+  .frac {
+    font-feature-settings: 'frac' on;
   }
 
   table {
@@ -283,8 +305,16 @@
     color: white;
     text-shadow: 0px 0px 6px var(--cyan);
   }
+  a > code {
+    /* Reset the hyperlink shadow */
+    text-shadow: none;
+    box-shadow: 0px 0px 6px var(--cyan);
+  }
   a:hover:not(h1 > a, h2 > a, h3 > a, h4 > a, h5 > a, h6 > a) {
     color: var(--cyan);
+  }
+  a > code:hover {
+    background-color: var(--cyan);
   }
   .toc-left a {
     color: var(--white);
@@ -309,5 +339,9 @@
   footer {
     position: fixed;
     bottom: 0;
+  }
+
+  .ipa {
+    white-space: nowrap;
   }
 </style>
