@@ -118,7 +118,7 @@
     color: inherit;
   }
 
-  code, pre, samp {
+  code, pre {
     font-family: "JetBrains Mono";
     font-feature-settings: 'calt' on,
       'frac' off,
@@ -133,9 +133,16 @@
       'zero' on;
   }
 
+  samp {
+    font-family: "Inter Variable";
+    color: var(--yellow);
+    padding: 0.1em 0.5ex;
+  }
+
   kbd {
     font-family: "JetBrains Mono";
-    font-feature-settings: 'calt' on,
+    font-feature-settings: 'calt' off,
+      'dlig' off,
       'frac' off,
       'ss01' off,
       'ss02' on,
