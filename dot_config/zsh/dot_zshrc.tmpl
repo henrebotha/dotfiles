@@ -726,7 +726,7 @@ repl() {
     python2)
       python2;;
     python3)
-      python3;;
+      PYTHON_BASIC_REPL=1 python3;;
     ruby)
       if command -v rbenv &> /dev/null; then
         if rbenv which pry &> /dev/null; then
