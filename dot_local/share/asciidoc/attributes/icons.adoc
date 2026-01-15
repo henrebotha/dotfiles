@@ -2,7 +2,6 @@
 //   e.g. {i}music{_i}
 :i: icon:
 :_i: [fw,role=primary]
-
 // legacy hard-coded icons
 :tick: icon:check-square[fw,role=primary]
 :untick: icon:square-o[fw,role=primary]
