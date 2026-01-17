@@ -280,8 +280,10 @@ if exists('g:plugs') && has_key(g:plugs, 'vim-noctu')
   set bg=dark
 endif
 
-" Shortcut to rapidly toggle `set list`
+" Toggle whitespace visibility
 nnoremap <leader>l :set list!<cr>
+nnoremap <leader>p :set paste!<cr>
+nnoremap <leader>w :set wrap!<cr>
 
 " Some experimental stuff for vim-gitgutter
 nnoremap <leader>gdargs :echo 'gitgutter diff args: ' . g:gitgutter_diff_args<cr>
@@ -442,8 +444,6 @@ nnoremap <leader>n :enew<cr>
 nnoremap <leader>z za
 nnoremap <leader>Z zA
 
-nnoremap <leader>W :set wrap!<cr>
-
 " Yank file path, optionally with line number
 nnoremap <leader>yf :let @+=expand("%")<cr>
 nnoremap <leader>yl :let @+=expand("%") . ':' . line(".")<cr>
@@ -522,7 +522,7 @@ nnoremap <leader>ss :call mkdir(".vim", "p", 0700) <bar> Obsession .vim/Session.
 nnoremap <leader>sr :source .vim/Session.vim<cr>
 
 " Bindings for goyo ("prose mode")
-nnoremap <leader>p :Goyo<cr>
+nnoremap <leader>P :Goyo<cr>
 " Detect window resize with goyo active & maximize window size when it happens
 " Workaround for https://github.com/junegunn/goyo.vim/issues/159
 augroup goyohacks
