@@ -1,25 +1,18 @@
-[env]
-PIP_NO_COLOR = 1
-
 [tools]
-# -- Languages
-node = "22"
-python = ["3.14", "3.13"]
-pipx = "latest"
-"pipx:beets" = { version = "latest", pipx_args = "--python 3.13", uvx_args = "--python 3.13" }
-ruby = "3.4.1"
-rust = "latest"
-# -- Other CLI tools
 "cargo:xan" = "0.46.2"
+"pipx:beets" = { version = "latest", pipx_args = "--python 3.13", uvx_args = "--python 3.13" }
 usage = "latest"
-uv = "latest"
 
 [settings]
 experimental = true
+# TODO: Once this setting can actually be set in ~/.config/mise/conf.d/*.toml, migrate it to there;
+# try using templates to allow them to concatenate. Something like:
+# idiomatic_version_file_enable_tools = {{ exec(command = 'mise config get settings.idiomatic_version_file_enable_tools | sed "s/]/\"node\"]/"') }}
 idiomatic_version_file_enable_tools = ["java", "node", "ruby"]
+
+[settings.python]
 # Use uv's venv
 # mise sync python --uv could also be useful
-python.uv_venv_auto = true
-
+uv_venv_auto = true
 [settings.pipx]
 uvx = true
