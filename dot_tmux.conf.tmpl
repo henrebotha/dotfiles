@@ -138,5 +138,10 @@ bind -T copy-mode-vi 'V' send -X select-line
 bind -T copy-mode-vi 'r' send -X rectangle-toggle
 bind -T copy-mode-vi 'y' send -X copy-selection-and-cancel
 
+bind -N 'Scroll the line to top/middle/bottom using zt/zz/zb' -T copy-mode-vi 'z' switch-client -T multi-z
+bind -T multi-z 't' send -X scroll-top
+bind -T multi-z 'z' send -X scroll-middle
+bind -T multi-z 'b' send -X scroll-bottom
+
 # Keep this at the bottom!
 run -b '~/.tmux/plugins/tpm/tpm'
