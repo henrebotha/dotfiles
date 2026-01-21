@@ -10,6 +10,7 @@
 !.local/share/asciidoc/*.adoc
 !.local/share/asciidoc/attributes/*.adoc
 !.local/share/asciidoc/templates/*.html
+*.code-workspace
 install.sh
 **/install.sh
 LICENSE
