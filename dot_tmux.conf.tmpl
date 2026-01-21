@@ -71,7 +71,7 @@ bind -N 'Create or switch to session with name' C command-prompt -p 'Create or s
 bind -N 'Create session for process' R command-prompt -p 'Create session for process:' 'new-session -s %1 %1'
 bind -N 'Change session working directory' P command-prompt -p 'Change session working directory to:' 'attach-session -t . -c %%'
 
-bind -N 'Set an environment variable for this window' E command-prompt -p 'Set variable name:','Set variable value:' 'run-shell "tmux set-environment TMUX_USER_ENV_%1 %2'
+bind -N 'Set an environment variable for this window' E command-prompt -p 'Set variable name:','Set variable value:' 'set-environment TMUX_USER_ENV_%1 %2'
 
 # Useful for tracking down open files in Vim!
 bind -N 'Switch to window running a given PID' W command-prompt -p "Switch to pane with pid:" "run-shell 'pane=\$(ps eww %% | sed \"1d; s/^.*TMUX_PANE=//;s/ .*//\"); [[ -z \$pane ]] && tmux display-message \"could not find pid\" || tmux switch-client -t \$pane'"
