@@ -1,2 +1,4 @@
 # Show a preview when truncating the line.
 --max-columns-preview
+--type-add
+notes:*.{adoc,md}
