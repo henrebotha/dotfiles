@@ -1,3 +1,12 @@
+# This file defines patterns that should not be projected to $HOME. In other
+# words: Listing `foo/` here means, "Do not do anything that would create
+# `~/foo/`."
+#
+# - Use .gitignore to keep files out of the Git repo.
+# - Use .chezmoiignore to allow files in Git but keep them out of $HOME.
+#
+# That means this file must use filenames as they would appear in the
+# destination: `.foo`, not `dot_foo`.
 *.adoc
 **/*.adoc
 *.txt
@@ -22,16 +31,14 @@ karabiner-elements/
 karabiner-elements/**
 ruby/
 ruby/**
-{{- if ne .chezmoi.os "android" -}}
-termux/
-termux/**
-{{- end -}}
-{{- if ne .chezmoi.os "linux" -}}
+{{- if ne .chezmoi.os "android" }}
+.termux/
+.termux/**
+{{- end }}
 xfce/
 xfce/**
 xorg.conf.d/
 xorg.conf.d/**
-{{- end -}}
 fish/
 fish/**
 firefox/
