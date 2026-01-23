@@ -1,8 +1,10 @@
 = dotfiles
+:experimental:
+:source-highlighter: highlight.js
 
 My various configs.
 
-== Instructions
+== Installation
 
 This repo is designed for use with https://www.chezmoi.io/[chezmoi].
 https://www.chezmoi.io/install/[See the instructions] for how to install chezmoi and set it up with this repo.
@@ -11,3 +13,79 @@ Alternatively, most files in this repo can be used by simply copying or symlinki
 Files are named and organised into directories in this repo according to the real name and path they should occupy, with minor differences (like replacing `.` with `dot_`).
 
 NOTE: Note that some files have a `.tmpl` extension; to use them without chezmoi, these must be renamed to remove the extension, and template placeholders (text that begins and ends with double curly braces, `like {{ this }}`) must be replaced with the appropriate content.
+
+== Development & management
+
+Managing this repo across multiple machines follows a strict workflow.
+
+The `main` branch is the canonical form of the repo, whose tip contains all the changes I consider "done".
+
+New features under evaluation — no matter how small — go into feature branches named `feat/$feature_name`.
+These branches should be based on `main` unless there is a good reason to do otherwise.
+
+Each machine has a "host branch" named `host/$host_name`.
+*This branch may contain sensitive information and is not to be pushed to a public repo.*
+
+The structure of a host branch is as follows.
+
+* The branch is based on `main`.
+* Its first commit adds a file named `PRIVATE`.
+The commit message itself starts with `PRIVATE:`.
+The commit is tagged as `private/$host_name`.
+* Its second commit, which is optional, is a merge commit that merges all feature branches currently under evaluation on that machine.
++
+====
+For example, `host/mbp` might have a merge commit that merges `feat/difft`, `feat/rg-notes`, and `feat/adoc-macros`.
+====
++
+The commit is tagged as `compose/$host_name`.
+* Its third commit is a WIP commit.
+The commit is tagged as `wip/$host_name`.
+This commit contains *anything and everything* that is currently present on the machine's local repo and not committed to any branch.
+Its function is mainly to capture things that are not yet properly organised according to the structure described above.
+
+The host branches should be force-pushed to *private* repos often, to ensure that they can be inspected & recovered without requiring access to the machine in question.
+
+The host branches can easily be rebased onto `main` to incorporate the latest changes.
+If more control and oversight is desired (especially likely to be required in the event that, say, `main` merges a feature branch that was previously merged into the host branch), the following process represents a thorough update of the host branch.
+Some of the stages below may be skipped depending on the situation; commands may then need to be modified.
+
+[source,shell]
+----
+## Stage 1: Just get the branch to reflect main
+$ git reset --hard private/$host_name
+$ git rebase main
+$ git tag -f private/$host_name
+## Stage 2: Update the merge commit
+$ git merge feat/1 feat/2 feat/3
+$ git tag -f compose/$host_name
+## Stage 3: Update the WIP commit
+$ git cherry-pick wip/$host_name
+$ git tag -f wip/$host_name
+----
+
+The state of a host branch can then be conveniently viewed as follows.
+
+[source,shell]
+----
+$ git log --oneline --decorate --graph private/$host_name..host/$host_name
+## Or using an alias
+$ git lg private/$host_name..host/$host_name
+## Omit either ref when currently checked out to that ref
+$ git lg private/$host_name..
+----
+
+====
+[source,shell]
+----
+$ git lg private/mbp..host/mbp
+* xxxxxxx (tag: wip/mbp, gitlab/host/mbp, host/mbp) --wip--
+*-----.   xxxxxxx (tag: compose/mbp) Merge branches 'feat/adoc-macros', 'feat/difft', 'feat/git-fetch-tags', 'feat/rg-notes' and 'feat/tmux-punt' into host/mbp
+|\ \ \ \
+| | | | * xxxxxxx (gitlab/feat/tmux-punt, feat/tmux-punt) Create function to send command to new Tmux pane
+| | | * xxxxxxx (gitlab/feat/rg-notes, feat/rg-notes) Add notes type to rg
+| | * xxxxxxx (gitlab/feat/git-fetch-tags, feat/git-fetch-tags) Fetch tags by default
+| * xxxxxxx (gitlab/feat/difft, feat/difft) Use difftastic with chezmoi
+* xxxxxxx (gitlab/feat/adoc-macros, feat/adoc-macros) Add macros for var, samp
+----
+====
