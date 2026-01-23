@@ -140,6 +140,8 @@
 	intended = ! "git --no-pager diff --name-only --diff-filter=A"
 	unintended = ls-files --others --exclude-standard
 
+	conflicts = ! "git --no-pager diff --name-only --diff-filter=U"
+
 	# Mnemonic: "diverge"
 	di = ! "f() { \
 		git -c color.diff=true log --oneline --graph --decorate HEAD $1 `git merge-base HEAD $1`^!; \
