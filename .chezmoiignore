@@ -7,6 +7,7 @@
 #
 # That means this file must use filenames as they would appear in the
 # destination: `.foo`, not `dot_foo`.
+_sandbox/
 *.adoc
 **/*.adoc
 *.txt
