@@ -64,7 +64,7 @@ case "${DOTFILES_ENV[OS]}" in
     elif [[ -f /etc/SuSE-release ]]; then
       DOTFILES_ENV[PKG_MANAGER]='zypp install'
     elif [[ -f /etc/alpine-release ]]; then
-      DOTFILES_ENV[PKG_MANAGER]='apk install'
+      DOTFILES_ENV[PKG_MANAGER]='apk add'
     else
       echo >&2 "Could not identify package manager."
       return 1
