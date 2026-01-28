@@ -1,0 +1,22 @@
+#! /usr/bin/env zsh
+# vim: filetype=zsh:
+
+: ${1:?memo needs a command to run (e.g. 'curl example.com/data.json').}
+
+# Usage: memo <command...>
+local cmd_string="$*"
+local checksum=$(echo -n "$cmd_string" | shasum -a 256 | cut -c1-8)
+
+# Derive the cache filename (e.g., curl.a1b2c3d4)
+local first_word="${1:t}" # :t gets the basename if it's a path
+local cache="/tmp/memo.${first_word}.${checksum}"
+
+# Use a checksum to invalidate the cache whenever the command changes
+local checksum=$(echo "'$@'" | shasum -a 256 | awk '{print $1}')
+
+# Check if a recent file exists
+if [[ -f "$cache" ]] && [[ -n $(find "$cache" -mmin -60) ]]; then
+  cat "$cache"
+else
+  "$@" | tee "$cache"
+fi
