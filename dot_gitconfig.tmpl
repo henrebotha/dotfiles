@@ -141,6 +141,7 @@
 	unintended = ls-files --others --exclude-standard
 
 	conflicts = ! "git --no-pager diff --name-only --diff-filter=U"
+	no-conflict = "diff --quiet --exit-code --diff-filter=U"
 
 	# Mnemonic: "diverge"
 	di = ! "f() { \

@@ -1,0 +1,68 @@
+= Maintenance process
+include::{user-home}/.local/share/asciidoc/attributes/doc-attrs.adoc[]
+include::{user-home}/.local/share/asciidoc/attributes/highlightjs.adoc[]
+include::{user-home}/.local/share/asciidoc/attributes/icons.adoc[]
+:toc: left
+:sourcedir: ./
+
+This document defines the workflow for maintaining this dotfiles repo.
+The workflow makes use of Git features such as octopus merges to track carefully the state of the repo on different machines.
+
+Each machine using the repo should choose a hostname, something short and to the point like `fwd` (Framework Desktop) or `mc` (Mecha Comet).
+Chezmoi will prompt for this hostname during initialisation, and populate the `$GIT_HOST` variable accordingly.
+
+A number of branches and tags with particular names are used.
+
+* `main` is the branch that serves as the canonical "release" for the repo.
+* `feat/$feature` is the branch that contains the code for some feature named `$feature`.
+Any change to the repo, no matter how small, should begin life as a `feat/$feature` branch, *unless* there is a very good reason not to do so; in such a case, it may be committed directly to `main`.
+(An example of a good reason is if the change is obvious, and definitely not to be reverted any time soon.)
+To retire a feature branch (once it is merged into `main`, or abandoned), create an annotated tag called `archive/feat/$feature` with a message describing why it's archived, and then delete the branch itself.
+* `host/$GIT_HOST` is the branch that holds whatever is currently in use on this machine.
+It contains the following commits, in reverse chronological order.
+  ** `private/$GIT_HOST` is a tag pointing to a commit that adds a file `PRIVATE` and a commit message that starts with ``PRIVATE: ``.
++
+CAUTION: *Descendants of this commit must never be pushed to a public repository,* as they may contain sensitive information or otherwise leak particulars about the machine.
+The tag or the `PRIVATE` commit message/file can be used in Git hooks to prevent pushing to public repositories.
+  ** `compose/$GIT_HOST` is a tag pointing to an octopus merge commit on top of `private/$GIT_HOST`.
+  This merge commit is the "composition" (combination) of all the features not yet merged to `main` that we are currently using or trying out on the machine.
+  It should always be created using the command `git merge --log --message "Merge features" [feature branches…]`.
+  This will ensure that the merge commit message contains the name of every single feature branch merged in, which is essential for the workflow used to update the composition of features.
++
+TIP: `git lg main..host/$GIT_HOST` is a nice way to view all the features thus in use.
+  ** `wip/$GIT_HOST` is a tag on the latest commit on this machine, mostly used for convenience during maintenance workflows.
+  It is allowed to have one (or more, but ideally only one) such commit after `compose/$GIT_HOST`, for capturing any random changes that have not yet been "sorted" properly into e.g. feature branches.
+  This can and should be pushed to any private repos, in order to ensure that these "loose" changes can be recovered from a remote should something happen to the machine.
+
+.Example host branch structure
+====
+[source]
+----
+* 6666666 (host/mc) --wip-- Work around bug X
+*---.   5555555 Merge features
+|\ \ \
+| | | * 4444444 (feat/c) Tweak C
+| | * 3333333 (feat/b) Don't use B
+| * 2222222 (feat/a) Add support for A
+* 1111111 PRIVATE: Do not push to public
+* 0000000 (main) Refactor Z
+----
+====
+
+== Initial setup
+
+This must be run at least once, before attempting any of the following workflows.
+
+include::{sourcedir}/prerequisites.adoc[]
+
+== Updating host branch & WIP tag
+
+include::{sourcedir}/update-wip-tag.adoc[tag=**]
+
+== Changing list of merged features
+
+include::{sourcedir}/update-compose.adoc[tag=**]
+
+== Rebasing onto latest `main`
+
+include::{sourcedir}/rebase-main.adoc[tag=**]

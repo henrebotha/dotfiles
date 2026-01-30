@@ -16,6 +16,8 @@ NOTE: Note that some files have a `.tmpl` extension; to use them without chezmoi
 
 == Development & management
 
+NOTE: This is just a loose overview. The canonical reference is in link:_docs[`_docs`].
+
 Managing this repo across multiple machines follows a strict workflow.
 
 The `main` branch is the canonical form of the repo, whose tip contains all the changes I consider "done".
