@@ -12,6 +12,10 @@ exclude = ["scripts"]
 [edit]
 hardlink = false
 
+{{ $git_host := promptStringOnce . "git.host" "What is this machine called (for Git)" }}
+[data.git]
+host = "{{ $git_host }}"
+
 [data.colours]
 # Yellowhammer
 bg                   = "22242c"

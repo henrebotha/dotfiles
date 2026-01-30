@@ -1,0 +1,5 @@
+.Force-push branch and tags to GitLab
+[source,shell]
+----
+$ git pf gitlab && git push --force --tags gitlab
+----

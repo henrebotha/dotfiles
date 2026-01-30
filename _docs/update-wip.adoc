@@ -1,0 +1,12 @@
+.Recover previous WIP changes
+[source,shell]
+----
+tag::code-standalone-prep[]
+$ git sw host/$GIT_HOST
+$ git reset --hard compose/$GIT_HOST
+end::code-standalone-prep[]
+$ git cherry-pick compose/$GIT_HOST@{1}..wip/$GIT_HOST
+## Resolve any conflicts
+$ git no-conflict || vim $(git conflicts) && git a --update . && git cherry-pick --continue
+----
+include::{sourcedir}/update-wip-tag.adoc[tag=!*]

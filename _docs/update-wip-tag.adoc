@@ -1,0 +1,10 @@
+.Update WIP tag
+[source,shell]
+----
+tag::code-standalone-prep[]
+$ git sw host/$GIT_HOST
+## Make whatever changes you want, then:
+end::code-standalone-prep[]
+$ git tag -f wip/$GIT_HOST
+----
+include::{sourcedir}/update-gitlab.adoc[tag=!*]

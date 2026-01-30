@@ -1,0 +1,5 @@
+.Set up config
+[source,shell]
+----
+$ git config core.logAllRefUpdates always
+----

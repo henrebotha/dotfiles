@@ -1,0 +1,23 @@
+.Re-merge feature branches
+[source,shell]
+----
+tag::code-standalone-prep[]
+$ git sw host/$GIT_HOST
+$ git reset --hard private/$GIT_HOST
+end::code-standalone-prep[]
+$ git show --format=%B compose/$GIT_HOST | rg --only-matching 'feat/[^:]+'
+feat/adoc-macros
+feat/rg-notes
+feat/tmux-punt
+feat/tmux-zoom-hooks
+## Take note of the feature branch names above, but add and/or remove whatever you want
+$ git merge --ff --log --message 'Merge features' \
+  feat/adoc-macros \
+  feat/rg-notes \
+  feat/tmux-zoom-hooks \
+  feat/difft
+## Resolve any conflicts
+$ git no-conflict || vim $(git conflicts) && git a --update . && git merge --continue
+$ git tag -f compose/$GIT_HOST
+----
+include::{sourcedir}/update-wip.adoc[tag=!*]

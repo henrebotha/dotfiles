@@ -1,0 +1,11 @@
+.Rebase onto `main`
+[source,shell]
+----
+$ git fp gitlab main
+$ git sw host/$GIT_HOST
+$ git reset --hard private/$GIT_HOST
+$ git rebase gitlab/main
+## Near-zero risk of conflicts at this stage
+$ git tag -f private/$GIT_HOST
+----
+include::{sourcedir}/update-compose.adoc[tag=!*]
