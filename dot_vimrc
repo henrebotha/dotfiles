@@ -214,6 +214,8 @@ function! s:tweak_colours()
   " hi LineNr ctermfg=14
   " hi CursorLineNr ctermfg=14
 
+  hi ErrorMsg ctermfg=black
+
   " hi SignColumn ctermbg=2 ctermfg=4
   " hi FoldColumn ctermbg=3 ctermfg=5
   " Fix vimdiff colours to be not so eye-bleeding. Ugly, but better
