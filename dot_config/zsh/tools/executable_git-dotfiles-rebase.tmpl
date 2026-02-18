@@ -1,0 +1,8 @@
+#!/usr/bin/env zsh
+# :vim set ft=zsh:
+
+local branches="$(git --no-pager show --no-patch --format=%B compose/{{ .git.host }} | rg --only-matching --replace='refs/heads/$1' '(feat/[^:]+)' | sort | uniq | tr '\n' ' ')"
+local text="pick refs/tags/private/{{ .git.host }}
+merge -C refs/tags/compose/{{ .git.host }} ${=branches}
+pick refs/tags/wip/{{ .git.host }}"
+GIT_SEQUENCE_EDITOR="echo '$text' >" git rebase -i --rebase-merges gitlab/main
