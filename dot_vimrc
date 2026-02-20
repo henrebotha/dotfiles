@@ -42,13 +42,13 @@ endfunction " }}}
 " Disable polyglot's built-in Elm
 " Disable Git so we can get the newer version
 let g:polyglot_disabled = [
-  \ 'elm',
-  \ 'git',
-  \ 'ocaml',
-  \ 'markdown',
-  \ 'sh',
-  \ 'asciidoc',
-  \ ]
+\   'elm',
+\   'git',
+\   'ocaml',
+\   'markdown',
+\   'sh',
+\   'asciidoc',
+\ ]
 
 " Install plugins {{{
 
@@ -69,9 +69,9 @@ Plug 'udalov/kotlin-vim', { 'for': ['kotlin'] }
 Plug 'henrebotha/vim-protobuf', { 'for': ['protobuf'] }
                                           " Language pack for Protobuf
 Plug 'vim-perl/vim-perl', {
-  \ 'do': 'mkdir -p after/syntax/perl && cp contrib/heredoc-sql.vim after/syntax/perl/heredoc-sql.vim',
-  \ 'for': ['perl']
-  \ }
+\   'do': 'mkdir -p after/syntax/perl && cp contrib/heredoc-sql.vim after/syntax/perl/heredoc-sql.vim',
+\   'for': ['perl']
+\ }
                                           " Language pack for Perl
                                           " Included here because heredoc
                                           " syntax is not loaded automatically
@@ -83,13 +83,13 @@ Plug 'joker1007/vim-ruby-heredoc-syntax', { 'for': ['ruby'] }
 " Not using Cond for this as I want to segregate it from plain Vim installs.
 if has('nvim')
   Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
+  \   'branch': 'next',
+  \   'do': 'bash install.sh',
+  \ }
 endif
 
 Plug 'tpope/vim-git' , {
-  \ 'for': ['git', 'gitcommit', 'gitconfig', 'gitrebase', 'gitsendemail'] }
+\ 'for': ['git', 'gitcommit', 'gitconfig', 'gitrebase', 'gitsendemail'] }
                                           " Language pack for Git
 Plug 'chrisbra/NrrwRgn', { 'on': ['NR', 'NrrwRgn'] }
                                           " Emacs-style narrowing
@@ -323,16 +323,16 @@ let g:ale_sign_column_always = 1
 let g:ale_lint_delay = 500
 " Only enable one JS linter
 let g:ale_linters = {
-      \   'javascript': ['eslint'],
-      \   'typescript': ['eslint'],
-      \   'graphql': ['gqlint'],
-      \   'html': [],
-      \   'scss': ['scsslint']
-      \}
+\   'javascript': ['eslint'],
+\   'typescript': ['eslint'],
+\   'graphql': ['gqlint'],
+\   'html': [],
+\   'scss': ['scsslint'],
+\ }
 let g:ale_fixers = {
-      \   '*': ['trim_whitespace'],
-      \   'javascript': ['prettier'],
-      \}
+\   '*': ['trim_whitespace'],
+\   'javascript': ['prettier'],
+\ }
 let g:ale_set_highlights = 0
 let g:ale_lint_on_text_changed = 'normal'
 let g:ale_lint_on_insert_leave = 1
@@ -405,11 +405,11 @@ if executable('fzf')
   command! -bang -nargs=* RgPerl call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case -t perl ".shellescape(<q-args>), 1, <bang>0)',
 
   command! -bang -nargs=* Rg
-    \ call fzf#vim#grep(
-    \   'rg --hidden -g "!.git" --vimgrep --color=always -- '.shellescape(<q-args>),
-    \   <bang>0 ? fzf#vim#with_preview('down:70%')
-    \           : fzf#vim#with_preview('down:70%:hidden', '?'),
-    \   <bang>0)
+  \ call fzf#vim#grep(
+  \   'rg --hidden -g "!.git" --vimgrep --color=always -- '.shellescape(<q-args>),
+  \   <bang>0 ? fzf#vim#with_preview('down:70%')
+  \           : fzf#vim#with_preview('down:70%:hidden', '?'),
+  \   <bang>0)
 else
   " Fallbacks just in case we're not set up yet
   nnoremap <leader>f :e
@@ -463,7 +463,7 @@ function! VisualSelection()
 
   if (line2byte(line_start)+column_start) > (line2byte(line_end)+column_end)
     let [line_start, column_start, line_end, column_end] =
-          \   [line_end, column_end, line_start, column_start]
+    \ [line_end, column_end, line_start, column_start]
   end
   let lines = getline(line_start, line_end)
   if len(lines) == 0
@@ -650,7 +650,15 @@ nmap ga <Plug>(EasyAlign)
 " Enable syntax highlighting in Markdown fenced code blocks
 " Note: Ensure all associated ftplugins exit early if we're actually in
 " Markdown.
-let g:markdown_fenced_languages = ['html', 'ruby', 'javascript', 'erb=eruby', 'xml', 'json', 'sql']
+let g:markdown_fenced_languages = [
+\   'erb=eruby',
+\   'html',
+\   'javascript',
+\   'json',
+\   'ruby',
+\   'sql',
+\   'xml',
+\ ]
 
 " Don't let vim-less mess up <style> elements in HTML.
 let g:less_html_style_tags = 0
