@@ -39,18 +39,20 @@ altc_cdup() {
 }
 
 altc_find_linked_worktrees() {
-  if command -v grealpath &> /dev/null; then
-    if ! git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
-      return
-    fi
-    current="$(git rev-parse --show-toplevel)"
-    for line in $(git worktree list | cut -d' ' -f1); do
-      if ! [[ "$line" == "$current" ]]; then
-        grealpath --relative-to=$(pwd) $line
-        return
-      fi
-    done
+  if ! command -v grealpath &> /dev/null; then
+    return
   fi
+
+  if ! git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
+    return
+  fi
+
+  current="$(git rev-parse --show-toplevel)"
+  for line in $(git worktree list | cut -d' ' -f1); do
+    if ! [[ "$line" == "$current" ]]; then
+      grealpath --relative-to=$(pwd) $line
+    fi
+  done
 }
 
 if command -v fdfind &> /dev/null; then
