@@ -46,3 +46,9 @@ fish/
 fish/**
 firefox/
 firefox/**
+{{- if eq .chezmoi.os "darwin" }}
+!install-hammerspoon.sh
+{{- else }}
+.hammerspoon/
+.hammerspoon/**
+{{- end }}

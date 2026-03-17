@@ -1,0 +1,16 @@
+#! /usr/bin/env zsh
+{{ if eq .chezmoi.os "darwin" -}}
+command -v hs >/dev/null 2>&1 || brew install hammerspoon --cask
+spoons=(
+  'ReloadConfiguration.spoon'
+  'RecursiveBinder.spoon'
+)
+[[ -d ~/.hammerspoon/Spoons ]] || mkdir -p ~/.hammerspoon/Spoons
+cd /tmp
+for spoon in "${spoons[@]}"; do
+  echo "Installing $spoon"
+  curl -LO "https://github.com/Hammerspoon/Spoons/raw/master/Spoons/$spoon.zip"
+  unzip "$spoon.zip"
+  cp -r "$spoon" ~/.hammerspoon/Spoons/.
+done
+{{ end -}}
