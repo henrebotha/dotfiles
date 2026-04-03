@@ -12,6 +12,11 @@ exclude = ["scripts"]
 [edit]
 hardlink = false
 
+{{ if eq .chezmoi.os "darwin" -}}
+[hooks.read-source-state.pre]
+  command = ".local/share/chezmoi/.configure-macos-menu.sh"
+
+{{ end -}}
 {{ $git_host := promptStringOnce . "git.host" "What is this machine called (for Git)" }}
 [data.git]
 host = "{{ $git_host }}"
