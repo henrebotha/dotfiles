@@ -16,3 +16,6 @@ idiomatic_version_file_enable_tools = ["java", "node", "ruby"]
 uv_venv_auto = true
 [settings.pipx]
 uvx = true
+
+[settings.ruby]
+compile = false
